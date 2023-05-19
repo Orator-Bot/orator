@@ -19,3 +19,22 @@ module.exports = {
   }
 }
 ```
+
+## Libraries used
+
+- `discord.js` for coding the bot.
+- `better-sqlite3` for database.
+- `discord-player` for playing audio.
+- `gtts` and `google-translate-api` for tts generation.
+- `fakeyou.js` for custom voice generation.
+
+## Resources used
+
+- `Hetzner` for hosting the bot.
+- `Fake You` for custom voices.
+
+## Team
+
+- RK: Owner
+- Arijit: Lead Developer
+- Frezz1ck: Web Developer.
