@@ -4,5 +4,7 @@ module.exports = {
   "Prefix": ".", // Prefix of the bot
   "DB_URL": "", // MongoDB url (though not used)
   "Languages": [], // Language Codes
-  "statusURL": "" // Webhook URL
+  "statusURL": "", // Webhook URL
+  "FakeYouEmail": "", // Fake You Email
+  "FakeYouPassword": "" // Fake You Password
   }
