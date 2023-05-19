@@ -1,0 +1,8 @@
+module.exports = {
+  "TOKEN": "",
+  "owners": [],
+  "Prefix": ".",
+  "DB_URL": "",
+  "Languages": [],
+  "statusURL": ""
+  }

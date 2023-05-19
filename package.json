@@ -1,0 +1,49 @@
+{
+  "name": "Orator",
+  "version": "1.0.0",
+  "description": "Orator is a Text to Speech Discord Bot.",
+  "main": "index.js",
+  "imports": {
+    "#root/*": "./*",
+    "#events/*": "./Events/*",
+    "#handlers/*": "./Structures/Handlers/*",
+    "#functions/*": "./Structures/Functions/*",
+    "#commands/*": "./Commands/*",
+    "#slashcommands/*": "./SlashCommands/*",
+    "#database/*": "./Database/*",
+    "#helper/*": "./Structures/Helpers/*",
+    "#helpers": "./Structures/index.js",
+    "#schemas/*": "./Database/Models/*"
+  },
+  "scripts": {
+    "dev": "node index.js"
+  },
+  "keywords": [],
+  "author": "ArijitTheDev",
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "latest",
+    "glob": "latest",
+    "ms": "latest",
+    "colors": "latest",
+    "axios": "latest",
+    "better-sqlite3": "latest",
+    "common-tags": "latest",
+    "sourcebin_js": "latest",
+    "moment": "latest",
+    "pagination.djs": "latest",
+    "mongoose": "latest",
+    "google-tts-api": "latest",
+    "discord-player": "latest",
+    "@discordjs/opus": "latest",
+    "ffmpeg-static": "latest",
+    "@discord-player/extractor": "latest",
+    "ytdl-core": "latest",
+    "pro.db": "latest",
+    "voucher-code-generator": "latest",
+    "translate-google": "latest",
+    "fakeyou.js": "latest",
+    "gtts": "latest",
+    "discord-hybrid-sharding": "latest"
+  }
+}

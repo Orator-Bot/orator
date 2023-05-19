@@ -1,0 +1,149 @@
+const { EmbedBuilder, Collection, ChannelType, ActionRowBuilder, ButtonStyle, ButtonBuilder } = require("discord.js");
+const { stripIndent } = require("common-tags")
+const ms = require("ms")
+const escapeRegex = (string) => {
+  return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+};
+module.exports = {
+  name: "messageCreate",
+  async execute(message) {
+    const { client, guild, channel, content, author } = message;
+    const getPremiumBtn = new ActionRowBuilder()
+      .addComponents(
+        new ButtonBuilder()
+        .setLabel("Upgrade to Premium")
+        .setEmoji("<a:__:1063829203117686895>")
+        .setURL("https://discord.gg/TeS3haQ4tT")
+        .setStyle(ButtonStyle.Link)
+      )
+    if (message.content === `<@${message.client.user.id}>`) {
+      if (client.config.owners.includes(message.author.id)) {
+        message.reply('Yes papa' + ` mera prefix hai ${client.prefix.get(message.guild.id).prefix}`)
+      } else if (message.author.id === '706863378647482410') {
+        message.reply('Yes mumma' + `mera prefix hai ${client.prefix.get(message.guild.id).prefix}`)
+      } else {
+        if (client.prefix.get(message.guild.id)) {
+          message.reply(`The prefix of ${message.client.user.username} in this server is ${client.prefix.get(message.guild.id).prefix}`)
+        } else {
+          message.reply(`The prefix of ${message.client.user.username} in this server is ${client.config.Prefix}`)
+        }
+      }
+    }
+
+    let prefix = client.config.Prefix
+    if (client.prefix.get(message.guild.id)) {
+      prefix = client.prefix.get(message.guild.id).prefix
+    }
+    const checkPrefix = prefix.toLowerCase();
+    const prefixRegex = new RegExp(
+      `^(<@!?${client.user.id}>|${escapeRegex(checkPrefix)})\\s*`
+    );
+    if (!prefixRegex.test(content.toLowerCase())) return;
+    const [matchedPrefix] = content.toLowerCase().match(prefixRegex);
+    const args = content.slice(matchedPrefix.length).trim().split(/ +/);
+    const commandName = args.shift().toLowerCase();
+    if (!message.content.startsWith(matchedPrefix) || message.author.bot)
+      return;
+    const command =
+      client.legacy.get(commandName) ||
+      client.legacy.find(
+        (cmd) => cmd.aliases && cmd.aliases.includes(commandName)
+      );
+    if (!command) return;
+    if (!command.description) return client.logger(`You need to pass a description in ${command.name}`, 'warn')
+    if (command.guildOnly && message.channel.type === ChannelType.DM) {
+      return message.reply({
+        content: "I can't execute that command inside DMs!",
+      });
+    }
+    if (command.stop) {
+      return message.channel.send({
+        embeds: [
+          new EmbedBuilder()
+          .setColor(client.color)
+          .setDescription(`:x: This Command is Under Maintenance!`)
+          ]
+      }).catch((err) => {})
+    }
+    if (command.ownerOnly) {
+      if (!client.config.owners.includes(message.author.id)) return
+    }
+    if(command.beta){
+      const betaData = client.betadb.prepare("SELECT * FROM beta WHERE guild_id = ?").get(message.guild.id)
+      if(!betaData) return
+    }
+    if (command.premium) {
+      const data = client.premiumdb.prepare('SELECT * FROM subscriptions WHERE guild_id = ?').get(message.guild.id)
+      if (!data) {
+        return message.channel.send({
+          embeds: [
+            new EmbedBuilder()
+            .setTitle("You discovered a Premium Command")
+            .setDescription(`${command.name} is a Premium only command. ${message.guild.name} doesn't have any Premium Subscriptions, Click on the button below to get Premium.`)
+            .setColor(client.color)
+            ],
+          components: [getPremiumBtn]
+        })
+      }
+    }
+    if (command.cooldown) {
+      const now = Date.now();
+      const cooldownAmount = command.cooldown
+      const cooldown = client.cooldown.get(command.name, message.author.id);
+      if (cooldown && cooldown.timestamp + cooldownAmount > now) {
+        const timeLeft = (cooldown.timestamp + cooldownAmount - now);
+        return message.reply(`You're on a cooldown. Please wait ${ms(Math.floor(timeLeft), {long: true })} before reusing the \`${command.name}\` command.`);
+      } else {
+        client.setcooldown.run(command.name, message.author.id, now);
+      }
+    }
+    if (command.botPerms) {
+      if (!message.guild.members.me.permissions.has(command.botPerms || [])) {
+        let noBotPerms = new EmbedBuilder()
+          .setDescription(`:x: | I Don't have ${command.botPerms} Permission To Use The Command!`)
+          .setColor(client.color)
+        return message.channel.send({
+          embeds: [noBotPerms]
+        }).catch((err) => {})
+      }
+    }
+    if (command.permissions) {
+      if (!message.member.permissions.has(command.permissions || [])) {
+        let noPerms = new EmbedBuilder()
+          .setDescription(`:x: | You Don't Have ${command.permissions} Permission To Use The Command!`)
+          .setColor(client.color)
+        return message.reply({ embeds: [noPerms] }).catch((err) => {})
+      }
+    }
+    if (command.args && !args.length) {
+      const ArgsEmbed = new EmbedBuilder()
+        .setTitle("You didn't provide any arguments!")
+        .setColor(client.color)
+        .setDescription(stripIndent`
+          \`\`\`diff
+        - [] = optional argument
+        - <> = required argument
+        - Do NOT type these when using commands!
+          \`\`\`
+          > ${command.description}
+          `)
+        .setThumbnail(client.user.displayAvatarURL())
+        .setTimestamp()
+      if (command.usage) {
+        ArgsEmbed.addFields({
+          name: "Correct Usage:",
+          value: `\`\`\`\n${prefix}${command.name} ${command.usage}\n\`\`\``
+        })
+      }
+      return message.channel.send({ embeds: [ArgsEmbed] });
+    }
+    try {
+      command.execute(message, args, client);
+    } catch (error) {
+      client.logger(error, 'warn');
+      message.reply({
+        content: "There was an error trying to execute that command!",
+      });
+    }
+  },
+};
