@@ -1,8 +1,8 @@
 module.exports = {
-  "TOKEN": "",
-  "owners": [],
-  "Prefix": ".",
-  "DB_URL": "",
-  "Languages": [],
-  "statusURL": ""
+  "TOKEN": "", // Bot Token
+  "owners": [], // Owner IDs
+  "Prefix": ".", // Prefix of the bot
+  "DB_URL": "", // MongoDB url (though not used)
+  "Languages": [], // Language Codes
+  "statusURL": "" // Webhook URL
   }
