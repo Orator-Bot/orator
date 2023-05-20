@@ -4,6 +4,7 @@ module.exports = {
   description: "Get max members server ID",
   aliases: ["maxmember"],
   ownerOnly: true,
+  category: "dev",
   async execute(message, args, client) {
     let maxMembers = 0;
     let maxMembersServerId = '';

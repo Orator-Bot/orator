@@ -8,7 +8,7 @@ module.exports = {
   permissions: "ManageGuild",
   botPerms: "",
   ownerOnly: false,
-  beta: true,
+  category: "config",
   premium: true,
   cooldown: 0,
   async execute(message, args, client){

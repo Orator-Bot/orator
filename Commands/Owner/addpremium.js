@@ -11,6 +11,7 @@ module.exports = {
   botPerms: "",
   ownerOnly: true,
   cooldown: 0,
+  category: "dev",
   async execute(message, args, client) {
     
     const webhook = new WebhookClient({

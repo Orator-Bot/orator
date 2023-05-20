@@ -9,6 +9,7 @@ module.exports = {
   args: true,
   usage: "<code>",
   ownerOnly: true,
+  category: "dev",
   async execute(message, args, client) {
     const code = args.join(" ")
     const now = Date.now()

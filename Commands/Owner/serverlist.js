@@ -3,6 +3,7 @@ const MAX_PER_PAGE = 5;
 module.exports = {
   name: "serverlist",
   description: "Lists all/matching servers",
+  category: "dev",
   ownerOnly: true,
   async execute(message, args, client) {
     const { channel, member } = message;

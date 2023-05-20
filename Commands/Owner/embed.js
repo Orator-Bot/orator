@@ -16,6 +16,7 @@ module.exports = {
   args: true,
   usage: "<channel>",
   ownerOnly: true,
+  category: "dev",
   async execute(message, args, client) {
     const channel = message.mentions.channels.first() || message.guild.channels.cache.get(args[0]);
     if (!channel) return message.reply("Please provide a valid channel");

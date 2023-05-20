@@ -4,6 +4,7 @@ module.exports = {
   name: "reload",
   description: "Reload events, commands and database.",
   ownerOnly: true,
+  category: "dev",
   async execute(message, args, client) {
     const now = Date.now()
     await message.channel.send('Reloading Slash and Legacy Commands...')

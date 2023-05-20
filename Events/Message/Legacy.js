@@ -18,9 +18,11 @@ module.exports = {
       )
     if (message.content === `<@${message.client.user.id}>`) {
       if (client.config.owners.includes(message.author.id)) {
+        if (client.prefix.get(message.guild.id)){
         message.reply('Yes papa' + ` mera prefix hai ${client.prefix.get(message.guild.id).prefix}`)
-      } else if (message.author.id === '706863378647482410') {
-        message.reply('Yes mumma' + `mera prefix hai ${client.prefix.get(message.guild.id).prefix}`)
+        } else {
+          message.reply('Yes papa' + ` mera prefix hai \`.\``)
+        }
       } else {
         if (client.prefix.get(message.guild.id)) {
           message.reply(`The prefix of ${message.client.user.username} in this server is ${client.prefix.get(message.guild.id).prefix}`)
@@ -36,7 +38,7 @@ module.exports = {
     }
     const checkPrefix = prefix.toLowerCase();
     const prefixRegex = new RegExp(
-      `^(<@!?${client.user.id}>|${escapeRegex(checkPrefix)})\\s*`
+      `^(<@!?${client.user.id}>|${escapeRegex(checkPrefix)}|o|o )\\s*`
     );
     if (!prefixRegex.test(content.toLowerCase())) return;
     const [matchedPrefix] = content.toLowerCase().match(prefixRegex);
@@ -68,9 +70,9 @@ module.exports = {
     if (command.ownerOnly) {
       if (!client.config.owners.includes(message.author.id)) return
     }
-    if(command.beta){
+    if (command.beta) {
       const betaData = client.betadb.prepare("SELECT * FROM beta WHERE guild_id = ?").get(message.guild.id)
-      if(!betaData) return
+      if (!betaData) return
     }
     if (command.premium) {
       const data = client.premiumdb.prepare('SELECT * FROM subscriptions WHERE guild_id = ?').get(message.guild.id)

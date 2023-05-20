@@ -3,6 +3,7 @@ module.exports = {
   ownerOnly: true,
   description: "Revoke access of a premium guild",
   args: true,
+  category: "dev",
   usage: "<guild id>",
   async execute(message, args, client) {
     let guildID = args[0]

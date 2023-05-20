@@ -10,6 +10,7 @@ module.exports = {
   ownerOnly: true,
   cooldown: 0,
   beta: false,
+  category: "dev",
   async execute(message, args, client){
     const guildId = args[0]
     client.betadb.prepare("INSERT OR REPLACE INTO beta(guild_id) VALUES(?)").run(guildId)

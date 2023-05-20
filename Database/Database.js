@@ -94,19 +94,29 @@ async function loadDatabase(client) {
   const subscriptiondb = new client.database('./Database/premium.db')
   subscriptiondb.prepare('CREATE TABLE IF NOT EXISTS subscriptions (guild_id TEXT PRIMARY KEY, user_id TEXT, expires INTEGER)').run()
   client.premiumdb = subscriptiondb
-  
+
   //Webhook Channel
   const webhookDB = new client.database('./Database/webhookpanel.db')
   webhookDB.prepare("CREATE TABLE IF NOT EXISTS webhookchannel(guild_id TEXT PRIMARY KEY, channel TEXT)").run()
   client.webhookdb = webhookDB
-  
+
   //Webhook VC
   webhookDB.prepare("CREATE TABLE IF NOT EXISTS webhookvc(guild_id TEXT PRIMARY KEY, channel TEXT)").run()
-  
+
   //Beta Program DB
   const betaDB = new client.database("./Database/beta.db")
   client.betadb = betaDB
   betaDB.prepare("CREATE TABLE IF NOT EXISTS beta(guild_id TEXT PRIMARY KEY)").run()
+
+  // Changelogs DB
+  const updatesDB = new client.database("./Database/changelogs.db")
+  updatesDB.prepare("CREATE TABLE IF NOT EXISTS updates(id INTEGER PRIMARY KEY AUTOINCREMENT, date TEXT, message TEXT)").run()
+  client.updatesdb = updatesDB
+
+  // Mail DB
+  const mailsDB = new client.database("./Database/mail.db")
+  mailsDB.prepare("CREATE TABLE IF NOT EXISTS mail(id INTEGER PRIMARY KEY AUTOINCREMENT, user TEXT, date TEXT, message TEXT)").run()
+  client.maildb = mailsDB
 }
 
 module.exports = { loadDatabase }
