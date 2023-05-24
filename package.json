@@ -16,7 +16,7 @@
     "#schemas/*": "./Database/Models/*"
   },
   "scripts": {
-    "dev": "node index.js"
+    "dev": "eslint --fix . && node shard.js"
   },
   "keywords": [],
   "author": "ArijitTheDev",
@@ -44,6 +44,7 @@
     "translate-google": "latest",
     "fakeyou.js": "latest",
     "gtts": "latest",
-    "discord-hybrid-sharding": "latest"
+    "discord-hybrid-sharding": "latest",
+    "eslint": "latest"
   }
 }
