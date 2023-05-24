@@ -1,7 +1,7 @@
-const Discord = require('discord.js')
-const { inspect } = require("util")
+const Discord = require("discord.js");
+const { inspect } = require("util");
 const { EmbedBuilder } = require("discord.js");
-const sourcebin = require("sourcebin_js")
+const sourcebin = require("sourcebin_js");
 module.exports = {
   name: "eval",
   aliases: ["ev", "e"],
@@ -11,8 +11,8 @@ module.exports = {
   ownerOnly: true,
   category: "dev",
   async execute(message, args, client) {
-    const code = args.join(" ")
-    const now = Date.now()
+    const code = args.join(" ");
+    const now = Date.now();
     try {
       let evaled = eval(code);
       
@@ -31,13 +31,13 @@ module.exports = {
           .then(async (src) => {
             await message.reply({
               content: `Your evaluated result was more than 2000 characters! Here is your result: ${src.url}`
-            })
-          })
+            });
+          });
       } else {
         message.reply({
           embeds: [
             new EmbedBuilder()
-            .setTitle('📤 Output')
+            .setTitle("📤 Output")
             .setDescription(`${clean(evaled)}`)
             .setColor(client.color)
             .setFooter({ text: `Time took: ${Date.now() - now}ms`})
@@ -52,14 +52,14 @@ module.exports = {
         allowedMentions: {
           repliedUser: false
         }
-      })
+      });
     }
   }
-}
+};
 
 function clean(text) {
   if (typeof(text) === "string")
-    return text.replace(/`/g, "`" + String.fromCharCode(8203)).replace(/@/g, "@" + String.fromCharCode(8203))
+    return text.replace(/`/g, "`" + String.fromCharCode(8203)).replace(/@/g, "@" + String.fromCharCode(8203));
   else
-    return text
+    return text;
 }

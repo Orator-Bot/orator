@@ -1,4 +1,4 @@
-const { EmbedBuilder } = require("discord.js")
+const { EmbedBuilder } = require("discord.js");
 module.exports = {
   name: "resetchannel",
   description: "Reset the orator only channel.",
@@ -9,7 +9,7 @@ module.exports = {
   category: "config",
   ownerOnly: false,
   async execute(message, args, client){
-    client.resetoratorvc.run(message.guild.id)
-    message.reply('Orator channel was successfuy reset.')
+    client.resetoratorvc.run(message.guild.id);
+    message.reply("Orator channel was successfuy reset.");
   }
-}
+};

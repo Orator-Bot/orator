@@ -116,9 +116,9 @@ async function embedSetup(channel, member, client) {
   if (description) embed.setDescription(description);
   if (footer) embed.setFooter({ text: footer });
   if (color) {
-    embed.setColor(color)
+    embed.setColor(color);
   } else {
-    embed.setColor(client.color)
+    embed.setColor(client.color);
   }
 
   const buttonRow = new ActionRowBuilder().addComponents(

@@ -1,4 +1,4 @@
-const { EmbedBuilder } = require("discord.js")
+const { EmbedBuilder } = require("discord.js");
 module.exports = {
   name: "maxmembers",
   description: "Get max members server ID",
@@ -7,15 +7,15 @@ module.exports = {
   category: "dev",
   async execute(message, args, client) {
     let maxMembers = 0;
-    let maxMembersServerId = '';
+    let maxMembersServerId = "";
     client.guilds.cache.forEach((guild) => {
       if (guild.memberCount > maxMembers) {
         maxMembers = guild.memberCount;
         maxMembersServerId = guild.id;
       }
     });
-    const server = client.guilds.cache.get(maxMembersServerId)
-    const owner = await client.users.fetch(server.ownerId).then(u => u.tag)
+    const server = client.guilds.cache.get(maxMembersServerId);
+    const owner = await client.users.fetch(server.ownerId).then(u => u.tag);
     const embed = new EmbedBuilder()
     .setColor(client.color)
     .setAuthor({
@@ -36,11 +36,11 @@ module.exports = {
       inline: true
     })
     .setTimestamp()
-    .setThumbnail(server.iconURL())
+    .setThumbnail(server.iconURL());
     
     message.channel.send({
       content: `The server with most members in Cluster ${client.cluster.id}:`,
       embeds: [embed]
     });
   }
-}
+};

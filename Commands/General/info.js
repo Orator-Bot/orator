@@ -1,12 +1,12 @@
-const { EmbedBuilder } = require("discord.js")
-const { stripIndent } = require("common-tags")
+const { EmbedBuilder } = require("discord.js");
+const { stripIndent } = require("common-tags");
 module.exports = {
   name: "info",
   description: "Information about the bot.",
   category: "general",
   async execute(message, args, client) {
     const promises = [
-	client.cluster.fetchClientValues('guilds.cache.size'),
+	client.cluster.fetchClientValues("guilds.cache.size"),
 	client.cluster.broadcastEval(c => c.guilds.cache.reduce((acc, guild) => acc + guild.memberCount, 0)),
 ];
 
@@ -45,8 +45,8 @@ module.exports = {
             })
             .setThumbnail(client.user.displayAvatarURL())
             ]
-        })
+        });
       })
       .catch(console.error);
   }
-}
+};

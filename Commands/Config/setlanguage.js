@@ -6,7 +6,7 @@ const {
   ButtonBuilder,
   ButtonStyle
 } = require("discord.js");
-const { stripIndent } = require("common-tags")
+const { stripIndent } = require("common-tags");
 module.exports = {
   name: "setlanguage",
   description: "Get the list of all languages available.",
@@ -93,7 +93,7 @@ module.exports = {
         }, {
           label: "French",
           value: "fr"
-        }))
+        }));
     const selectLang2 = new ActionRowBuilder()
       .addComponents(
         new StringSelectMenuBuilder()
@@ -131,20 +131,20 @@ module.exports = {
           value: "ja"
         },
         {
-          label: 'Korean',
-          value: 'ko'
+          label: "Korean",
+          value: "ko"
         }, {
-          label: 'Latin',
-          value: 'la'
+          label: "Latin",
+          value: "la"
         }, {
-          label: 'Latvian',
-          value: 'lv'
+          label: "Latvian",
+          value: "lv"
         },
         {
           label: "Macedonian",
           value: "mk"
         })
-      )
+      );
     const selectLang3 = new ActionRowBuilder()
       .addComponents(
         new StringSelectMenuBuilder()
@@ -166,50 +166,50 @@ module.exports = {
           label: "Romanian",
           value: "ro"
         }, {
-          label: 'Russian',
-          value: 'ru'
+          label: "Russian",
+          value: "ru"
         }, {
-          label: 'Serbain',
-          value: 'sr'
+          label: "Serbain",
+          value: "sr"
         }, {
-          label: 'Slovak',
-          value: 'sk'
+          label: "Slovak",
+          value: "sk"
         }, {
-          label: 'Spanish',
-          value: 'es'
+          label: "Spanish",
+          value: "es"
         }, {
-          label: 'Spanish (Spain)',
-          value: 'es-es'
+          label: "Spanish (Spain)",
+          value: "es-es"
         }, {
-          label: 'Spanish (United States)',
-          value: 'es-us'
+          label: "Spanish (United States)",
+          value: "es-us"
         }, {
-          label: 'Swahili',
-          value: 'sw'
+          label: "Swahili",
+          value: "sw"
         }, {
-          label: 'Swedish',
-          value: 'sv'
+          label: "Swedish",
+          value: "sv"
         }, {
-          label: 'Tamil',
-          value: 'ta'
+          label: "Tamil",
+          value: "ta"
         }, {
-          label: 'Thai',
-          value: 'th'
+          label: "Thai",
+          value: "th"
         }, {
-          label: 'Turkish',
-          value: 'tr'
+          label: "Turkish",
+          value: "tr"
         }, {
-          label: 'Vietnamese',
-          value: 'vi'
+          label: "Vietnamese",
+          value: "vi"
         }, {
-          label: 'Welsh',
-          value: 'cy'
+          label: "Welsh",
+          value: "cy"
         })
-      )
+      );
     let getLangOutput;
-    const hasCustomLang = client.getlang.get(message.guild.id)
-    if (!hasCustomLang) getlangOutput = "en"
-    else getlangOutput = hasCustomLang.language
+    const hasCustomLang = client.getlang.get(message.guild.id);
+    if (!hasCustomLang) getlangOutput = "en";
+    else getlangOutput = hasCustomLang.language;
     const sentEmbed = await message.channel.send({
       embeds: [new EmbedBuilder()
       .setColor("#486FFA")
@@ -221,19 +221,19 @@ module.exports = {
         })
       ],
       components: [selectLang, selectLang2, selectLang3]
-    })
+    });
 
     const collector = await sentEmbed.createMessageComponentCollector({
       filter: i => i.user.id === message.author.id,
       time: 30000,
       componentType: ComponentType.SelectMenu
-    })
+    });
 
-    collector.on('collect', async interaction => {
+    collector.on("collect", async interaction => {
       if (!interaction.isStringSelectMenu()) return;
-      const selectedLanguage = interaction.values[0]
-      await interaction.deferUpdate()
-      client.setlang.run(interaction.guild.id, selectedLanguage)
+      const selectedLanguage = interaction.values[0];
+      await interaction.deferUpdate();
+      client.setlang.run(interaction.guild.id, selectedLanguage);
       await sentEmbed.edit({
         embeds: [
           new EmbedBuilder()
@@ -246,7 +246,7 @@ module.exports = {
           })
           ],
         components: []
-      })
-    })
+      });
+    });
   }
-}
+};

@@ -1,5 +1,5 @@
-const { EmbedBuilder, WebhookClient } = require('discord.js')
-const ms = require("ms")
+const { EmbedBuilder, WebhookClient } = require("discord.js");
+const ms = require("ms");
 module.exports = {
   name: "redeem",
   category: "general",
@@ -8,6 +8,6 @@ module.exports = {
   usage: "<code>",
   stop: true,
   async execute(message, args, client) {
-    message.reply('Redeem command is currently under maintenance.')
+    message.reply("Redeem command is currently under maintenance.");
   }
-}
+};

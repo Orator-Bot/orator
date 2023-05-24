@@ -6,8 +6,8 @@ module.exports = {
   usage: "<ID>",
   category: "dev",
   async execute(message, args, client){
-    const id = args[0]
-    client.updatesdb.prepare("DELETE FROM updates WHERE id = ?").run(id)
-    message.reply('Removed the update.')
+    const id = args[0];
+    client.updatesdb.prepare("DELETE FROM updates WHERE id = ?").run(id);
+    message.reply("Removed the update.");
   }
-}
+};

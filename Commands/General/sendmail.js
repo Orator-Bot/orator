@@ -4,7 +4,6 @@ module.exports = {
   args: true,
   usage: "<User ID> <Mail>",
   ownerOnly: true,
-  category: "dev",
   async execute(message, args, client){
     const date = new Date().toLocaleString();
     const msg = args.slice(1).join(" ");

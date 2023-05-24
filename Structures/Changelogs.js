@@ -1,6 +1,6 @@
-const { stripIndent } = require("common-tags")
+const { stripIndent } = require("common-tags");
 module.exports = {
   data: [
     "Coming soon..."
     ]
-}
+};

@@ -4,16 +4,16 @@ const {
   StringSelectMenuBuilder,
   ButtonBuilder,
   ButtonStyle
-} = require('discord.js')
+} = require("discord.js");
 module.exports = {
-  name: 'interactionCreate',
+  name: "interactionCreate",
   async execute(interaction, client) {
-    if (!['panel-change-language', 'panel-config'].includes(interaction.customId)) return;
-    if (!interaction.member.permissions.has('Administrator')) return interaction.reply({
-      content: 'You need Administrator permission to use the Buttons.',
+    if (!["panel-change-language", "panel-config"].includes(interaction.customId)) return;
+    if (!interaction.member.permissions.has("Administrator")) return interaction.reply({
+      content: "You need Administrator permission to use the Buttons.",
       ephemeral: true
-    })
-    if (interaction.customId === 'panel-change-language') {
+    });
+    if (interaction.customId === "panel-change-language") {
       const menu1 = new ActionRowBuilder()
         .addComponents(new StringSelectMenuBuilder()
           .setPlaceholder("Select a Language (A-F)")
@@ -92,7 +92,7 @@ module.exports = {
           }, {
             label: "French",
             value: "fr"
-          }))
+          }));
 
       const menu2 = new ActionRowBuilder()
         .addComponents(new StringSelectMenuBuilder()
@@ -130,19 +130,19 @@ module.exports = {
             value: "ja"
           },
           {
-            label: 'Korean',
-            value: 'ko'
+            label: "Korean",
+            value: "ko"
           }, {
-            label: 'Latin',
-            value: 'la'
+            label: "Latin",
+            value: "la"
           }, {
-            label: 'Latvian',
-            value: 'lv'
+            label: "Latvian",
+            value: "lv"
           },
           {
             label: "Macedonian",
             value: "mk"
-          }))
+          }));
 
       const menu3 = new ActionRowBuilder()
         .addComponents(new StringSelectMenuBuilder()
@@ -164,81 +164,81 @@ module.exports = {
             label: "Romanian",
             value: "ro"
           }, {
-            label: 'Russian',
-            value: 'ru'
+            label: "Russian",
+            value: "ru"
           }, {
-            label: 'Serbain',
-            value: 'sr'
+            label: "Serbain",
+            value: "sr"
           }, {
-            label: 'Slovak',
-            value: 'sk'
+            label: "Slovak",
+            value: "sk"
           }, {
-            label: 'Spanish',
-            value: 'es'
+            label: "Spanish",
+            value: "es"
           }, {
-            label: 'Spanish (Spain)',
-            value: 'es-es'
+            label: "Spanish (Spain)",
+            value: "es-es"
           }, {
-            label: 'Spanish (United States)',
-            value: 'es-us'
+            label: "Spanish (United States)",
+            value: "es-us"
           }, {
-            label: 'Swahili',
-            value: 'sw'
+            label: "Swahili",
+            value: "sw"
           }, {
-            label: 'Swedish',
-            value: 'sv'
+            label: "Swedish",
+            value: "sv"
           }, {
-            label: 'Tamil',
-            value: 'ta'
+            label: "Tamil",
+            value: "ta"
           }, {
-            label: 'Thai',
-            value: 'th'
+            label: "Thai",
+            value: "th"
           }, {
-            label: 'Turkish',
-            value: 'tr'
+            label: "Turkish",
+            value: "tr"
           }, {
-            label: 'Vietnamese',
-            value: 'vi'
+            label: "Vietnamese",
+            value: "vi"
           }, {
-            label: 'Welsh',
-            value: 'cy'
-          }))
+            label: "Welsh",
+            value: "cy"
+          }));
 
-      let currentVoice = 'en'
-      const voiceData = client.getlang.get(interaction.guild.id)
-      if (voiceData) currentVoice = voiceData.lang
+      let currentVoice = "en";
+      const voiceData = client.getlang.get(interaction.guild.id);
+      if (voiceData) currentVoice = voiceData.lang;
       await interaction.reply({
-        content: 'Change Language Embed Here',
-        embeds: [new EmbedBuilder().setTitle('Select a voice language.').setDescription('Current Voice: ' + currentVoice).setTimestamp().setColor(client.color)],
+        content: "Change Language Embed Here",
+        embeds: [new EmbedBuilder().setTitle("Select a voice language.").setDescription("Current Voice: " + currentVoice).setTimestamp().setColor(client.color)],
         components: [menu1, menu2, menu3],
         ephemeral: true
-      })
+      });
     } else {
       const ConfigEmbed = new EmbedBuilder()
         .setColor(client.color)
-        .setTitle('Panel Configuration')
-        .setDescription(`🗣️ Speaker Info: Enable or Disable Speaker Info.\n⏯️ Pause/Unpause: Pause or Resume the panel to work.`)
-        .setTimestamp()
+        .setTitle("Panel Configuration")
+        .setDescription("🗣️ Speaker Info: Enable or Disable Speaker Info.\n⏯️ Pause/Unpause: Pause or Resume the panel to work.")
+        .setTimestamp();
 
       const ConfigButtons = new ActionRowBuilder().addComponents(
         new ButtonBuilder()
-        .setLabel('Enable/Disable Speaker Info')
-        .setCustomId('conf-spinfo')
+        .setLabel("Enable/Disable Speaker Info")
+        .setCustomId("conf-spinfo")
         .setStyle(ButtonStyle.Secondary)
-        .setEmoji('🗣️'),
+        .setEmoji("🗣️"),
 
         new ButtonBuilder()
-        .setLabel('Pause / Unpause Panel')
-        .setCustomId('conf-pause-unpause')
+        .setLabel("Pause / Unpause Panel")
+        .setCustomId("conf-pause-unpause")
         .setStyle(ButtonStyle.Secondary)
-        .setEmoji('⏯️')
-      )
+        .setEmoji("⏯️")
+      );
       await interaction.reply({
         embeds: [ConfigEmbed],
         components: [ConfigButtons],
         ephemeral: true
-      })
+      });
 
     }
   }
-}
+};

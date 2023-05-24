@@ -8,14 +8,14 @@ module.exports = {
       return interaction.reply({
         content: "This Command Has Been Removed!",
         ephemeral: true,
-      })
+      });
     }
     if (command.developer && !client.config.owners.includes(interaction.user.id)) {
       return interaction.reply({
         content: "This command is only available for the Developers.",
         ephemeral: true,
-      })
+      });
     }
       await command.execute(interaction, client);
   }
-}
+};

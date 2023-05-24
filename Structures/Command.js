@@ -1,4 +1,4 @@
-const { EmbedBuilder } = require("discord.js")
+const { EmbedBuilder } = require("discord.js");
 module.exports = {
   name: "",
   description: "",
@@ -9,8 +9,7 @@ module.exports = {
   botPerms: "",
   ownerOnly: false,
   cooldown: 0,
-  beta: false,
   async execute(message, args, client){
     
   }
-}
+};

@@ -3,10 +3,10 @@ const {
   ActionRowBuilder,
   StringSelectMenuBuilder,
   ComponentType
-} = require("discord.js")
+} = require("discord.js");
 const {
   stripIndent
-} = require("common-tags")
+} = require("common-tags");
 module.exports = {
   name: "setcustomvoice",
   aliases: ["customvoice", "cv"],
@@ -15,10 +15,10 @@ module.exports = {
   premium: true,
   category: "config",
   async execute(message, args, client) {
-    let voice = 'TM:7wbtjphx8h8v'
-    const cVoice = client.customlang.get(message.guild.id)
-    if (cVoice) voice = cVoice.sound
-    const voiceData = await client.fy.models.fetch(voice)
+    let voice = "TM:7wbtjphx8h8v";
+    const cVoice = client.customlang.get(message.guild.id);
+    if (cVoice) voice = cVoice.sound;
+    const voiceData = await client.fy.models.fetch(voice);
     const Embed = new EmbedBuilder()
       .setTitle("Custom Voice List")
       .setDescription(stripIndent`
@@ -26,11 +26,11 @@ module.exports = {
       
      Select one voice from the select menu below. They are currently available voices, more voices coming very soon.
     `)
-      .setColor('#486FFA')
+      .setColor("#486FFA")
       .setFooter({
         text: `Requested by ${message.author.tag}`,
         iconURL: message.author.displayAvatarURL()
-      })
+      });
 
     const selectMenu = new ActionRowBuilder()
       .addComponents(
@@ -39,13 +39,13 @@ module.exports = {
         .setCustomId("custom-voice-menu")
         .addOptions({
           label: "Sicilian Electrician",
-          value: 'TM:7wbtjphx8h8v'
+          value: "TM:7wbtjphx8h8v"
         }, {
           label: "Donald Trump (US President)",
-          value: 'TM:aejrk66wq3ss'
+          value: "TM:aejrk66wq3ss"
         }, {
           label: "Donald Trump (Angry)",
-          value: 'TM:4v0ft4j72y2g'
+          value: "TM:4v0ft4j72y2g"
         }, {
           label: "Luigi (Super Mario)",
           value: "TM:eq4cxqfnjc2y"
@@ -57,7 +57,7 @@ module.exports = {
           value: "TM:cp6vg8m1n4qq"
         }, {
           label: "MrBeast",
-          value: 'TM:m20pfzak370d'
+          value: "TM:m20pfzak370d"
         }, {
           label: "Elon Musk",
           value: "TM:fxq6hnfc3rht"
@@ -75,10 +75,10 @@ module.exports = {
           value: "TM:wsvak9gwrdqf"
         }, {
           label: "Hulk",
-          value: 'TM:v0rhad5mddmn'
+          value: "TM:v0rhad5mddmn"
         }, {
           label: "Spider Man",
-          value: 'TM:c6dwjmqtg5jp'
+          value: "TM:c6dwjmqtg5jp"
         },{
           label: "Scooby-Doo",
           value: "TM:3fcxdr8nyvgm"
@@ -98,36 +98,36 @@ module.exports = {
           label: "Stone Cold",
           value: "TM:zd1vsgfvt9rc"
         })
-      )
+      );
 
     const sentEmbed = await message.channel.send({
       embeds: [Embed],
       components: [selectMenu]
-    })
+    });
 
     const collector = await sentEmbed.createMessageComponentCollector({
       filter: i => i.user.id === message.author.id,
       time: 30000,
       componentType: ComponentType.SelectMenu
-    })
+    });
 
-    collector.on('collect', async interaction => {
+    collector.on("collect", async interaction => {
       if (!interaction.isStringSelectMenu()) return;
-      const selectedVoice = interaction.values[0]
-      client.setcustomlang.run(interaction.guild.id, selectedVoice)
-      await interaction.deferUpdate()
+      const selectedVoice = interaction.values[0];
+      client.setcustomlang.run(interaction.guild.id, selectedVoice);
+      await interaction.deferUpdate();
       await sentEmbed.edit({
         embeds: [
           new EmbedBuilder()
           .setColor(client.color)
-          .setDescription('<:Tick:1035765324693385226>' + ' Successfully Saved New Voice')
+          .setDescription("<:Tick:1035765324693385226>" + " Successfully Saved New Voice")
           .setFooter({
             text: `Requested by ${interaction.user.tag}`,
             iconURL: interaction.user.displayAvatarURL()
           })
           ],
         components: []
-      })
-    })
+      });
+    });
   }
-}
+};

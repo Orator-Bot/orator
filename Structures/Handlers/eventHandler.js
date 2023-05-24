@@ -13,7 +13,7 @@ async function loadEvents(client) {
       const event = require(file);
       const execute = (...args) => event.execute(...args, client);
       const target = event.rest ? client.rest : client;
-      target[event.once ? "once" : "on"](event.name, execute)
+      target[event.once ? "once" : "on"](event.name, execute);
       client.events.set(event.name, execute);
       events.push({
         Event: event.name,
@@ -24,14 +24,14 @@ async function loadEvents(client) {
         Event: file.split("/").pop().slice(0, -3),
         Status: "🛑"
       });
-      client.logger(`${file.split("/").pop().slice(0,-3)} - ${error}`)
+      client.logger(`${file.split("/").pop().slice(0,-3)} - ${error}`);
     }
   }
   console.table(events, ["Event", "Status"]);
-  client.logger('Events Loaded Successfully.', 'success')
-  console.timeEnd("Events Loaded")
+  client.logger("Events Loaded Successfully.", "success");
+  console.timeEnd("Events Loaded");
 }
 
 module.exports = {
   loadEvents
-}
+};

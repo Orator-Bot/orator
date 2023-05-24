@@ -1,8 +1,8 @@
-const { EmbedBuilder } = require('discord.js')
-const { stripIndent } = require('common-tags')
+const { EmbedBuilder } = require("discord.js");
+const { stripIndent } = require("common-tags");
 module.exports = {
-  name: 'sounds',
-  description: 'Get the list of the sounds available on Orator Soundboard.',
+  name: "sounds",
+  description: "Get the list of the sounds available on Orator Soundboard.",
   category: "general",
   async execute(message, args, client){
     const Embed = new EmbedBuilder()
@@ -24,11 +24,11 @@ module.exports = {
     • Whoareyou
     `)
     .addFields({
-      name: 'Usage',
-      value: 'To use the sound, join in a voice channel and use `.soundboard <sound name>`'
+      name: "Usage",
+      value: "To use the sound, join in a voice channel and use `.soundboard <sound name>`"
     })
-    .setTimestamp()
+    .setTimestamp();
     
-    message.channel.send({ embeds: [Embed] })
+    message.channel.send({ embeds: [Embed] });
   }
-}
+};

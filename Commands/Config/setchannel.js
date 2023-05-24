@@ -4,10 +4,10 @@ const {
   ActionRowBuilder,
   ChannelSelectMenuBuilder,
   ComponentType
-} = require("discord.js")
+} = require("discord.js");
 const {
   stripIndent
-} = require("common-tags")
+} = require("common-tags");
 
 module.exports = {
   name: "setchannel",
@@ -15,9 +15,9 @@ module.exports = {
   permissions: "Administrator",
   category: "config",
   async execute(message, args, client) {
-    let currentChannel = "None"
-    const dbData = client.getoratorvc.get(message.guild.id)
-    if (dbData) currentChannel = `<#${dbData.channel}>`
+    let currentChannel = "None";
+    const dbData = client.getoratorvc.get(message.guild.id);
+    if (dbData) currentChannel = `<#${dbData.channel}>`;
 
 
     const selectmenu = new ActionRowBuilder()
@@ -27,7 +27,7 @@ module.exports = {
           customId: "select-channel",
           placeholder: "Select a Channel"
         })
-      )
+      );
 
     const sentEmbed = await message.channel.send({
       embeds: [
@@ -45,18 +45,18 @@ module.exports = {
         })
         ],
       components: [selectmenu]
-    })
+    });
 
     const collector = await sentEmbed.createMessageComponentCollector({
       filter: i => i.user.id === message.author.id,
       time: 30000
-    })
+    });
 
-    collector.on('collect', async interaction => {
+    collector.on("collect", async interaction => {
       if (!interaction.isChannelSelectMenu()) return;
-      const selectedChannel = interaction.values[0]
-      client.setoratorvc.run(message.guild.id, selectedChannel)
-      await interaction.deferUpdate()
+      const selectedChannel = interaction.values[0];
+      client.setoratorvc.run(message.guild.id, selectedChannel);
+      await interaction.deferUpdate();
       await sentEmbed.edit({
         embeds: [
           new EmbedBuilder()
@@ -65,7 +65,7 @@ module.exports = {
           .setDescription(`Successfully set <#${selectedChannel}> as the orator channel.`)
           ],
         components: []
-      })
-    })
+      });
+    });
   }
-}
+};

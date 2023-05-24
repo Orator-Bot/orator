@@ -6,14 +6,14 @@ module.exports = {
   ownerOnly: true,
   category: "dev",
   async execute(message, args, client) {
-    const now = Date.now()
-    await message.channel.send('Reloading Slash and Legacy Commands...')
+    const now = Date.now();
+    await message.channel.send("Reloading Slash and Legacy Commands...")
     .then(async (msg) => {
-      loadLegacy(client)
-      loadCommands(client)
-      await msg.edit(`👍🏻 Reloaded Commands within ${Date.now() - now}ms.`)
-    })
-    loadCommands(client)
-    loadLegacy(client)
+      loadLegacy(client);
+      loadCommands(client);
+      await msg.edit(`👍🏻 Reloaded Commands within ${Date.now() - now}ms.`);
+    });
+    loadCommands(client);
+    loadLegacy(client);
   }
-}
+};

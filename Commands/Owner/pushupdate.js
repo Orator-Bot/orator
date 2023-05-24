@@ -7,8 +7,8 @@ module.exports = {
   category: "dev",
   async execute(message, args, client){
     const date = new Date().toLocaleString();
-    const msg = args.join(" ")
-    client.updatesdb.prepare("INSERT INTO updates(date, message) VALUES(?,?)").run(date, msg)
-    message.reply('Pushed a new update.')
+    const msg = args.join(" ");
+    client.updatesdb.prepare("INSERT INTO updates(date, message) VALUES(?,?)").run(date, msg);
+    message.reply("Pushed a new update.");
   }
-}
+};

@@ -1,13 +1,13 @@
 const {
   stripIndent
-} = require("common-tags")
+} = require("common-tags");
 const {
   EmbedBuilder,
   ActionRowBuilder,
   ButtonBuilder,
   ButtonStyle,
-} = require("discord.js")
-const ms = require("ms")
+} = require("discord.js");
+const ms = require("ms");
 module.exports = {
   name: "serverinfo",
   description: "Get the premium information of the server.",
@@ -22,9 +22,9 @@ module.exports = {
         .setEmoji("<a:__:1063829203117686895>")
         .setURL("https://discord.gg/TeS3haQ4tT")
         .setStyle(ButtonStyle.Link)
-      )
+      );
 
-    const data = client.premiumdb.prepare('SELECT * FROM subscriptions WHERE guild_id = ?').get(message.guild.id)
+    const data = client.premiumdb.prepare("SELECT * FROM subscriptions WHERE guild_id = ?").get(message.guild.id);
     
     if (!data) {
       message.channel.send({
@@ -43,7 +43,7 @@ module.exports = {
       .setTimestamp()
         ],
         components: [getPremiumBtn]
-      })
+      });
     } else {
       message.channel.send({
         embeds: [
@@ -67,7 +67,7 @@ module.exports = {
           })
       .setTimestamp()
           ]
-      })
+      });
     }
   }
-}
+};

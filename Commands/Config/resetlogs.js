@@ -4,7 +4,7 @@ module.exports = {
   permissions: "Administrator",
   category: "config",
   async execute(message, args, client){
-    client.resetlogs.run(message.guild.id)
-    await message.reply("Logs channel has been reset successfully.")
+    client.resetlogs.run(message.guild.id);
+    await message.reply("Logs channel has been reset successfully.");
   }
-}
+};

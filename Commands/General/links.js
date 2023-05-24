@@ -1,14 +1,14 @@
-const { EmbedBuilder } = require('discord.js')
-const { stripIndent } = require('common-tags')
+const { EmbedBuilder } = require("discord.js");
+const { stripIndent } = require("common-tags");
 module.exports = {
-  name: 'links',
+  name: "links",
   category: "general",
-  description: 'Important Orator Links',
+  description: "Important Orator Links",
   async execute(message, args, client) {
     message.channel.send({
       embeds: [new EmbedBuilder()
       .setColor(client.color)
-      .setTitle(client.user.username + ' Links')
+      .setTitle(client.user.username + " Links")
       .setDescription(stripIndent`
                   <:dot_red:1064544315948400740> Website: https://oratorbot.xyz
                   <:dot_red:1064544315948400740> Developer Site: https://dev.oratorbot.xyz
@@ -17,6 +17,6 @@ module.exports = {
                   <:dot_red:1064544315948400740> Vote Orator: https://top.gg/bot/948637316145102868
       `)
       ]
-    })
+    });
   }
-}
+};

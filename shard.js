@@ -1,12 +1,12 @@
-const { ClusterManager } = require('discord-hybrid-sharding');
-const config = require('./config')
+const { ClusterManager } = require("discord-hybrid-sharding");
+const config = require("./config");
 
 const manager = new ClusterManager(`${__dirname}/index.js`, {
-    totalShards: 'auto',
+    totalShards: "auto",
     shardsPerClusters: 2,
-    mode: 'process',
+    mode: "process",
     token: config.TOKEN,
 });
 
-manager.on('clusterCreate', cluster => console.log(`Launched Cluster ${cluster.id}`));
+manager.on("clusterCreate", cluster => console.log(`Launched Cluster ${cluster.id}`));
 manager.spawn({ timeout: -1 });
