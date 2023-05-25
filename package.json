@@ -13,7 +13,8 @@
     "#database/*": "./Database/*",
     "#helper/*": "./Structures/Helpers/*",
     "#helpers": "./Structures/index.js",
-    "#schemas/*": "./Database/Models/*"
+    "#schemas/*": "./Database/Models/*",
+    "#endpoints/*": "./Endpoints/*"
   },
   "scripts": {
     "dev": "eslint --fix . && node shard.js"
@@ -45,6 +46,7 @@
     "fakeyou.js": "latest",
     "gtts": "latest",
     "discord-hybrid-sharding": "latest",
-    "eslint": "latest"
+    "eslint": "latest",
+    "express": "latest"
   }
 }

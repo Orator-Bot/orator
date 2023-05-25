@@ -50,16 +50,28 @@ module.exports = {
         embeds: [new EmbedBuilder().setColor(client.color).setDescription(`:white_check_mark: Added Premium Subscription to Guild ID: \`${guildId}\` with Booster User ID: [${await client.users.fetch(userId).then(async(u) => await u.tag)}](https://discord.com/users/${userId}) for ${ms(ms(time), { long: true })}`).setThumbnail(await client.guilds.fetch(guildId).then(async(g) => await g.iconURL()))]
       });
       
+      const guildName = await client.guilds.fetch(guildId).then(async g => await g.name)
+      const guildIcon = await client.guilds.fetch(guildId).then(async g => await g.iconURL())
+      const boosterTag = await client.users.fetch(userId).then(async u => await u.tag)
       const PremiumClaimedEmbed = new EmbedBuilder()
+      .setTitle(`Premium Activated in: ${guildName}`)
+      .setThumbnail(guildIcon)
+      .setDescription(`Premium Bot: ` + client.user.username)
+      .addFields({
+        name: '__Guild ID__',
+        value: `${guildId}`
+      },{
+        name: '__Booster__',
+        value: `${boosterTag}`
+      }, {
+        name: '__Expiry Time__',
+        value: `${time}`
+      })
+      .setFooter({
+        text: `Premium added by: ${message.author.tag}`,
+        iconURL: message.author.displayAvatarURL()
+      })
       .setColor(client.color)
-      .setTitle(`Added Premium by ${message.author.tag}`)
-      .setDescription(stripIndent`
-      __Guild ID__: ${guildId}
-      __Booster__: ${userId} (https://discord.com/users/${userId})
-      __Expiry Time:__ ${ms(time, { long: true })}
-      __Premium Given By__: [${message.author.tag}](https://discord.com/users/${message.author.id})
-      `)
-      .setTimestamp();
       
       await webhook.send({
         embeds: [PremiumClaimedEmbed]
