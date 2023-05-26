@@ -75,4 +75,3 @@ const connectDB = async () => {
       client.logger("Error: Unable to login into Mongo DB.", "warn");
     });
 };
-//connectDB()
