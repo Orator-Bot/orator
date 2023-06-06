@@ -16,9 +16,13 @@ const authenticate = (req, res, next) => {
   next();
 };
 app.post('/purchase', authenticate, (req, res) => {
-  const { userId, userTag, guildName, guildIcon, guildId, time } = req.body;
+  let { userId, userTag, guildName, guildIcon, guildId, time } = req.body;
   if (!userId || !guildId || !time || !userTag || !guildName || !guildIcon) {
     return res.status(400).json({ message: 'Missing required fields' });
+  }
+  
+  if(guildIcon === null){
+    guildIcon = ""
   }
   const expireTime = Date.now() + ms(time);
   const subscription = db.prepare('SELECT * FROM subscriptions WHERE guild_id = ?').get(guildId);

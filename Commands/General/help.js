@@ -39,6 +39,8 @@ module.exports = {
       <:iconDown:1029750030875234395> Text to Speech
       <:iconDown:1029750030875234395> Join to Create
       
+      ⚠️ **If you want to claim free premium for testing, join our support server and claim 6hrs free premium**
+      
       <a:right:1108683486732234802> **__Support Us__**
       <:review:1029746473560199299> [Get Premium](https://discord.gg/93dCvuY4RS)
       <:review:1029746473560199299> [Donate and support the development](https://donatebot.io/checkout/723535438186414160?buyer=842620032960823327)
@@ -56,7 +58,7 @@ module.exports = {
       const supportButton = new ButtonBuilder()
       .setLabel("Support Server")
       .setStyle(ButtonStyle.Link)
-      .setURL("https://oratorbot.xyz/support");
+      .setURL("https://discord.gg/orator");
       
       const rowMenu = new StringSelectMenuBuilder()
         .setPlaceholder("Select Category")

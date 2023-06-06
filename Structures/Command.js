@@ -9,6 +9,7 @@ module.exports = {
   botPerms: "",
   ownerOnly: false,
   cooldown: 0,
+  category: "",
   async execute(message, args, client){
     
   }
