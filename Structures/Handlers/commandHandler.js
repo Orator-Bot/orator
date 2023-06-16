@@ -1,9 +1,8 @@
 const color = require("colors");
+const { loadFiles } = require("@arijitthedev/utils");
 async function loadCommands(client) {
-  const { loadFiles } = require("#functions/fileLoader.js");
-
   let commandsArray = [];
-  
+
   const Files = await loadFiles("SlashCommands");
   Files.forEach((file) => {
     const command = require(file);
@@ -12,7 +11,7 @@ async function loadCommands(client) {
 
     client.commands.set(command.data.name, command);
     commandsArray.push(command.data.toJSON());
-    
+
   });
   client.application.commands.set(commandsArray);
   client.logger(`Loaded Slash Commands: ${client.commands.size}`, "success");

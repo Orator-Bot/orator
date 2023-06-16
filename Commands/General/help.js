@@ -14,7 +14,7 @@ module.exports = {
       const addEmojiInDescription = (c) => {
         return `<:iconDown:1029750030875234395> ${c.description || "No description provided"}`;
       };
-      
+
       const allCommands = [
      ...client.legacy.filter((c) => !c.ownerOnly).values()
      ];
@@ -42,24 +42,30 @@ module.exports = {
       ⚠️ **If you want to claim free premium for testing, join our support server and claim 6hrs free premium**
       
       <a:right:1108683486732234802> **__Support Us__**
-      <:review:1029746473560199299> [Get Premium](https://discord.gg/93dCvuY4RS)
+      <:review:1029746473560199299> [Get Premium](https://oratorbot.xyz/premium)
       <:review:1029746473560199299> [Donate and support the development](https://donatebot.io/checkout/723535438186414160?buyer=842620032960823327)
       `)
         .setThumbnail(client.user.displayAvatarURL());
-        
+
       const row = new ActionRowBuilder();
       const linkRow = new ActionRowBuilder();
-      
+
       const voteButton = new ButtonBuilder()
-      .setLabel("Vote Me")
-      .setStyle(ButtonStyle.Link)
-      .setURL("https://top.gg/bot/948637316145102868/vote");
-      
+        .setLabel("Vote Me")
+        .setStyle(ButtonStyle.Link)
+        .setURL("https://top.gg/bot/948637316145102868/vote");
+
       const supportButton = new ButtonBuilder()
-      .setLabel("Support Server")
-      .setStyle(ButtonStyle.Link)
-      .setURL("https://discord.gg/orator");
-      
+        .setLabel("Support Server")
+        .setStyle(ButtonStyle.Link)
+        .setURL("https://discord.gg/orator");
+
+      const premiumButton = new ButtonBuilder()
+          .setLabel("Get Premium")
+          .setEmoji("<a:__:1063829203117686895>")
+          .setURL("https://oratorbot.xyz/premium")
+          .setStyle(ButtonStyle.Link)
+
       const rowMenu = new StringSelectMenuBuilder()
         .setPlaceholder("Select Category")
         .setCustomId("filter-help-menu")
@@ -98,7 +104,7 @@ module.exports = {
         .setMaxValues(5);
 
       row.setComponents(rowMenu);
-      linkRow.setComponents(voteButton, supportButton);
+      linkRow.setComponents(voteButton, supportButton, premiumButton);
       const components = [row, linkRow];
 
       const rawFields = [];

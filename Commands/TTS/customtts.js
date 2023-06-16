@@ -13,6 +13,16 @@ module.exports = {
     if (text.length <= 5) return message.reply("TTS text must be greater than or equal to 5 and less than or equal to 150.");
     if (text.length >= 150) return message.reply("TTS text must be greater than or equal to 5 and less than or equal to 150.");
 
+    const allowRoleData = client.allowroledb.prepare('SELECT * FROM allowrole WHERE guild_id = ?').get(message.guild.id)
+    if (allowRoleData && allowRoleData.roles) {
+      const memberRoles = message.member.roles.cache.map((role) => role.id);
+      const allowedRoles = allowRoleData.roles.split(',');
+      const hasWhitelistedRole = allowedRoles.some((role) => memberRoles.includes(role));
+      if (!hasWhitelistedRole) {
+        return message.reply(`You must have one of the **AllowRoles** to use this command.\nUse \`.allowrole list\` to check the roles.`)
+      }
+    }
+    
     const blacklistword = client.getblacklistword.all(message.guild.id).map((row) => row.word);
     if (blacklistword.some((word) => text.toLowerCase().split(" ").includes(word))) {
       await message.delete().catch(err => {});

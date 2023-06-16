@@ -1,6 +1,6 @@
 const color = require("colors");
+const { loadFiles } = require("@arijitthedev/utils");
 async function loadLegacy(client) {
-  const { loadFiles } = require("#functions/fileLoader.js");
   const Files = await loadFiles("Commands");
   Files.forEach((file) => {
     const command = require(file);

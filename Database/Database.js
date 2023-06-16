@@ -117,6 +117,11 @@ async function loadDatabase(client) {
   const mailsDB = new client.database("./Database/mail.db")
   mailsDB.prepare("CREATE TABLE IF NOT EXISTS mail(id INTEGER PRIMARY KEY AUTOINCREMENT, user TEXT, date TEXT, message TEXT)").run()
   client.maildb = mailsDB
+
+  // AllowRole DB
+  const allowRoleDB = new client.database("./Database/allowrole.db")
+  allowRoleDB.prepare("CREATE TABLE IF NOT EXISTS allowrole (id INTEGER PRIMARY KEY AUTOINCREMENT,guild_id TEXT NOT NULL,roles TEXT NOT NULL)").run()
+  client.allowroledb = allowRoleDB
 }
 
 module.exports = { loadDatabase }

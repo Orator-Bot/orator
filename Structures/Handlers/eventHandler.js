@@ -1,4 +1,4 @@
-const { loadFiles } = require("#functions/fileLoader.js");
+const { loadFiles } = require("@arijitthedev/utils");
 const color = require("colors");
 
 async function loadEvents(client) {

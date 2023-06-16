@@ -28,7 +28,7 @@ module.exports = {
         new ButtonBuilder()
         .setLabel("Upgrade to Premium")
         .setEmoji("<a:__:1063829203117686895>")
-        .setURL("https://discord.gg/TeS3haQ4tT")
+        .setURL("https://oratorbot.xyz/premium")
         .setStyle(ButtonStyle.Link)
       );
 

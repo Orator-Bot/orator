@@ -7,6 +7,11 @@ const { logger } = require("#functions/Logger.js");
 const mongoose = require("mongoose");
 const { Player, QueryType } = require("discord-player");
 const { ClusterClient, getInfo } = require("discord-hybrid-sharding");
+const { Banner } = require("@arijitthedev/utils")
+
+// Banner
+const banner = new Banner()
+banner.create("ORATOR")
 
 //Client
 const client = new Client({

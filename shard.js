@@ -9,5 +9,6 @@ const manager = new ClusterManager(`${__dirname}/index.js`, {
     token: config.TOKEN,
 });
 
+console.clear()
 manager.on("clusterCreate", cluster => logger(`Launched Cluster ${cluster.id}`, "success"));
 manager.spawn({ timeout: -1 });

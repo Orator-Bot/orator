@@ -20,7 +20,15 @@ module.exports = {
           content: "You aren't in a voice channel.",
         });
       }
-
+      const allowRoleData = client.allowroledb.prepare('SELECT * FROM allowrole WHERE guild_id = ?').get(message.guild.id)
+      if (allowRoleData && allowRoleData.roles) {
+        const memberRoles = message.member.roles.cache.map((role) => role.id);
+        const allowedRoles = allowRoleData.roles.split(',');
+        const hasWhitelistedRole = allowedRoles.some((role) => memberRoles.includes(role));
+        if (!hasWhitelistedRole) {
+          return message.reply(`You must have one of the **AllowRoles** to use this command.\nUse \`.allowrole list\` to check the roles.`)
+        }
+      }
       const channelData = client.getoratorvc.get(message.guild.id);
       if (channelData) {
         if (voiceChannel.id !== channelData.channel) return message.reply(`I'm only allowed to join: <#${channelData.channel}>`);
