@@ -34,7 +34,7 @@ module.exports = {
         if (voiceChannel.id !== channelData.channel) return message.reply(`I'm only allowed to join: <#${channelData.channel}>`);
       }
 
-      const url = `https://arijit.site/sounds/${SoundName.toLowerCase()}.mp3`;
+      const url = `https://arijitdn.com/sounds/${SoundName.toLowerCase()}.mp3`;
 
       await client.player.play(voiceChannel, url, {
         nodeOptions: {

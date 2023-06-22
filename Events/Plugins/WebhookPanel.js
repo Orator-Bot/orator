@@ -8,6 +8,7 @@ module.exports = {
     if (message.webhookId === null) return;
     const webhookVC = client.webhookdb.prepare("SELECT * FROM webhookchannel WHERE guild_id = ?").get(message.guild.id);
     const webhookVoice = client.webhookdb.prepare("SELECT * FROM webhookvc WHERE guild_id = ?").get(message.guild.id);
+    const hooksConf = client.hooksconfdb.prepare("SELECT * FROM hooksconfig WHERE guild = ?").get(message.guild.id)
     if (!webhookVC) return;
     if (webhookVC) {
       if (message.channel.id !== webhookVC.channel) return;
@@ -25,7 +26,24 @@ module.exports = {
           slow: false,
           host: "https://translate.google.com"
         });
-        await client.player.play(message.guild.channels.cache.get(webhookVoice.channel), url);
+        if (hooksConf) {
+          if (hooksConf.autoleave === "on") {
+            await client.player.play(message.guild.channels.cache.get(webhookVoice.channel), url, {
+              nodeOptions: {
+                leaveOnEnd: true
+              }
+            })
+          }
+          else if (hooksConf.autoleave === "off") {
+            await client.player.play(message.guild.channels.cache.get(webhookVoice.channel), url, {
+              nodeOptions: {
+                leaveOnEnd: false
+              }
+            });
+          } else {
+            return message.reply("Wrong Confirmation on Hooks Panel. Try settings the `.hooksconfig autoleave` again, or join the support server.")
+          }
+        }
       } catch (error) {
         message.channel.send(`[Error]: ${error.message}`);
       }

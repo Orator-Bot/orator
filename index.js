@@ -7,7 +7,7 @@ const { logger } = require("#functions/Logger.js");
 const mongoose = require("mongoose");
 const { Player, QueryType } = require("discord-player");
 const { ClusterClient, getInfo } = require("discord-hybrid-sharding");
-const { Banner } = require("@arijitthedev/utils")
+const { Banner, handleCrashes } = require("@arijitthedev/utils")
 
 // Banner
 const banner = new Banner()
@@ -33,7 +33,6 @@ client.cluster = new ClusterClient(client);
 
 //Import Values
 const { loadEvents } = require("#root/Structures/Handlers/eventHandler.js");
-require("#root/Structures/Handlers/crashHandler.js")(client);
 const { loadDatabase } = require("#database/Database.js");
 const { FakeYouClient } = require("#handlers/FakeYou.js");
 
@@ -47,6 +46,7 @@ client.legacyCommands = new Array();
 loadEvents(client);
 loadDatabase(client);
 FakeYouClient(client);
+handleCrashes();
 
 const InitPlayer = async () => {
   const player = new Player(client);

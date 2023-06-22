@@ -7,4 +7,4 @@ async function FakeYouClient(client){
   await fy.start();
   client.fy = fy;
 }
-module.exports = { FakeYouClient };
+module.exports = { FakeYouClient }

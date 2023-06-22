@@ -8,6 +8,8 @@ module.exports = {
   name: "messageCreate",
   async execute(message) {
     const { client, guild, channel, content, author } = message;
+    const banData = client.getbanneduser.get(message.author.id)
+      if (banData) return
     const getPremiumBtn = new ActionRowBuilder()
       .addComponents(
         new ButtonBuilder()
@@ -18,8 +20,8 @@ module.exports = {
       );
     if (message.content === `<@${message.client.user.id}>`) {
       if (client.config.owners.includes(message.author.id)) {
-        if (client.prefix.get(message.guild.id)){
-        message.reply("Yes papa" + ` mera prefix hai ${client.prefix.get(message.guild.id).prefix}`);
+        if (client.prefix.get(message.guild.id)) {
+          message.reply("Yes papa" + ` mera prefix hai ${client.prefix.get(message.guild.id).prefix}`);
         } else {
           message.reply("Yes papa" + " mera prefix hai `.`");
         }

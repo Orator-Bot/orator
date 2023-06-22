@@ -40,20 +40,15 @@ module.exports = {
       return message.reply("You have a role which is blacklisted from using TTS commands.");
     }
 
-    await message.channel.send({
-        content: "Please wait for some seconds, it takes some time to generate.\nApprox: `less than 30s`."
+    const waitMsg = await message.channel.send({
+        content: "Please wait for some seconds, it takes some time to generate.\nApprox: `less than 30s`.",
+        fetchReply: true
       })
-      .then(async (m) => {
-        setTimeout(async () => {
-          await m.delete();
-        }, 6000);
-      });
-    await message.channel.sendTyping();
-
+    message.channel.sendTyping();
     let voice = "TM:7wbtjphx8h8v";
     const cVoice = client.customlang.get(message.guild.id);
     if (cVoice) voice = cVoice.sound;
-    const tts = await client.fy.makeTTS(voice, text);
+    const tts = await client.fy.makeTTS(voice, `,${text}.`);
     const ttsURL = tts.audioURL();
 
     const voiceData = await client.fy.models.fetch(voice);
@@ -97,6 +92,8 @@ module.exports = {
         ],
       components: [playButton, linkButton]
     });
+    
+    await waitMsg.delete()
 
     const collector = await sentEmbed.createMessageComponentCollector({
       filter: i => i.user.id === message.author.id,

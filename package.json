@@ -43,11 +43,12 @@
     "pro.db": "latest",
     "voucher-code-generator": "latest",
     "translate-google": "latest",
-    "fakeyou.js": "latest",
+    "fakeyou.js": "^1.1.1",
     "gtts": "latest",
     "discord-hybrid-sharding": "latest",
     "eslint": "latest",
     "express": "latest",
-    "@arijitthedev/utils": "^1.1.0"
+    "@arijitthedev/utils": "^1.2.0",
+    "dotenv": "latest"
   }
 }

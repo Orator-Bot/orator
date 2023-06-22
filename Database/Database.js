@@ -83,7 +83,7 @@ async function loadDatabase(client) {
   client.getblacklistuser = blacklistuserDB.prepare('SELECT * FROM blacklistuser WHERE guild_id = ? AND user_id = ?')
   client.resetblacklistuser = blacklistuserDB.prepare('DELETE FROM blacklistuser WHERE guild_id = ? AND user_id = ?')
 
-  // Blacklist User
+  // Blacklist Role
   const blacklistroleDB = new client.database('./Database/blacklistrole.db')
   blacklistroleDB.prepare('CREATE TABLE IF NOT EXISTS blacklistrole(guild_id TEXT, role_id TEXT, PRIMARY KEY(guild_id, role_id))').run()
   client.setblacklistrole = blacklistroleDB.prepare('INSERT OR IGNORE INTO blacklistrole(guild_id, role_id) VALUES(?,?)')
@@ -122,6 +122,18 @@ async function loadDatabase(client) {
   const allowRoleDB = new client.database("./Database/allowrole.db")
   allowRoleDB.prepare("CREATE TABLE IF NOT EXISTS allowrole (id INTEGER PRIMARY KEY AUTOINCREMENT,guild_id TEXT NOT NULL,roles TEXT NOT NULL)").run()
   client.allowroledb = allowRoleDB
+
+  //Hooks Config
+  const hooksConfDB = new client.database("./Database/hooksconfig.db")
+  hooksConfDB.prepare("CREATE TABLE IF NOT EXISTS hooksconfig(guild TEXT PRIMARY KEY, autoleave TEXT)").run()
+  client.hooksconfdb = hooksConfDB
+
+  // Ban User
+  const banDB = new client.database('./Database/bans.db')
+  banDB.prepare('CREATE TABLE IF NOT EXISTS bans(user_id TEXT)').run()
+  client.banuser = banDB.prepare('INSERT OR REPLACE INTO bans(user_id) VALUES(?)')
+  client.getbanneduser = banDB.prepare('SELECT * FROM bans WHERE user_id = ?')
+  client.unbanuser = banDB.prepare('DELETE FROM bans WHERE user_id = ?')
 }
 
 module.exports = { loadDatabase }
