@@ -53,7 +53,7 @@ module.exports = {
       const endTime = ms(subscription.expires - Date.now(), { long: true });
       return message.reply(`That guild (\`${guildId}\`) already has subscription which has ${endTime} remaining.`);
     } else {
-      client.premiumdb.prepare("INSERT INTO subscriptions(guild_id, user_id, expires) VALUES(?,?,?)").run(guildId, userId, expireTime);
+      client.premiumdb.prepare("INSERT OR REPLACE INTO subscriptions(guild_id, user_id, expires) VALUES(?,?,?)").run(guildId, userId, expireTime);
       let description = `:white_check_mark: Added Premium Subscription to Guild ID: \`${guildId}\` with Booster User ID: [${await client.users.fetch(userId).then(async(u) => await u.tag)}](https://discord.com/users/${userId}) for ${ms(ms(time), { long: true })}\n`
       try {
         const response = await fetch(endpointURL, {

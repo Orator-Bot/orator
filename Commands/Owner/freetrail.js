@@ -47,7 +47,7 @@ module.exports = {
       const endTime = ms(subscription.expires - Date.now(), { long: true });
       return message.reply(`That guild (\`${guildId}\`) already has subscription which has ${endTime} remaining.`);
     } else {
-      client.premiumdb.prepare("INSERT INTO subscriptions(guild_id, user_id, expires) VALUES(?,?,?)").run(guildId, userId, expireTime);
+      client.premiumdb.prepare("INSERT OR REPLACE INTO subscriptions(guild_id, user_id, expires) VALUES(?,?,?)").run(guildId, userId, expireTime);
       let description = `:white_check_mark: Added Free Trial to Guild ID: \`${guildId}\` for ${ms(ms(time), { long: true })}\n`
       try {
         const response = await fetch(endpointURL, {

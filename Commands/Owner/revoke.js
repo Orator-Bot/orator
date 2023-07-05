@@ -49,7 +49,7 @@ module.exports = {
       if(response.ok){
         description += `:white_check_mark: Data wiped from Payments API.\n`
       }else{
-        description += `:cross: Couldn't wipe data from Payments API, Error: ${data}`
+        description += `:x: Couldn't wipe data from Payments API, Error: ${data}`
       }
     } catch (err) {
       console.log(err)

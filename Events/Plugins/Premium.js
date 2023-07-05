@@ -19,17 +19,30 @@ module.exports = {
       for (const subscription of expiredSubscriptions) {
         await webhook.send({
           embeds: [new EmbedBuilder()
-          .setColor(client.color)
+          .setColor('Red')
           .setTitle("Premium Expired")
-          .setDescription(`__Guild ID:__ ${subscription.guild_id}\n__Booster ID__: [${subscription.user_id}](https://discord.com/users/${subscription.user_id})`)
+          .setDescription('Premium Expired Bot: Orator')
           .setTimestamp()
+          .addFields({
+            name: "Guild Name",
+            value: `${await client.guilds.fetch(subscription.guild_id).then(async g => await g.name)}`
+          }, {
+            name: "Guild ID",
+            value: `${subscription.guild_id}`
+          }, {
+            name: "Booster User",
+            value: `${await client.users.fetch(subscription.user_id).then(async u => await u.username)}`
+          }, {
+            name: "Booster ID",
+            value: `${subscription.user_id}`
+          })
           ]
         });
         await client.users.send(subscription.user_id, {
             content: `<@${subscription.user_id}> :wave:`,
             embeds: [new EmbedBuilder()
           .setColor(client.color)
-          .setDescription(`Premium expired in a Guild [${subscription.guild_id}] where you boosted earlier.`)
+          .setDescription(`Premium expired in the Guild: ${await client.guilds.fetch(subscription.guild_id).then(async g => await g.name)} (ID: ${subscription.guild_id})`)
           ],
             components: [getPremiumBtn]
           })
