@@ -43,6 +43,12 @@ module.exports = {
           } else {
             return message.reply("Wrong Confirmation on Hooks Panel. Try settings the `.hooksconfig autoleave` again, or join the support server.")
           }
+        }else{
+          await client.player.play(message.guild.channels.cache.get(webhookVoice.channel), url, {
+              nodeOptions: {
+                leaveOnEnd: false
+              }
+            });
         }
       } catch (error) {
         message.channel.send(`[Error]: ${error.message}`);

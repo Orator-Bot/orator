@@ -2,7 +2,7 @@ const Database = require("better-sqlite3")
 const color = require("colors")
 
 async function loadDatabase(client) {
-  client.logger(`Loaded SQL Database.`, 'success')
+  client.logger(`├─ Loaded SQL Database.`, 'success')
   client.database = Database
 
   //Cooldowns DB
@@ -44,12 +44,6 @@ async function loadDatabase(client) {
   customVoice.prepare("CREATE TABLE IF NOT EXISTS customLang(guild INTEGER PRIMARY KEY, sound TEXT)").run()
   client.customlang = customVoice.prepare("SELECT * FROM customLang WHERE guild = ?")
   client.setcustomlang = customVoice.prepare("INSERT OR REPLACE INTO customLang(guild, sound) VALUES(?,?)")
-
-  // Languages DB
-  const langDB = new client.database("./Database/guildLang.db")
-  langDB.prepare("CREATE TABLE IF NOT EXISTS guildLang(guild TEXT PRIMARY KEY, language TEXT)").run()
-  client.setlang = langDB.prepare("INSERT OR REPLACE INTO guildLang(guild, language) VALUES(?,?)")
-  client.getlang = langDB.prepare("SELECT * FROM guildLang WHERE guild = ?")
 
   // Logs DB
   const logsdb = new client.database("./Database/logs.db")
@@ -134,6 +128,11 @@ async function loadDatabase(client) {
   client.banuser = banDB.prepare('INSERT OR REPLACE INTO bans(user_id) VALUES(?)')
   client.getbanneduser = banDB.prepare('SELECT * FROM bans WHERE user_id = ?')
   client.unbanuser = banDB.prepare('DELETE FROM bans WHERE user_id = ?')
+
+  // Bot Statistics
+  const statisticsDB = new client.database("./Database/stats0.db")
+  statisticsDB.prepare("CREATE TABLE IF NOT EXISTS statsdb(command TEXT PRIMARY KEY, usage INTEGER DEFAULT 0)").run()
+  client.statsdb = statisticsDB
 }
 
 module.exports = { loadDatabase }

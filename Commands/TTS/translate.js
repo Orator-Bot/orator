@@ -13,6 +13,9 @@ module.exports = {
   async execute(message, args, client) {
     const language = args[0];
     const text = args.slice(1).join(" ");
+    if (text.length > 200){
+      return message.reply('Message must not exceed 200 characters.')
+    }
     if (!client.config.Languages.includes(language.toLowerCase())) return message.reply("Please use a valid language code. Get language codes using `languages`");
     try {
       const voiceChannel = message.member.voice.channel;

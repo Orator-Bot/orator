@@ -7,7 +7,8 @@ module.exports = {
   name: "ready",
   once: true,
   async execute(client) {
-    client.logger("Client is ready to use.");
+    client.logger("├─ Client is ready to use.", "success");
+    client.logger("├─ Online in " + client.guilds.cache.size + " guilds")
     const prefix = client.config.Prefix;
     client.user.setPresence({
       activities: [{

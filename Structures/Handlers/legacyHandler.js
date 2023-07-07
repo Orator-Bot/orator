@@ -7,6 +7,6 @@ async function loadLegacy(client) {
     client.legacy.set(command.name, command);
       client.legacyCommands.push(command);
   });
-  client.logger(`Loaded Prefix Commands: ${client.legacy.size}`, "success");
+  client.logger(`├─ Loaded Prefix Commands: ${client.legacy.size}`, "success");
 }
 module.exports = { loadLegacy };

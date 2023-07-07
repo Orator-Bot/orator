@@ -11,6 +11,9 @@ app.use("/status", statusRoute)
 const operationsRoute = require("#endpoints/operations.js")
 app.use("/operations", operationsRoute)
 
+const dataRoute = require("#endpoints/data.js")
+app.use("/data", dataRoute)
+
 app.listen(4018, () => {
-  logger(`[https://api.oratorbot.xyz] Started at port 4018`, "success")
+  logger(`├─ API Online: [https://api.oratorbot.xyz]:4018`, "success")
 })

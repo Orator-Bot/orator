@@ -10,6 +10,9 @@ module.exports = {
   category: "tts",
   async execute(message, args, client) {
     const text = args.join(" ");
+    if (text.length > 200) {
+      return message.reply('Message must not exceed 200 characters.')
+    }
     const allowRoleData = client.allowroledb.prepare('SELECT * FROM allowrole WHERE guild_id = ?').get(message.guild.id)
       if (allowRoleData && allowRoleData.roles) {
         const memberRoles = message.member.roles.cache.map((role) => role.id);

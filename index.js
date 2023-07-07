@@ -7,11 +7,7 @@ const { logger } = require("#functions/Logger.js");
 const mongoose = require("mongoose");
 const { Player, QueryType } = require("discord-player");
 const { ClusterClient, getInfo } = require("discord-hybrid-sharding");
-const { Banner, handleCrashes } = require("@arijitthedev/utils")
-
-// Banner
-const banner = new Banner()
-banner.create("ORATOR")
+const { handleCrashes } = require("@arijitthedev/utils")
 
 //Client
 const client = new Client({
@@ -52,7 +48,7 @@ const InitPlayer = async () => {
   const player = new Player(client);
   await player.extractors.loadDefault()
     .then(() => {
-      client.logger("Player Extractor Initiated.", "success");
+      client.logger("├─ Player Extractor Initiated.", "success");
     })
     .catch(() => {});
   client.player = player;
@@ -63,10 +59,10 @@ InitPlayer();
 //Login
 client.login(client.config.TOKEN)
   .then(() => {
-    client.logger(`Logged in the client: ${client.user.tag}`, "success");
+    client.logger(`├─ Logged in the client: ${client.user.username}`, "success");
   })
   .catch((err) => {
-    client.logger(`Error logging into the client: ${error}`, "warn");
+    client.logger(`├─ Error logging into the client: ${error}`, "warn");
   });
 
 // Database Connection
@@ -74,9 +70,9 @@ const connectDB = async () => {
   await mongoose.set("strictQuery", true);
   await mongoose.connect(client.config.DB_URL)
     .then(async () => {
-      client.logger("Loaded Mongo DB.", "success");
+      client.logger("├─ Loaded Mongo DB.", "success");
     })
     .catch((err) => {
-      client.logger("Error: Unable to login into Mongo DB.", "warn");
+      client.logger("├─ Error: Unable to login into Mongo DB.", "warn");
     });
 };

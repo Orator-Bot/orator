@@ -27,9 +27,7 @@ async function loadEvents(client) {
       client.logger(`${file.split("/").pop().slice(0,-3)} - ${error}`);
     }
   }
-  console.table(events, ["Event", "Status"]);
-  client.logger("Events Loaded Successfully.", "success");
-  console.timeEnd("Events Loaded");
+  client.logger("├─ Events Loaded Successfully.", "success");
 }
 
 module.exports = {

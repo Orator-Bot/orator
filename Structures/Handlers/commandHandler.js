@@ -14,6 +14,6 @@ async function loadCommands(client) {
 
   });
   client.application.commands.set(commandsArray);
-  client.logger(`Loaded Slash Commands: ${client.commands.size}`, "success");
+  client.logger(`├─ Loaded Slash Commands: ${client.commands.size}`, "success");
 }
 module.exports = { loadCommands };

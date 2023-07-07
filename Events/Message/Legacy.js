@@ -1,15 +1,19 @@
-const { EmbedBuilder, Collection, ChannelType, ActionRowBuilder, ButtonStyle, ButtonBuilder } = require("discord.js");
+const { EmbedBuilder, Collection, ChannelType, ActionRowBuilder, ButtonStyle, ButtonBuilder, WebhookClient } = require("discord.js");
 const { stripIndent } = require("common-tags");
 const ms = require("ms");
+const colors = require("colors")
 const escapeRegex = (string) => {
   return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 };
 module.exports = {
   name: "messageCreate",
   async execute(message) {
+    const webhook = new WebhookClient({
+      url: "https://discord.com/api/webhooks/1126901001501294692/dp1OEYSD74NNU7Mu5-X4ULOxtR68gfcluasCOHG2Jz39Q-Mm2PyIDa9HWRx4i9iGBZnZ"
+    })
     const { client, guild, channel, content, author } = message;
     const banData = client.getbanneduser.get(message.author.id)
-      if (banData) return
+    if (banData) return
     const getPremiumBtn = new ActionRowBuilder()
       .addComponents(
         new ButtonBuilder()
@@ -55,6 +59,19 @@ module.exports = {
       );
     if (!command) return;
     if (!command.description) return client.logger(`You need to pass a description in ${command.name}`, "warn");
+    if (command) {
+      const incrementCommandCount = (cmdName) => {
+        client.statsdb.prepare("INSERT INTO statsdb(command, usage) VALUES(?, 1) ON CONFLICT(command) DO UPDATE SET usage = usage + 1").run(cmdName)
+      }
+      const getTotalCommandUsage = () => {
+        return client.statsdb.prepare("SELECT SUM(usage) as total FROM statsdb").get().total || 0
+      }
+      incrementCommandCount(`${command.name}`)
+      const totalUsage = getTotalCommandUsage()
+      await webhook.send({
+        content: `→ [${totalUsage}] **${message.author.username} used:** ${command.name}\nGuild: ${message.guild.id}`
+      })
+    }
     if (command.guildOnly && message.channel.type === ChannelType.DM) {
       return message.reply({
         content: "I can't execute that command inside DMs!",

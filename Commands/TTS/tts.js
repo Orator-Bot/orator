@@ -12,8 +12,13 @@ module.exports = {
   async execute(message, args, client) {
     const text = args.join(" ");
     let langCode = "en";
+    if (text.length > 200) {
+      return message.reply('Message must not exceed 200 characters.')
+    }
     const hasCustomLang = client.getlang.get(message.guild.id);
-    if (hasCustomLang) langCode = hasCustomLang.language;
+    if (hasCustomLang) {
+      langCode = hasCustomLang.lang;
+    }
     try {
       const voiceChannel = message.member.voice.channel;
       if (!voiceChannel) {
@@ -52,9 +57,7 @@ module.exports = {
         return message.reply("You have a role which is blacklisted from using TTS commands.");
       }
 
-      const url = googleTTS.getAudioUrl(text, { lang: `${langCode}`, slow: false, host: "https://translate.google.com" });
-
-
+      const url = googleTTS.getAudioUrl(text, { lang: langCode, slow: false, host: "https://translate.google.com" });
       await client.player.play(voiceChannel, url, {
         nodeOptions: {
           leaveOnEnd: false
