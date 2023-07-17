@@ -209,7 +209,7 @@ module.exports = {
     let getLangOutput;
     const hasCustomLang = client.getlang.get(message.guild.id);
     if (!hasCustomLang) getlangOutput = "en";
-    else getlangOutput = hasCustomLang.language;
+    else getlangOutput = hasCustomLang.lang;
     const sentEmbed = await message.channel.send({
       embeds: [new EmbedBuilder()
       .setColor("#486FFA")

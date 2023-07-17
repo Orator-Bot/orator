@@ -7,13 +7,6 @@ module.exports = {
     const webhook = new WebhookClient({
       url: webhookURL
     })
-    const promises = [
-    	client.cluster.fetchClientValues("guilds.cache.size"),
-    	client.cluster.broadcastEval(c => c.guilds.cache.reduce((acc, guild) => acc + guild.memberCount, 0)),
-    ];
-    Promise.all(promises)
-      .then(async results => {
-        const totalGuilds = results[0].reduce((acc, guildCount) => acc + guildCount, 0)
         const embed = new EmbedBuilder()
           .setTitle(`Left ${guild.name}`)
           .setColor('Red')
@@ -36,6 +29,5 @@ module.exports = {
           await webhook.send({
             embeds: [embed]
           })
-      })
   }
 }

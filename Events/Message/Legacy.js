@@ -11,6 +11,9 @@ module.exports = {
     const webhook = new WebhookClient({
       url: "https://discord.com/api/webhooks/1126901001501294692/dp1OEYSD74NNU7Mu5-X4ULOxtR68gfcluasCOHG2Jz39Q-Mm2PyIDa9HWRx4i9iGBZnZ"
     })
+    const convoChannel = new WebhookClient({
+      url: "https://discord.com/api/webhooks/1126940019509166340/IabQCfFSVjcKUC0q48oGU0KcyZmquDnHoLG7wjrar-tjtRG5MIvKz71WJhpmJ65AKphl"
+    })
     const { client, guild, channel, content, author } = message;
     const banData = client.getbanneduser.get(message.author.id)
     if (banData) return
@@ -69,8 +72,22 @@ module.exports = {
       incrementCommandCount(`${command.name}`)
       const totalUsage = getTotalCommandUsage()
       await webhook.send({
-        content: `→ [${totalUsage}] **${message.author.username} used:** ${command.name}\nGuild: ${message.guild.id}`
+        content: `→ [${totalUsage}] **${message.author.username} used:** ${command.name}\nUser: ${message.author.id}\nGuild: ${message.guild.id}`
       })
+    }
+    if(command.name === "tts"){
+      const convoEmbed = new EmbedBuilder()
+      .setColor(client.color)
+      .setAuthor({
+        name: message.author.username,
+        iconURL: message.author.displayAvatarURL()
+      })
+      .setDescription(`${args.join()}`)
+      .setFooter({
+        text: `User: ${message.author.id} | Guild: ${message.guild.id}`
+      })
+      .setThumbnail(client.user.displayAvatarURL())
+     // convoChannel.send({ embeds: [convoEmbed] })
     }
     if (command.guildOnly && message.channel.type === ChannelType.DM) {
       return message.reply({

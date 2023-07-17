@@ -32,7 +32,7 @@ module.exports = {
     if (panelData.speaker === "enabled") text = speakerMember + " said " + message.content;
     let langCode = "en";
     const langData = client.getlang.get(message.guild.id);
-    if (langData) langCode = langData.language;
+    if (langData) langCode = langData.lang;
     const userVC = message.member.voice.channel;
     const botVC = message.guild.members.me.voice.channel;
     if (message.webhookId === null) {

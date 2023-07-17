@@ -1,6 +1,6 @@
 const { Player, QueryType, useQueue } = require("discord-player");
 const googleTTS = require("google-tts-api");
-const { EmbedBuilder } = require("discord.js");
+const { EmbedBuilder, ActionRowBuilder, ButtonStyle, ButtonBuilder } = require("discord.js");
 
 module.exports = {
   name: "tts",
@@ -63,8 +63,17 @@ module.exports = {
           leaveOnEnd: false
         },
       });
+      
+      const getPrm = new ButtonBuilder()
+      .setLabel("Upgrade to Premium Now")
+      .setURL("https://discord.gg/93dCvuY4RS")
+      .setStyle(ButtonStyle.Link)
+      
+      const buttons = new ActionRowBuilder().addComponents(getPrm)
+      
       await message.channel.send({
-        content: `[${langCode}] 🎙️ ${message.author.tag} said: **${text}**`
+        content: `[${langCode}] 🎙️ ${message.author.tag} said: **${text}**\n> :tada: **Sale is live!! We are giving 20% discount on lifetime and 10% discount on yearly plans**`,
+        components: [buttons]
       });
       const logsChannel = client.ttslogs.get(message.guild.id);
       if (logsChannel) {

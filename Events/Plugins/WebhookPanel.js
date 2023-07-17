@@ -19,7 +19,7 @@ module.exports = {
       const text = message.content;
       let langCode = "en";
       const langData = client.getlang.get(message.guild.id);
-      if (langData) langCode = langData.language;
+      if (langData) langCode = langData.lang;
       try {
         const url = googleTTS.getAudioUrl(text, {
           lang: langCode,

@@ -41,7 +41,7 @@ module.exports = {
     
     let langCode = "en";
     const hasCustomLang = client.getlang.get(message.guild.id);
-    if(hasCustomLang) langCode = hasCustomLang.language;
+    if(hasCustomLang) langCode = hasCustomLang.lang;
     try {
       const id = `${Math.floor((Math.random() * message.author.id) + 1)}`;
       const tts = new gtts(text, langCode);
