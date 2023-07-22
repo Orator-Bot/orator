@@ -5,10 +5,12 @@ module.exports = {
   usage: "<Update>",
   ownerOnly: true,
   category: "dev",
-  async execute(message, args, client){
+  async execute(message, args, client) {
     const date = new Date().toLocaleString();
     const msg = args.join(" ");
-    client.updatesdb.prepare("INSERT INTO updates(date, message) VALUES(?,?)").run(date, msg);
+    client.updatesdb
+      .prepare("INSERT INTO updates(date, message) VALUES(?,?)")
+      .run(date, msg);
     message.reply("Pushed a new update.");
-  }
+  },
 };

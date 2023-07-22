@@ -1,5 +1,11 @@
 const { Pagination } = require("pagination.djs");
-const { ActionRowBuilder, StringSelectMenuBuilder, EmbedBuilder, ButtonStyle, ButtonBuilder } = require("discord.js");
+const {
+  ActionRowBuilder,
+  StringSelectMenuBuilder,
+  EmbedBuilder,
+  ButtonStyle,
+  ButtonBuilder,
+} = require("discord.js");
 const { stripIndent } = require("common-tags");
 module.exports = {
   name: "devhelp",
@@ -13,23 +19,28 @@ module.exports = {
 
     if (!args.length) {
       const addEmojiInDescription = (c) => {
-        return `<:iconDown:1029750030875234395> ${c.description || "No description provided"}`;
+        return `<:iconDown:1029750030875234395> ${
+          c.description || "No description provided"
+        }`;
       };
-      
+
       const allCommands = [
-     ...client.legacy.filter((c) => c.ownerOnly).values()
-     ];
+        ...client.legacy.filter((c) => c.ownerOnly).values(),
+      ];
       const allCommandNames = allCommands.map((c) => c.name);
 
       const embed = new EmbedBuilder()
         .setTitle(`${client.user.username} - Help Command`)
         .setColor(client.color)
         .setTimestamp()
-        .setDescription(stripIndent`
+        .setDescription(
+          stripIndent`
       Get the information about the commands of ${client.user.username}
       
       <a:right:1108683486732234802> **__Information__**
-      <:dot:1108430250003660831> Total Commands: ${client.legacy.filter((c) => c.ownerOnly).size}
+      <:dot:1108430250003660831> Total Commands: ${
+        client.legacy.filter((c) => c.ownerOnly).size
+      }
       <:dot:1108430250003660831> Prefix in this server: ${prefix}
       <:dot:1108430250003660831> Use \`${prefix}help <command name>\` to get more information about the command.
       
@@ -43,29 +54,30 @@ module.exports = {
       <a:right:1108683486732234802> **__Support Us__**
       <:review:1029746473560199299> [Get Premium](https://discord.gg/93dCvuY4RS)
       <:review:1029746473560199299> [Donate and support the development](https://donatebot.io/checkout/723535438186414160?buyer=842620032960823327)
-      `)
+      `
+        )
         .setThumbnail(client.user.displayAvatarURL());
-        
+
       const row = new ActionRowBuilder();
       const linkRow = new ActionRowBuilder();
-      
+
       const voteButton = new ButtonBuilder()
-      .setLabel("Vote Me")
-      .setStyle(ButtonStyle.Link)
-      .setURL("https://top.gg/bot/948637316145102868/vote");
-      
+        .setLabel("Vote Me")
+        .setStyle(ButtonStyle.Link)
+        .setURL("https://top.gg/bot/948637316145102868/vote");
+
       const supportButton = new ButtonBuilder()
-      .setLabel("Support Server")
-      .setStyle(ButtonStyle.Link)
-      .setURL("https://oratorbot.xyz/support");
-      
+        .setLabel("Support Server")
+        .setStyle(ButtonStyle.Link)
+        .setURL("https://oratorbot.xyz/support");
+
       const rowMenu = new StringSelectMenuBuilder()
         .setPlaceholder("Select Category")
         .setCustomId("filter-help-menu")
         .setOptions({
           label: "Developer Commands",
           value: "dev",
-          emoji: "🖲️"
+          emoji: "🖲️",
         });
 
       row.setComponents(rowMenu);
@@ -93,7 +105,7 @@ module.exports = {
 
       const response = await message.channel.send({
         embeds: [embed],
-        components
+        components,
       });
       const user = message.member;
       const collector = response.createMessageComponentCollector({
@@ -120,7 +132,9 @@ module.exports = {
         }
         if (!i.isStringSelectMenu()) return;
         if (i.customId.startsWith("filter")) {
-          fields = rawFields.filter((field) => i.values.includes(field.category));
+          fields = rawFields.filter((field) =>
+            i.values.includes(field.category)
+          );
           pagination.currentPage = 1;
           const payload = pagination
             .setTitle(`${client.user.username} Help - ${i.values.join(", ")}`)
@@ -135,18 +149,24 @@ module.exports = {
       });
     } else {
       const command = args[0].toLowerCase();
-      const cmd = client.legacy.get(command) ||
+      const cmd =
+        client.legacy.get(command) ||
         client.legacy.find((c) => c.aliases && c.aliases.includes(command));
       const notFoundEmbed = new EmbedBuilder()
-        .setDescription(`<:Cross:1108433508633940068> No such commands found: \`${command}\``)
+        .setDescription(
+          `<:Cross:1108433508633940068> No such commands found: \`${command}\``
+        )
         .setColor(client.color);
 
       if (!cmd) return message.channel.send({ embeds: [notFoundEmbed] });
       if (cmd.ownerOnly) {
-        if (!client.config.owners.includes(message.author.id)) return message.channel.send({ embeds: [notFoundEmbed] });
+        if (!client.config.owners.includes(message.author.id))
+          return message.channel.send({ embeds: [notFoundEmbed] });
       }
       if (cmd.beta) {
-        const betaData = client.betadb.prepare("SELECT * FROM beta WHERE guild_id = ?").get(message.guild.id);
+        const betaData = client.betadb
+          .prepare("SELECT * FROM beta WHERE guild_id = ?")
+          .get(message.guild.id);
         if (!betaData) return message.channel.send({ embeds: [notFoundEmbed] });
       }
       if (cmd.hidden) return message.channel.send({ embeds: [notFoundEmbed] });
@@ -162,31 +182,34 @@ module.exports = {
         commandInfoEmbed.addFields({
           name: "__Usage__",
           value: `<:dot:1108430250003660831> \`${prefix}${command} ${cmd.usage}\``,
-          inline: true
+          inline: true,
         });
       }
       if (cmd.premium === true) {
         commandInfoEmbed.addFields({
           name: "__Premium__",
-          value: "<:dot:1108430250003660831> This command requires premium to use.",
-          inline: true
+          value:
+            "<:dot:1108430250003660831> This command requires premium to use.",
+          inline: true,
         });
       }
       if (cmd.beta === true) {
         commandInfoEmbed.addFields({
           name: "__Beta__",
-          value: "<:dot:1108430250003660831> This is a beta servers only command.",
-          inline: true
+          value:
+            "<:dot:1108430250003660831> This is a beta servers only command.",
+          inline: true,
         });
       }
       if (cmd.stop === true) {
         commandInfoEmbed.addFields({
           name: "__Maintenance__",
-          value: "<:dot:1108430250003660831> This command is currently under maintenance.",
-          inline: true
+          value:
+            "<:dot:1108430250003660831> This command is currently under maintenance.",
+          inline: true,
         });
       }
       message.channel.send({ embeds: [commandInfoEmbed] });
     }
-  }
+  },
 };

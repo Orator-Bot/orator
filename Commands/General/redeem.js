@@ -9,5 +9,5 @@ module.exports = {
   stop: true,
   async execute(message, args, client) {
     message.reply("Redeem command is currently under maintenance.");
-  }
+  },
 };

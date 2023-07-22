@@ -1,44 +1,57 @@
-const { EmbedBuilder, WebhookClient } = require("discord.js")
+const { EmbedBuilder, WebhookClient } = require("discord.js");
 
 module.exports = {
   name: "guildCreate",
   async execute(guild, client) {
-    const webhookURL = "https://discord.com/api/webhooks/1126035872333176852/r442DUc_uycchUhkgEEq1L4ICjppfPLOpJ1R0Lr8-MSRruL2GrT1Ad_Vmvl8gHldsD-k"
+    const webhookURL =
+      "https://discord.com/api/webhooks/1126035872333176852/r442DUc_uycchUhkgEEq1L4ICjppfPLOpJ1R0Lr8-MSRruL2GrT1Ad_Vmvl8gHldsD-k";
     const webhook = new WebhookClient({
-      url: webhookURL
-    })
+      url: webhookURL,
+    });
     const promises = [
-	client.cluster.fetchClientValues("guilds.cache.size"),
-	client.cluster.broadcastEval(c => c.guilds.cache.reduce((acc, guild) => acc + guild.memberCount, 0)),
+      client.cluster.fetchClientValues("guilds.cache.size"),
+      client.cluster.broadcastEval((c) =>
+        c.guilds.cache.reduce((acc, guild) => acc + guild.memberCount, 0)
+      ),
     ];
-    Promise.all(promises)
-      .then(async results => {
-        const totalGuilds = results[0].reduce((acc, guildCount) => acc + guildCount, 0)
-        const embed = new EmbedBuilder()
-          .setTitle(`Joined ${totalGuilds}th Guild`)
-          .setColor('Green')
-          .setThumbnail(guild.iconURL())
-          .addFields({
-            name: 'Guild Name',
-            value: `${guild.name}`
-          }, {
-            name: 'Guild ID',
-            value: `${guild.id}`
-          }, {
-            name: 'Owner',
-            value: `${await client.users.fetch(guild.ownerId).then(async u => u.username)}`
-          }, {
-            name: 'Owner ID',
-            value: `${guild.ownerId}`
-          }, {
-            name: 'Members Count',
-            value: `${guild.memberCount} members`
-          })
-          .setTimestamp()
+    Promise.all(promises).then(async (results) => {
+      const totalGuilds = results[0].reduce(
+        (acc, guildCount) => acc + guildCount,
+        0
+      );
+      const embed = new EmbedBuilder()
+        .setTitle(`Joined ${totalGuilds}th Guild`)
+        .setColor("Green")
+        .setThumbnail(guild.iconURL())
+        .addFields(
+          {
+            name: "Guild Name",
+            value: `${guild.name}`,
+          },
+          {
+            name: "Guild ID",
+            value: `${guild.id}`,
+          },
+          {
+            name: "Owner",
+            value: `${await client.users
+              .fetch(guild.ownerId)
+              .then(async (u) => u.username)}`,
+          },
+          {
+            name: "Owner ID",
+            value: `${guild.ownerId}`,
+          },
+          {
+            name: "Members Count",
+            value: `${guild.memberCount} members`,
+          }
+        )
+        .setTimestamp();
 
-        await webhook.send({
-          embeds: [embed]
-        })
-      })
-  }
-}
+      await webhook.send({
+        embeds: [embed],
+      });
+    });
+  },
+};

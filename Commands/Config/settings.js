@@ -10,54 +10,54 @@ module.exports = {
   ownerOnly: false,
   cooldown: 0,
   category: "config",
-  async execute(message, args, client){
-    const dot = "<:dot:1108430250003660831>"
+  async execute(message, args, client) {
+    const dot = "<:dot:1108430250003660831>";
     const embed = new EmbedBuilder()
       .setTitle(`Guild Settings - ${message.guild.name}`)
       .setThumbnail(message.guild.iconURL())
       .setColor(client.color)
-      .setTimestamp()
-    const prefixData = client.prefix.get(message.guild.id)
-    if(prefixData){
+      .setTimestamp();
+    const prefixData = client.prefix.get(message.guild.id);
+    if (prefixData) {
       embed.addFields({
         name: `${dot} **Prefix:**`,
-        value: `\`${prefixData.prefix}\`\n`
-      })
+        value: `\`${prefixData.prefix}\`\n`,
+      });
     } else {
       embed.addFields({
         name: `${dot} **Prefix:**`,
-        value: `\`.\``
-      })
+        value: `\`.\``,
+      });
     }
-    
-    const panelData = client.getpanel.get(message.guild.id)
-    if(panelData){
+
+    const panelData = client.getpanel.get(message.guild.id);
+    if (panelData) {
       embed.addFields({
         name: `${dot} **Panel:**`,
-        value: `<#${panelData.channel}>`
-      })
+        value: `<#${panelData.channel}>`,
+      });
     }
-    
-    const oratorVCData = client.getoratorvc.get(message.guild.id)
-    if(oratorVCData){
+
+    const oratorVCData = client.getoratorvc.get(message.guild.id);
+    if (oratorVCData) {
       embed.addFields({
         name: `${dot} **Orator VC:**`,
-        value: `<#${oratorVCData.channel}>`
-      })
+        value: `<#${oratorVCData.channel}>`,
+      });
     }
-    
-    const customTTSData = client.customlang.get(message.guild.id)
-    if(customTTSData){
+
+    const customTTSData = client.customlang.get(message.guild.id);
+    if (customTTSData) {
       const voice = customTTSData.sound;
       const voiceData = await client.fy.models.fetch(voice);
       embed.addFields({
         name: `${dot} **Custom Voice:**`,
-        value: `${voiceData.title}`
-      })
+        value: `${voiceData.title}`,
+      });
     }
-    
+
     message.channel.send({
-      embeds: [embed]
-    })
-  }
+      embeds: [embed],
+    });
+  },
 };

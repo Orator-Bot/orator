@@ -1,7 +1,15 @@
-const { EmbedBuilder, Collection, ChannelType, ActionRowBuilder, ButtonStyle, ButtonBuilder, WebhookClient } = require("discord.js");
+const {
+  EmbedBuilder,
+  Collection,
+  ChannelType,
+  ActionRowBuilder,
+  ButtonStyle,
+  ButtonBuilder,
+  WebhookClient,
+} = require("discord.js");
 const { stripIndent } = require("common-tags");
 const ms = require("ms");
-const colors = require("colors")
+const colors = require("colors");
 const escapeRegex = (string) => {
   return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 };
@@ -9,34 +17,42 @@ module.exports = {
   name: "messageCreate",
   async execute(message) {
     const webhook = new WebhookClient({
-      url: "https://discord.com/api/webhooks/1126901001501294692/dp1OEYSD74NNU7Mu5-X4ULOxtR68gfcluasCOHG2Jz39Q-Mm2PyIDa9HWRx4i9iGBZnZ"
-    })
+      url: "https://discord.com/api/webhooks/1126901001501294692/dp1OEYSD74NNU7Mu5-X4ULOxtR68gfcluasCOHG2Jz39Q-Mm2PyIDa9HWRx4i9iGBZnZ",
+    });
     const convoChannel = new WebhookClient({
-      url: "https://discord.com/api/webhooks/1126940019509166340/IabQCfFSVjcKUC0q48oGU0KcyZmquDnHoLG7wjrar-tjtRG5MIvKz71WJhpmJ65AKphl"
-    })
+      url: "https://discord.com/api/webhooks/1126940019509166340/IabQCfFSVjcKUC0q48oGU0KcyZmquDnHoLG7wjrar-tjtRG5MIvKz71WJhpmJ65AKphl",
+    });
     const { client, guild, channel, content, author } = message;
-    const banData = client.getbanneduser.get(message.author.id)
-    if (banData) return
-    const getPremiumBtn = new ActionRowBuilder()
-      .addComponents(
-        new ButtonBuilder()
+    const banData = client.getbanneduser.get(message.author.id);
+    if (banData) return;
+    const getPremiumBtn = new ActionRowBuilder().addComponents(
+      new ButtonBuilder()
         .setLabel("Upgrade to Premium")
         .setEmoji("<a:__:1063829203117686895>")
         .setURL("https://discord.gg/TeS3haQ4tT")
         .setStyle(ButtonStyle.Link)
-      );
+    );
     if (message.content === `<@${message.client.user.id}>`) {
       if (client.config.owners.includes(message.author.id)) {
         if (client.prefix.get(message.guild.id)) {
-          message.reply("Yes papa" + ` mera prefix hai ${client.prefix.get(message.guild.id).prefix}`);
+          message.reply(
+            "Yes papa" +
+              ` mera prefix hai ${client.prefix.get(message.guild.id).prefix}`
+          );
         } else {
           message.reply("Yes papa" + " mera prefix hai `.`");
         }
       } else {
         if (client.prefix.get(message.guild.id)) {
-          message.reply(`The prefix of ${message.client.user.username} in this server is ${client.prefix.get(message.guild.id).prefix}`);
+          message.reply(
+            `The prefix of ${message.client.user.username} in this server is ${
+              client.prefix.get(message.guild.id).prefix
+            }`
+          );
         } else {
-          message.reply(`The prefix of ${message.client.user.username} in this server is ${client.config.Prefix}`);
+          message.reply(
+            `The prefix of ${message.client.user.username} in this server is ${client.config.Prefix}`
+          );
         }
       }
     }
@@ -61,33 +77,45 @@ module.exports = {
         (cmd) => cmd.aliases && cmd.aliases.includes(commandName)
       );
     if (!command) return;
-    if (!command.description) return client.logger(`You need to pass a description in ${command.name}`, "warn");
+    if (!command.description)
+      return client.logger(
+        `You need to pass a description in ${command.name}`,
+        "warn"
+      );
     if (command) {
       const incrementCommandCount = (cmdName) => {
-        client.statsdb.prepare("INSERT INTO statsdb(command, usage) VALUES(?, 1) ON CONFLICT(command) DO UPDATE SET usage = usage + 1").run(cmdName)
-      }
+        client.statsdb
+          .prepare(
+            "INSERT INTO statsdb(command, usage) VALUES(?, 1) ON CONFLICT(command) DO UPDATE SET usage = usage + 1"
+          )
+          .run(cmdName);
+      };
       const getTotalCommandUsage = () => {
-        return client.statsdb.prepare("SELECT SUM(usage) as total FROM statsdb").get().total || 0
-      }
-      incrementCommandCount(`${command.name}`)
-      const totalUsage = getTotalCommandUsage()
+        return (
+          client.statsdb
+            .prepare("SELECT SUM(usage) as total FROM statsdb")
+            .get().total || 0
+        );
+      };
+      incrementCommandCount(`${command.name}`);
+      const totalUsage = getTotalCommandUsage();
       await webhook.send({
-        content: `→ [${totalUsage}] **${message.author.username} used:** ${command.name}\nUser: ${message.author.id}\nGuild: ${message.guild.id}`
-      })
+        content: `→ [${totalUsage}] **${message.author.username} used:** ${command.name}\nUser: ${message.author.id}\nGuild: ${message.guild.id}`,
+      });
     }
-    if(command.name === "tts"){
+    if (command.name === "tts") {
       const convoEmbed = new EmbedBuilder()
-      .setColor(client.color)
-      .setAuthor({
-        name: message.author.username,
-        iconURL: message.author.displayAvatarURL()
-      })
-      .setDescription(`${args.join()}`)
-      .setFooter({
-        text: `User: ${message.author.id} | Guild: ${message.guild.id}`
-      })
-      .setThumbnail(client.user.displayAvatarURL())
-     // convoChannel.send({ embeds: [convoEmbed] })
+        .setColor(client.color)
+        .setAuthor({
+          name: message.author.username,
+          iconURL: message.author.displayAvatarURL(),
+        })
+        .setDescription(`${args.join()}`)
+        .setFooter({
+          text: `User: ${message.author.id} | Guild: ${message.guild.id}`,
+        })
+        .setThumbnail(client.user.displayAvatarURL());
+      // convoChannel.send({ embeds: [convoEmbed] })
     }
     if (command.guildOnly && message.channel.type === ChannelType.DM) {
       return message.reply({
@@ -95,32 +123,40 @@ module.exports = {
       });
     }
     if (command.stop) {
-      return message.channel.send({
-        embeds: [
-          new EmbedBuilder()
-          .setColor(client.color)
-          .setDescription(":x: This Command is Under Maintenance!")
-          ]
-      }).catch((err) => {});
+      return message.channel
+        .send({
+          embeds: [
+            new EmbedBuilder()
+              .setColor(client.color)
+              .setDescription(":x: This Command is Under Maintenance!"),
+          ],
+        })
+        .catch((err) => {});
     }
     if (command.ownerOnly) {
       if (!client.config.owners.includes(message.author.id)) return;
     }
     if (command.beta) {
-      const betaData = client.betadb.prepare("SELECT * FROM beta WHERE guild_id = ?").get(message.guild.id);
+      const betaData = client.betadb
+        .prepare("SELECT * FROM beta WHERE guild_id = ?")
+        .get(message.guild.id);
       if (!betaData) return;
     }
     if (command.premium) {
-      const data = client.premiumdb.prepare("SELECT * FROM subscriptions WHERE guild_id = ?").get(message.guild.id);
+      const data = client.premiumdb
+        .prepare("SELECT * FROM subscriptions WHERE guild_id = ?")
+        .get(message.guild.id);
       if (!data) {
         return message.channel.send({
           embeds: [
             new EmbedBuilder()
-            .setTitle("You discovered a Premium Command")
-            .setDescription(`${command.name} is a Premium only command. ${message.guild.name} doesn't have any Premium Subscriptions, Click on the button below to get Premium.`)
-            .setColor(client.color)
-            ],
-          components: [getPremiumBtn]
+              .setTitle("You discovered a Premium Command")
+              .setDescription(
+                `${command.name} is a Premium only command. ${message.guild.name} doesn't have any Premium Subscriptions, Click on the button below to get Premium.`
+              )
+              .setColor(client.color),
+          ],
+          components: [getPremiumBtn],
         });
       }
     }
@@ -129,8 +165,12 @@ module.exports = {
       const cooldownAmount = command.cooldown;
       const cooldown = client.cooldown.get(command.name, message.author.id);
       if (cooldown && cooldown.timestamp + cooldownAmount > now) {
-        const timeLeft = (cooldown.timestamp + cooldownAmount - now);
-        return message.reply(`You're on a cooldown. Please wait ${ms(Math.floor(timeLeft), {long: true })} before reusing the \`${command.name}\` command.`);
+        const timeLeft = cooldown.timestamp + cooldownAmount - now;
+        return message.reply(
+          `You're on a cooldown. Please wait ${ms(Math.floor(timeLeft), {
+            long: true,
+          })} before reusing the \`${command.name}\` command.`
+        );
       } else {
         client.setcooldown.run(command.name, message.author.id, now);
       }
@@ -138,17 +178,23 @@ module.exports = {
     if (command.botPerms) {
       if (!message.guild.members.me.permissions.has(command.botPerms || [])) {
         let noBotPerms = new EmbedBuilder()
-          .setDescription(`:x: | I Don't have ${command.botPerms} Permission To Use The Command!`)
+          .setDescription(
+            `:x: | I Don't have ${command.botPerms} Permission To Use The Command!`
+          )
           .setColor(client.color);
-        return message.channel.send({
-          embeds: [noBotPerms]
-        }).catch((err) => {});
+        return message.channel
+          .send({
+            embeds: [noBotPerms],
+          })
+          .catch((err) => {});
       }
     }
     if (command.permissions) {
       if (!message.member.permissions.has(command.permissions || [])) {
         let noPerms = new EmbedBuilder()
-          .setDescription(`:x: | You Don't Have ${command.permissions} Permission To Use The Command!`)
+          .setDescription(
+            `:x: | You Don't Have ${command.permissions} Permission To Use The Command!`
+          )
           .setColor(client.color);
         return message.reply({ embeds: [noPerms] }).catch((err) => {});
       }
@@ -157,20 +203,22 @@ module.exports = {
       const ArgsEmbed = new EmbedBuilder()
         .setTitle("You didn't provide any arguments!")
         .setColor(client.color)
-        .setDescription(stripIndent`
+        .setDescription(
+          stripIndent`
           \`\`\`diff
         - [] = optional argument
         - <> = required argument
         - Do NOT type these when using commands!
           \`\`\`
           > ${command.description}
-          `)
+          `
+        )
         .setThumbnail(client.user.displayAvatarURL())
         .setTimestamp();
       if (command.usage) {
         ArgsEmbed.addFields({
           name: "Correct Usage:",
-          value: `\`\`\`\n${prefix}${command.name} ${command.usage}\n\`\`\``
+          value: `\`\`\`\n${prefix}${command.name} ${command.usage}\n\`\`\``,
         });
       }
       return message.channel.send({ embeds: [ArgsEmbed] });

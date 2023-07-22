@@ -9,9 +9,9 @@ module.exports = {
   botPerms: "",
   ownerOnly: false,
   category: "admin",
-  async execute(message, args, client){
+  async execute(message, args, client) {
     const word = args[0];
     client.resetblacklistword.run(message.guild.id, word);
-    message.reply("Unblacklisted the word: \`" + word + "\`.");
-  }
+    message.reply("Unblacklisted the word: `" + word + "`.");
+  },
 };

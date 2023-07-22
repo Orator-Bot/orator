@@ -1,7 +1,7 @@
 const color = require("colors");
 const { inspect } = require("util");
 module.exports = (client) => {
-  client.on("error",(err) => {
+  client.on("error", (err) => {
     console.log(color.green("[CLIENT ERROR]"));
     console.log(color.brightMagenta("---------------------"));
     console.log(err);

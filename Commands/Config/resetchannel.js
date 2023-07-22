@@ -8,8 +8,8 @@ module.exports = {
   botPerms: "",
   category: "config",
   ownerOnly: false,
-  async execute(message, args, client){
+  async execute(message, args, client) {
     client.resetoratorvc.run(message.guild.id);
     message.reply("Orator channel was successfuy reset.");
-  }
+  },
 };

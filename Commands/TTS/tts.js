@@ -1,6 +1,11 @@
 const { Player, QueryType, useQueue } = require("discord-player");
 const googleTTS = require("google-tts-api");
-const { EmbedBuilder, ActionRowBuilder, ButtonStyle, ButtonBuilder } = require("discord.js");
+const {
+  EmbedBuilder,
+  ActionRowBuilder,
+  ButtonStyle,
+  ButtonBuilder,
+} = require("discord.js");
 
 module.exports = {
   name: "tts",
@@ -13,7 +18,7 @@ module.exports = {
     const text = args.join(" ");
     let langCode = "en";
     if (text.length > 200) {
-      return message.reply('Message must not exceed 200 characters.')
+      return message.reply("Message must not exceed 200 characters.");
     }
     const hasCustomLang = client.getlang.get(message.guild.id);
     if (hasCustomLang) {
@@ -26,73 +31,105 @@ module.exports = {
           content: "You aren't in a voice channel.",
         });
       }
-      const allowRoleData = client.allowroledb.prepare('SELECT * FROM allowrole WHERE guild_id = ?').get(message.guild.id)
+      const allowRoleData = client.allowroledb
+        .prepare("SELECT * FROM allowrole WHERE guild_id = ?")
+        .get(message.guild.id);
       if (allowRoleData && allowRoleData.roles) {
         const memberRoles = message.member.roles.cache.map((role) => role.id);
-        const allowedRoles = allowRoleData.roles.split(',');
-        const hasWhitelistedRole = allowedRoles.some((role) => memberRoles.includes(role));
+        const allowedRoles = allowRoleData.roles.split(",");
+        const hasWhitelistedRole = allowedRoles.some((role) =>
+          memberRoles.includes(role)
+        );
         if (!hasWhitelistedRole) {
-          return message.reply(`You must have one of the **AllowRoles** to use this command.\nUse \`.allowrole list\` to check the roles.`)
+          return message.reply(
+            `You must have one of the **AllowRoles** to use this command.\nUse \`.allowrole list\` to check the roles.`
+          );
         }
       }
       const channelData = client.getoratorvc.get(message.guild.id);
       if (channelData) {
-        if (voiceChannel.id !== channelData.channel) return message.reply(`I'm only allowed to join: <#${channelData.channel}>`);
+        if (voiceChannel.id !== channelData.channel)
+          return message.reply(
+            `I'm only allowed to join: <#${channelData.channel}>`
+          );
       }
 
-      const blacklistword = client.getblacklistword.all(message.guild.id).map((row) => row.word);
-      if (blacklistword.some((word) => text.toLowerCase().split(" ").includes(word))) {
-        await message.delete().catch(err => {});
-        return message.channel.send(`${message.author}, you have used a blacklisted word which isn't allowed.`);
+      const blacklistword = client.getblacklistword
+        .all(message.guild.id)
+        .map((row) => row.word);
+      if (
+        blacklistword.some((word) =>
+          text.toLowerCase().split(" ").includes(word)
+        )
+      ) {
+        await message.delete().catch((err) => {});
+        return message.channel.send(
+          `${message.author}, you have used a blacklisted word which isn't allowed.`
+        );
       }
 
-      const blacklistuser = client.getblacklistuser.all(message.guild.id, message.author.id).map((row) => row.user_id);
+      const blacklistuser = client.getblacklistuser
+        .all(message.guild.id, message.author.id)
+        .map((row) => row.user_id);
       if (blacklistuser.includes(message.author.id)) {
-        return message.channel.send(`${message.author}, you are blacklisted from using the TTS commands of the bot by a server admin. Contact the admins to remove the blacklist.`);
+        return message.channel.send(
+          `${message.author}, you are blacklisted from using the TTS commands of the bot by a server admin. Contact the admins to remove the blacklist.`
+        );
       }
 
       const roleIds = message.member.roles.cache.map((role) => role.id);
-      const blacklistrole = client.getblacklistrole.all(message.guild.id).map((row) => row.role_id);
+      const blacklistrole = client.getblacklistrole
+        .all(message.guild.id)
+        .map((row) => row.role_id);
       if (blacklistrole.some((roleId) => roleIds.includes(roleId))) {
-        return message.reply("You have a role which is blacklisted from using TTS commands.");
+        return message.reply(
+          "You have a role which is blacklisted from using TTS commands."
+        );
       }
 
-      const url = googleTTS.getAudioUrl(text, { lang: langCode, slow: false, host: "https://translate.google.com" });
+      const url = googleTTS.getAudioUrl(text, {
+        lang: langCode,
+        slow: false,
+        host: "https://translate.google.com",
+      });
       await client.player.play(voiceChannel, url, {
         nodeOptions: {
-          leaveOnEnd: false
+          leaveOnEnd: false,
         },
       });
-      
+
       const getPrm = new ButtonBuilder()
-      .setLabel("Upgrade to Premium Now")
-      .setURL("https://discord.gg/93dCvuY4RS")
-      .setStyle(ButtonStyle.Link)
-      
-      const buttons = new ActionRowBuilder().addComponents(getPrm)
-      
+        .setLabel("Upgrade to Premium Now")
+        .setURL("https://discord.gg/93dCvuY4RS")
+        .setStyle(ButtonStyle.Link);
+
+      const buttons = new ActionRowBuilder().addComponents(getPrm);
+
       await message.channel.send({
         content: `[${langCode}] 🎙️ ${message.author.tag} said: **${text}**\n> :tada: **Sale is live!! We are giving 20% discount on lifetime and 10% discount on yearly plans**`,
-        components: [buttons]
+        components: [buttons],
       });
       const logsChannel = client.ttslogs.get(message.guild.id);
       if (logsChannel) {
-        const sendchannel = await message.guild.channels.cache.get(logsChannel.channel).send({
-            embeds: [new EmbedBuilder()
-            .setTitle("TTS Command")
-            .setAuthor({
-                name: message.author.tag + " used TTS command.",
-                iconURL: message.author.displayAvatarURL()
-              })
-            .setDescription(`\`\`\`${text}\`\`\``)
-            .setColor("#486FFA")
-            .setTimestamp()
-            .setFooter({
-                text: `Used in #${message.channel.name}`
-              })
-          ]
+        const sendchannel = await message.guild.channels.cache
+          .get(logsChannel.channel)
+          .send({
+            embeds: [
+              new EmbedBuilder()
+                .setTitle("TTS Command")
+                .setAuthor({
+                  name: message.author.tag + " used TTS command.",
+                  iconURL: message.author.displayAvatarURL(),
+                })
+                .setDescription(`\`\`\`${text}\`\`\``)
+                .setColor("#486FFA")
+                .setTimestamp()
+                .setFooter({
+                  text: `Used in #${message.channel.name}`,
+                }),
+            ],
           })
-          .catch(err => {});
+          .catch((err) => {});
       }
     } catch (err) {
       console.log(err);
@@ -100,5 +137,5 @@ module.exports = {
         content: `[${client.time}]: TTS Timed-Out. Try again!`,
       });
     }
-  }
+  },
 };

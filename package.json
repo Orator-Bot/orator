@@ -1,6 +1,6 @@
 {
-  "name": "Orator",
-  "version": "4.0.0",
+  "name": "orator",
+  "version": "5.0.0",
   "description": "Orator is a Text to Speech Discord Bot.",
   "main": "index.js",
   "imports": {
@@ -33,7 +33,6 @@
     "sourcebin_js": "latest",
     "moment": "latest",
     "pagination.djs": "latest",
-    "mongoose": "latest",
     "google-tts-api": "latest",
     "discord-player": "latest",
     "@discordjs/opus": "latest",
@@ -48,7 +47,6 @@
     "discord-hybrid-sharding": "latest",
     "eslint": "latest",
     "express": "latest",
-    "@arijitthedev/utils": "^1.2.0",
     "dotenv": "latest"
   }
 }

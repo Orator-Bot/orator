@@ -8,15 +8,17 @@ module.exports = {
   once: true,
   async execute(client) {
     client.logger("├─ Client is ready to use.", "success");
-    client.logger("├─ Online in " + client.guilds.cache.size + " guilds")
+    client.logger("├─ Online in " + client.guilds.cache.size + " guilds");
     const prefix = client.config.Prefix;
     client.user.setPresence({
-      activities: [{
-        name: prefix + "help | Cluster: " + client.cluster.id,
-        type: ActivityType.Listening
-      }]
+      activities: [
+        {
+          name: prefix + "help | Cluster: " + client.cluster.id,
+          type: ActivityType.Listening,
+        },
+      ],
     });
     loadCommands(client);
     loadLegacy(client);
-  }
+  },
 };

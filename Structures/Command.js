@@ -10,7 +10,5 @@ module.exports = {
   ownerOnly: false,
   cooldown: 0,
   category: "",
-  async execute(message, args, client){
-    
-  }
+  async execute(message, args, client) {},
 };

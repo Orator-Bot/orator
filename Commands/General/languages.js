@@ -1,27 +1,24 @@
-const {
-  EmbedBuilder
-} = require("discord.js");
+const { EmbedBuilder } = require("discord.js");
 const { stripIndent } = require("common-tags");
 const { Pagination } = require("pagination.djs");
 module.exports = {
-    name: "languages",
-    description: "Get the list of available languages",
-    category: "general",
-    async execute(message, args, client) {
-      const pagination = new Pagination(message, {
-        firstEmoji: "<:ff:1040299724936323156>",
-        prevEmoji: "<:leftarrow:1040299945497993287>",
-        nextEmoji: "<:rightarrow:1040299958760374356>",
-        lastEmoji: "<:ff2:1040299740245524480>",
-        limit: 1,
-        idle: 30000
-      });
+  name: "languages",
+  description: "Get the list of available languages",
+  category: "general",
+  async execute(message, args, client) {
+    const pagination = new Pagination(message, {
+      firstEmoji: "<:ff:1040299724936323156>",
+      prevEmoji: "<:leftarrow:1040299945497993287>",
+      nextEmoji: "<:rightarrow:1040299958760374356>",
+      lastEmoji: "<:ff2:1040299740245524480>",
+      limit: 1,
+      idle: 30000,
+    });
 
-      const embed1 = new EmbedBuilder()
-        .setAuthor({ name: "Languages", iconURL: client.user.displayAvatarURL() })
-        .setColor(client.color)
-        .setThumbnail(client.user.displayAvatarURL())
-        .setDescription(stripIndent`
+    const embed1 = new EmbedBuilder()
+      .setAuthor({ name: "Languages", iconURL: client.user.displayAvatarURL() })
+      .setColor(client.color)
+      .setThumbnail(client.user.displayAvatarURL()).setDescription(stripIndent`
       **__English__**
       en: English
       en-US: English (US)
@@ -29,11 +26,10 @@ module.exports = {
       en-IN: English (India)
       en-AU: English (Australia)
       `);
-      const embed2 = new EmbedBuilder()
-        .setAuthor({ name: "Languages", iconURL: client.user.displayAvatarURL() })
-        .setColor("Blurple")
-        .setThumbnail(client.user.displayAvatarURL())
-        .setDescription(stripIndent`
+    const embed2 = new EmbedBuilder()
+      .setAuthor({ name: "Languages", iconURL: client.user.displayAvatarURL() })
+      .setColor("Blurple")
+      .setThumbnail(client.user.displayAvatarURL()).setDescription(stripIndent`
       **__A-D__**
       af: African
       ar: Arabic
@@ -45,11 +41,10 @@ module.exports = {
       da: Danish
       nl: Dutch
       `);
-      const embed3 = new EmbedBuilder()
-        .setAuthor({ name: "Languages", iconURL: client.user.displayAvatarURL() })
-        .setColor("Blurple")
-        .setThumbnail(client.user.displayAvatarURL())
-        .setDescription(stripIndent`
+    const embed3 = new EmbedBuilder()
+      .setAuthor({ name: "Languages", iconURL: client.user.displayAvatarURL() })
+      .setColor("Blurple")
+      .setThumbnail(client.user.displayAvatarURL()).setDescription(stripIndent`
       **__E-H__**
       fil: Filipino
       fr: French
@@ -59,11 +54,10 @@ module.exports = {
       hi: Hindi
       hu: Hungarian
       `);
-      const embed4 = new EmbedBuilder()
-        .setAuthor({ name: "Languages", iconURL: client.user.displayAvatarURL() })
-        .setColor("Blurple")
-        .setThumbnail(client.user.displayAvatarURL())
-        .setDescription(stripIndent`
+    const embed4 = new EmbedBuilder()
+      .setAuthor({ name: "Languages", iconURL: client.user.displayAvatarURL() })
+      .setColor("Blurple")
+      .setThumbnail(client.user.displayAvatarURL()).setDescription(stripIndent`
       **__I-L__**
       is: Icelandic
       id: Indonesian
@@ -71,11 +65,10 @@ module.exports = {
       kn: Kannada
       ko: Korean
       `);
-      const embed5 = new EmbedBuilder()
-        .setAuthor({ name: "Languages", iconURL: client.user.displayAvatarURL() })
-        .setColor("Blurple")
-        .setThumbnail(client.user.displayAvatarURL())
-        .setDescription(stripIndent`
+    const embed5 = new EmbedBuilder()
+      .setAuthor({ name: "Languages", iconURL: client.user.displayAvatarURL() })
+      .setColor("Blurple")
+      .setThumbnail(client.user.displayAvatarURL()).setDescription(stripIndent`
       **__M-P__**
       ms: Malay
       ml: Malayalam
@@ -84,11 +77,10 @@ module.exports = {
       pl: Polish
       pt: Portuguese
       `);
-      const embed6 = new EmbedBuilder()
-        .setAuthor({ name: "Languages", iconURL: client.user.displayAvatarURL() })
-        .setColor("Blurple")
-        .setThumbnail(client.user.displayAvatarURL())
-        .setDescription(stripIndent`
+    const embed6 = new EmbedBuilder()
+      .setAuthor({ name: "Languages", iconURL: client.user.displayAvatarURL() })
+      .setColor("Blurple")
+      .setThumbnail(client.user.displayAvatarURL()).setDescription(stripIndent`
       **__R-Z__**
       ro: Romanian
       ru: Russian
@@ -104,7 +96,7 @@ module.exports = {
       uk: Ukranian
       vi- Vietnamese
       `);
-      pagination.setEmbeds([embed1, embed2, embed3, embed4, embed5, embed6]);
-      await pagination.send();
-    }
-  };
+    pagination.setEmbeds([embed1, embed2, embed3, embed4, embed5, embed6]);
+    await pagination.send();
+  },
+};

@@ -17,19 +17,19 @@ async function loadEvents(client) {
       client.events.set(event.name, execute);
       events.push({
         Event: event.name,
-        Status: "🟢"
+        Status: "🟢",
       });
     } catch (error) {
       events.push({
         Event: file.split("/").pop().slice(0, -3),
-        Status: "🛑"
+        Status: "🛑",
       });
-      client.logger(`${file.split("/").pop().slice(0,-3)} - ${error}`);
+      client.logger(`${file.split("/").pop().slice(0, -3)} - ${error}`);
     }
   }
   client.logger("├─ Events Loaded Successfully.", "success");
 }
 
 module.exports = {
-  loadEvents
+  loadEvents,
 };

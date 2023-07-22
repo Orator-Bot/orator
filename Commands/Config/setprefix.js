@@ -8,6 +8,8 @@ module.exports = {
   async execute(message, args, client) {
     const newPrefix = args[0];
     client.setprefix.run(message.guild.id, newPrefix);
-    message.channel.send("Changed the prefix of **" + message.guild.name + "** " + newPrefix);
-  }
+    message.channel.send(
+      "Changed the prefix of **" + message.guild.name + "** " + newPrefix
+    );
+  },
 };

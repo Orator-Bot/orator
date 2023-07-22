@@ -1,5 +1,7 @@
 const colors = require("colors");
-const time = new Date().toLocaleTimeString("en-IN", { timeZone: "Asia/Kolkata" });
+const time = new Date().toLocaleTimeString("en-IN", {
+  timeZone: "Asia/Kolkata",
+});
 
 function logger(message, level = "info") {
   let color;
@@ -18,9 +20,7 @@ function logger(message, level = "info") {
       color = "brightWhite";
   }
 
- console.log(
-   colors[color](`[${time}] `) + message
-   );
+  console.log(colors[color](`[${time}] `) + message);
 }
 
 module.exports = { logger };

@@ -5,7 +5,7 @@ async function loadLegacy(client) {
   Files.forEach((file) => {
     const command = require(file);
     client.legacy.set(command.name, command);
-      client.legacyCommands.push(command);
+    client.legacyCommands.push(command);
   });
   client.logger(`├─ Loaded Prefix Commands: ${client.legacy.size}`, "success");
 }

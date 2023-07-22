@@ -1,4 +1,10 @@
-const { EmbedBuilder, ButtonBuilder, ActionRowBuilder, ButtonStyle, ComponentType } = require("discord.js");
+const {
+  EmbedBuilder,
+  ButtonBuilder,
+  ActionRowBuilder,
+  ButtonStyle,
+  ComponentType,
+} = require("discord.js");
 const MAX_PER_PAGE = 5;
 module.exports = {
   name: "serverlist",
@@ -29,12 +35,16 @@ module.exports = {
 
     let components = [];
     components.push(
-      new ButtonBuilder().setCustomId("prevBtn").setEmoji("⬅️").setStyle(ButtonStyle.Secondary).setDisabled(true),
       new ButtonBuilder()
-      .setCustomId("nxtBtn")
-      .setEmoji("➡️")
-      .setStyle(ButtonStyle.Secondary)
-      .setDisabled(totalPages === 1)
+        .setCustomId("prevBtn")
+        .setEmoji("⬅️")
+        .setStyle(ButtonStyle.Secondary)
+        .setDisabled(true),
+      new ButtonBuilder()
+        .setCustomId("nxtBtn")
+        .setEmoji("➡️")
+        .setStyle(ButtonStyle.Secondary)
+        .setDisabled(totalPages === 1)
     );
     let buttonsRow = new ActionRowBuilder().addComponents(components);
 
@@ -45,7 +55,11 @@ module.exports = {
       const embed = new EmbedBuilder()
         .setColor(client.color)
         .setAuthor({ name: "List of servers" })
-        .setFooter({ text: `${match ? "Matched" : "Total"} Servers: ${total} • Page ${currentPage} of ${totalPages}` });
+        .setFooter({
+          text: `${
+            match ? "Matched" : "Total"
+          } Servers: ${total} • Page ${currentPage} of ${totalPages}`,
+        });
 
       const fields = [];
       for (let i = start; i < end; i++) {
@@ -60,18 +74,26 @@ module.exports = {
 
       let components = [];
       components.push(
-        ButtonBuilder.from(buttonsRow.components[0]).setDisabled(currentPage === 1),
-        ButtonBuilder.from(buttonsRow.components[1]).setDisabled(currentPage === totalPages)
+        ButtonBuilder.from(buttonsRow.components[0]).setDisabled(
+          currentPage === 1
+        ),
+        ButtonBuilder.from(buttonsRow.components[1]).setDisabled(
+          currentPage === totalPages
+        )
       );
       buttonsRow = new ActionRowBuilder().addComponents(components);
       return embed;
     };
 
     const embed = buildEmbed();
-    const sentMsg = await channel.send({ embeds: [embed], components: [buttonsRow] });
+    const sentMsg = await channel.send({
+      embeds: [embed],
+      components: [buttonsRow],
+    });
 
     const collector = channel.createMessageComponentCollector({
-      filter: (reaction) => reaction.user.id === member.id && reaction.message.id === sentMsg.id,
+      filter: (reaction) =>
+        reaction.user.id === member.id && reaction.message.id === sentMsg.id,
       idle: 1 * 10000,
       dispose: true,
       componentType: ComponentType.Button,

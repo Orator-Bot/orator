@@ -1,9 +1,9 @@
 {
-    "rules": {
-        "semi": ["error", "always"],
-        "quotes": ["error", "double"]
-    },
-    "parserOptions": {
-  "ecmaVersion": "latest"
-}
+  "rules": {
+    "semi": ["error", "always"],
+    "quotes": ["error", "double"]
+  },
+  "parserOptions": {
+    "ecmaVersion": "latest"
+  }
 }

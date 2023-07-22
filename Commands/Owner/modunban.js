@@ -10,12 +10,12 @@ module.exports = {
   ownerOnly: true,
   cooldown: 0,
   category: "dev",
-  async execute(message, args, client){
-    let userId = args[0]
-    const mentionedMember = message.mentions.members.first()
-    if(mentionedMember) userId = mentionedMember.user.id
-    
-    client.unbanuser.run(userId)
-    message.reply('Unbanned user.')
-  }
+  async execute(message, args, client) {
+    let userId = args[0];
+    const mentionedMember = message.mentions.members.first();
+    if (mentionedMember) userId = mentionedMember.user.id;
+
+    client.unbanuser.run(userId);
+    message.reply("Unbanned user.");
+  },
 };

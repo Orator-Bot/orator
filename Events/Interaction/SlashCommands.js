@@ -1,4 +1,9 @@
-const { Client, CommandInteraction, InteractionType, EmbedBuilder } = require("discord.js");
+const {
+  Client,
+  CommandInteraction,
+  InteractionType,
+  EmbedBuilder,
+} = require("discord.js");
 module.exports = {
   name: "interactionCreate",
   async execute(interaction, client) {
@@ -10,12 +15,15 @@ module.exports = {
         ephemeral: true,
       });
     }
-    if (command.developer && !client.config.owners.includes(interaction.user.id)) {
+    if (
+      command.developer &&
+      !client.config.owners.includes(interaction.user.id)
+    ) {
       return interaction.reply({
         content: "This command is only available for the Developers.",
         ephemeral: true,
       });
     }
-      await command.execute(interaction, client);
-  }
+    await command.execute(interaction, client);
+  },
 };

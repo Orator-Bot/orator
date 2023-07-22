@@ -9,5 +9,5 @@ module.exports = {
     const word = args[0];
     client.setblacklistword.run(message.guild.id, word);
     await message.reply(`Marked \`${word}\` as Blacklisted.`);
-  }
+  },
 };

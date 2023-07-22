@@ -6,20 +6,28 @@ module.exports = {
   category: "general",
   async execute(message, args, client) {
     const promises = [
-	client.cluster.fetchClientValues("guilds.cache.size"),
-	client.cluster.broadcastEval(c => c.guilds.cache.reduce((acc, guild) => acc + guild.memberCount, 0)),
-];
-
+      client.cluster.fetchClientValues("guilds.cache.size"),
+      client.cluster.broadcastEval((c) =>
+        c.guilds.cache.reduce((acc, guild) => acc + guild.memberCount, 0)
+      ),
+    ];
 
     Promise.all(promises)
-      .then(results => {
-        const totalGuilds = results[0].reduce((acc, guildCount) => acc + guildCount, 0);
-        const totalMembers = results[1].reduce((acc, memberCount) => acc + memberCount, 0);
+      .then((results) => {
+        const totalGuilds = results[0].reduce(
+          (acc, guildCount) => acc + guildCount,
+          0
+        );
+        const totalMembers = results[1].reduce(
+          (acc, memberCount) => acc + memberCount,
+          0
+        );
         return message.channel.send({
           embeds: [
             new EmbedBuilder()
-            .setTitle("Orator Bot")
-            .setDescription(stripIndent`
+              .setTitle("Orator Bot")
+              .setDescription(
+                stripIndent`
             Orator is a Text to Speech generator Discord Bot using which you can generate your own text to speech in 50+ languages or AI generated custom voices. You can also get the TTS file and have the full right to use them.
             
             <:__:1086867519706505267> Current Shard: ${message.guild.shardId}
@@ -37,16 +45,17 @@ module.exports = {
             
             __Important Links__
             Use \`.links\` to see the links related to Orator Bot.
-            `)
-            .setColor(client.color)
-            .setFooter({
-              text: `Requested by ${message.author.tag}`,
-              iconURL: message.author.displayAvatarURL()
-            })
-            .setThumbnail(client.user.displayAvatarURL())
-            ]
+            `
+              )
+              .setColor(client.color)
+              .setFooter({
+                text: `Requested by ${message.author.tag}`,
+                iconURL: message.author.displayAvatarURL(),
+              })
+              .setThumbnail(client.user.displayAvatarURL()),
+          ],
         });
       })
       .catch(console.error);
-  }
+  },
 };
