@@ -14,10 +14,10 @@ module.exports = {
   async execute(message, args, client) {
     const queue = useQueue(message.guild.id);
     if (!queue)
-      return message.reply({ content: `❌ | I am **not** in a voice channel` });
+      return message.reply({ content: "❌ | I am **not** in a voice channel" });
     await queue.delete();
     return await message.reply({
-      content: `:white_check_mark: | I have **successfully disconnected** from the voice channel`,
+      content: ":white_check_mark: | I have **successfully disconnected** from the voice channel",
     });
   },
 };

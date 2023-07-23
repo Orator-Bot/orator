@@ -26,7 +26,7 @@ module.exports = {
     } else {
       embed.addFields({
         name: `${dot} **Prefix:**`,
-        value: `\`.\``,
+        value: "`.`",
       });
     }
 

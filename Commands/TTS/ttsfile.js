@@ -24,7 +24,7 @@ module.exports = {
       );
       if (!hasWhitelistedRole) {
         return message.reply(
-          `You must have one of the **AllowRoles** to use this command.\nUse \`.allowrole list\` to check the roles.`
+          "You must have one of the **AllowRoles** to use this command.\nUse `.allowrole list` to check the roles."
         );
       }
     }

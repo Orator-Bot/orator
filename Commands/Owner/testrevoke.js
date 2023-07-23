@@ -37,7 +37,7 @@ module.exports = {
     const prevembed = new EmbedBuilder()
       .setColor(client.color)
       .setTitle(`Revoke Subscriptions: ${guildName}`)
-      .setDescription(`<a:roti_loading:1105371517652578364> Revoking Datas...`)
+      .setDescription("<a:roti_loading:1105371517652578364> Revoking Datas...")
       .setTimestamp()
       .setThumbnail(guildIcon);
 
@@ -48,24 +48,24 @@ module.exports = {
       .prepare("DELETE FROM subscriptions WHERE guild_id = ? AND user_id = ?")
       .run(guildID, message.author.id);
 
-    description += `:white_check_mark: Revoked Subscription.\n`;
+    description += ":white_check_mark: Revoked Subscription.\n";
     client.resetpanel.run(guildID);
-    description += `:white_check_mark: Revoked Panel DB.\n`;
+    description += ":white_check_mark: Revoked Panel DB.\n";
     client.resetlogs.run(guildID);
-    description += `:white_check_mark: Revoked Logs DB.\n`;
+    description += ":white_check_mark: Revoked Logs DB.\n";
     client.webhookdb
       .prepare("DELETE FROM webhookchannel WHERE guild_id = ?")
       .run(guildID);
-    description += `:white_check_mark: Revoked Webhook Channel DB.\n`;
+    description += ":white_check_mark: Revoked Webhook Channel DB.\n";
     client.webhookdb
       .prepare("DELETE FROM webhookvc WHERE guild_id = ?")
       .run(guildID);
-    description += `:white_check_mark: Revoked Webhook VC DB.\n`;
+    description += ":white_check_mark: Revoked Webhook VC DB.\n";
     const blacklistRoleDB = new client.database("./Database/blacklistrole.db");
     blacklistRoleDB
       .prepare("DELETE FROM blacklistrole WHERE guild_id = ?")
       .run(guildID);
-    description += `:white_check_mark: Revoked Blacklist Role DB.\n`;
+    description += ":white_check_mark: Revoked Blacklist Role DB.\n";
 
     const nextembed = new EmbedBuilder()
       .setColor(client.color)

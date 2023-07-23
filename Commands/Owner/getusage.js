@@ -26,7 +26,7 @@ module.exports = {
         });
       } else {
         message.channel.send({
-          content: `No such commands are available.`,
+          content: "No such commands are available.",
         });
       }
     }

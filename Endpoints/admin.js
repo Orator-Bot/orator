@@ -40,7 +40,7 @@ app.post("/purchase", authenticate, (req, res) => {
   const PremiumClaimedEmbed = new EmbedBuilder()
     .setTitle(`Premium Activated in: ${guildName}`)
     .setThumbnail(guildIcon)
-    .setDescription(`Premium Bot: Orator`)
+    .setDescription("Premium Bot: Orator")
     .addFields(
       {
         name: "__Guild ID__",
@@ -56,7 +56,7 @@ app.post("/purchase", authenticate, (req, res) => {
       }
     )
     .setFooter({
-      text: `Used Purchase API`,
+      text: "Used Purchase API",
     })
     .setColor("#486FFA");
 

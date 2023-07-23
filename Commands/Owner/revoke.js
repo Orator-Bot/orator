@@ -25,7 +25,7 @@ module.exports = {
     const prevembed = new EmbedBuilder()
       .setColor(client.color)
       .setTitle(`Revoke Subscriptions: ${guildName}`)
-      .setDescription(`<a:roti_loading:1105371517652578364> Revoking Datas...`)
+      .setDescription("<a:roti_loading:1105371517652578364> Revoking Datas...")
       .setTimestamp()
       .setThumbnail(guildIcon);
     const msg = await message.channel.send({ embeds: [prevembed] });
@@ -34,24 +34,24 @@ module.exports = {
     client.premiumdb
       .prepare("DELETE FROM subscriptions WHERE guild_id = ?")
       .run(guildID);
-    description += `:white_check_mark: Revoked Subscription.\n`;
+    description += ":white_check_mark: Revoked Subscription.\n";
     client.resetpanel.run(guildID);
-    description += `:white_check_mark: Revoked Panel DB.\n`;
+    description += ":white_check_mark: Revoked Panel DB.\n";
     client.resetlogs.run(guildID);
-    description += `:white_check_mark: Revoked Logs DB.\n`;
+    description += ":white_check_mark: Revoked Logs DB.\n";
     client.webhookdb
       .prepare("DELETE FROM webhookchannel WHERE guild_id = ?")
       .run(guildID);
-    description += `:white_check_mark: Revoked Webhook Channel DB.\n`;
+    description += ":white_check_mark: Revoked Webhook Channel DB.\n";
     client.webhookdb
       .prepare("DELETE FROM webhookvc WHERE guild_id = ?")
       .run(guildID);
-    description += `:white_check_mark: Revoked Webhook VC DB.\n`;
+    description += ":white_check_mark: Revoked Webhook VC DB.\n";
     const blacklistRoleDB = new client.database("./Database/blacklistrole.db");
     blacklistRoleDB
       .prepare("DELETE FROM blacklistrole WHERE guild_id = ?")
       .run(guildID);
-    description += `:white_check_mark: Revoked Blacklist Role DB.\n`;
+    description += ":white_check_mark: Revoked Blacklist Role DB.\n";
     try {
       const response = await fetch(endpointURL, {
         method: "POST",
@@ -59,7 +59,7 @@ module.exports = {
       });
       const data = await response.json();
       if (response.ok) {
-        description += `:white_check_mark: Data wiped from Payments API.\n`;
+        description += ":white_check_mark: Data wiped from Payments API.\n";
       } else {
         description += `:x: Couldn't wipe data from Payments API, Error: ${data}`;
       }

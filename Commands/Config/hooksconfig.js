@@ -27,7 +27,7 @@ module.exports = {
               )
               .run(message.guild.id, "on");
             message.channel.send(
-              `:white_check_mark: Successfully set the **autoleave config** to **ON**.`
+              ":white_check_mark: Successfully set the **autoleave config** to **ON**."
             );
           } else if (action === "off") {
             client.hooksconfdb
@@ -36,7 +36,7 @@ module.exports = {
               )
               .run(message.guild.id, "off");
             message.channel.send(
-              `:white_check_mark: Successfully set the **autoleave config** to **OFF**.`
+              ":white_check_mark: Successfully set the **autoleave config** to **OFF**."
             );
           } else {
             return message.reply(

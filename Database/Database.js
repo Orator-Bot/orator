@@ -2,7 +2,7 @@ const Database = require("better-sqlite3");
 const color = require("colors");
 
 async function loadDatabase(client) {
-  client.logger(`├─ Loaded SQL Database.`, "success");
+  client.logger("├─ Loaded SQL Database.", "success");
   client.database = Database;
 
   //Cooldowns DB

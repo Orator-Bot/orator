@@ -68,7 +68,7 @@ module.exports = {
         });
         const data = await response.json();
         if (response.ok) {
-          description += `:white_check_mark: Payment API: Done.\n`;
+          description += ":white_check_mark: Payment API: Done.\n";
         } else {
           description += `❌ Payment API: Error- ${data}`;
         }
@@ -100,7 +100,7 @@ module.exports = {
       const PremiumClaimedEmbed = new EmbedBuilder()
         .setTitle(`Free Trial Activated in: ${guildName}`)
         .setThumbnail(guildIcon)
-        .setDescription(`Premium Bot: ` + client.user.username)
+        .setDescription("Premium Bot: " + client.user.username)
         .addFields(
           {
             name: "__Guild ID__",

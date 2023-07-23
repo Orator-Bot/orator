@@ -40,7 +40,7 @@ module.exports = {
       )
       .addFields({
         name: "Think carefully and click on a button:",
-        value: `<:Tick:1035765324693385226> **Confirm** - To confirm and cancel the premium.\n<:Cross:1108433508633940068> **Cancel** - To abort this process.`,
+        value: "<:Tick:1035765324693385226> **Confirm** - To confirm and cancel the premium.\n<:Cross:1108433508633940068> **Cancel** - To abort this process.",
       })
       .setFooter({
         text: `Action Taken by ${message.author.tag}`,
@@ -67,7 +67,7 @@ module.exports = {
               new EmbedBuilder()
                 .setColor(client.color)
                 .setDescription(
-                  `<:Tick:1035765324693385226> Cancellation Process Started...`
+                  "<:Tick:1035765324693385226> Cancellation Process Started..."
                 ),
             ],
           });

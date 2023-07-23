@@ -117,7 +117,7 @@ module.exports = {
         break;
       default: {
         return message.reply(
-          `Invalid Usage! \`.allowrole <add | remove | list>\`.`
+          "Invalid Usage! `.allowrole <add | remove | list>`."
         );
       }
     }

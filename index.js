@@ -8,6 +8,7 @@ const fs = require("fs");
 const { logger } = require("#functions/Logger.js");
 const { Player, QueryType } = require("discord-player");
 const { ClusterClient, getInfo } = require("discord-hybrid-sharding");
+const { handleCrashes } = require("@arijitthedev/utils");
 
 const client = new Client({
   intents: [
