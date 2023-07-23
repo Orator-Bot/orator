@@ -258,6 +258,33 @@ async function loadDatabase(client) {
     )
     .run();
   client.statsdb = statisticsDB;
+
+  // Panel API Config
+  const panelAPIDB = new client.database("./Database/panelapi.db");
+  panelAPIDB
+    .prepare(
+      "CREATE TABLE IF NOT EXISTS panelapi(guild TEXT PRIMARY KEY, api TEXT)"
+    )
+    .run();
+  client.panelapi = panelAPIDB;
+
+  // Male API
+  const maleAPI = new client.database("./Database/maleapi.db");
+  maleAPI
+    .prepare(
+      "CREATE TABLE IF NOT EXISTS maleapi(guild TEXT PRIMARY KEY, voice TEXT)"
+    )
+    .run();
+  client.maleapi = maleAPI;
+
+  // Voice Role
+  const voiceRoleDB = new client.database("./Database/voicerole.db");
+  voiceRoleDB
+    .prepare(
+      "CREATE TABLE IF NOT EXISTS voicerole(guild TEXT PRIMARY KEY, role TEXT)"
+    )
+    .run();
+  client.voicerole = voiceRoleDB;
 }
 
 module.exports = { loadDatabase };

@@ -45,9 +45,13 @@ module.exports = {
         .setLabel("Config")
         .setCustomId("panel-config")
         .setStyle(ButtonStyle.Primary)
-        .setEmoji("<:settings:1029746486155673640>")
+        .setEmoji("<:settings:1029746486155673640>"),
+      new ButtonBuilder()
+        .setCustomId("panel-change-voice")
+        .setStyle(ButtonStyle.Primary)
+        .setLabel("Change Voice")
+        .setEmoji("<:ysp_VoiceChannel:1125096371180028095>")
     );
-
     try {
       await channel.send({
         embeds: [panelEmbed],

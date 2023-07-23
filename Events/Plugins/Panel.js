@@ -1,4 +1,5 @@
 const ms = require("ms");
+const axios = require("axios");
 const googleTTS = require("google-tts-api");
 const { Player, QueryType } = require("discord-player");
 const {
@@ -19,18 +20,10 @@ module.exports = {
     const panelData = client.getpanel.get(message.guild.id);
     if (!panelData) return;
     if (message.channel.id !== panelData.channel) return;
+    const panelAPI = client.panelapi
+      .prepare("SELECT * FROM panelapi WHERE guild = ?")
+      .get(message.guild.id);
     let text = message.content;
-    await message.delete().catch(() => {
-      message
-        .reply(
-          "Error: Can't delete the message due to **Missing Permissions**."
-        )
-        .then(async (m) => {
-          setTimeout(async () => {
-            await m.delete();
-          }, 3000);
-        });
-    });
     let speakerMember;
     if (message.webhookId === null) {
       speakerMember = message.author.username;
@@ -123,29 +116,151 @@ module.exports = {
             });
       }
     }
-    const url = googleTTS.getAudioUrl(text, {
+    let url = googleTTS.getAudioUrl(text, {
       lang: langCode,
       slow: false,
       host: "https://translate.google.com",
     });
-    await client.player.play(userVC, url, {
-      nodeOptions: {
-        leaveOnEnd: false,
-      },
-    });
-    await message.channel
-      .send(`[${message.author.tag} said]: ${text}`)
-      .then(async (m) => {
-        setTimeout(async () => {
-          await m.delete();
-        }, 5000);
+    if (!panelAPI) {
+      await client.player.play(userVC, url, {
+        nodeOptions: {
+          leaveOnEnd: false,
+        },
       });
+      await message.channel
+        .send(`[${message.author.username} said]: ${text}`)
+        .then(async (m) => {
+          await message.delete().catch(() => {
+            message
+              .reply(
+                "Error: Can't delete the message due to **Missing Permissions**."
+              )
+              .then(async (m) => {
+                setTimeout(async () => {
+                  await m.delete();
+                }, 3000);
+              });
+          });
+          setTimeout(async () => {
+            await m.delete();
+          }, 5000);
+        });
+    } else {
+      switch (panelAPI.api) {
+        case "unreal":
+          {
+            const waitMessage = await message.channel.send(
+              "Please wait for the Voice Generation to complete. [API: Orator Male Voice]"
+            );
+            await message.channel.sendTyping();
+            const apiKey = client.config.UnrealToken;
+            const apiUrl = "https://api.v5.unrealspeech.com/speech";
+            const voiceId = "male-0";
+            const requestData = {
+              Text: text,
+              VoiceId: voiceId,
+              OutputFormat: "uri",
+              AudioFormat: "mp3",
+              Bitrate: "192k",
+            };
+            const headers = {
+              Authorization: `Bearer ${apiKey}`,
+              "Content-Type": "application/json",
+            };
+            axios
+              .post(apiUrl, requestData, { headers })
+              .then(async (response) => {
+                url = response.data;
+                await client.player.play(userVC, url, {
+                  nodeOptions: {
+                    leaveOnEnd: false,
+                  },
+                });
+                await message.channel
+                  .send(
+                    `(**\`Orator Male API\`**) [${message.author.username} said]: ${text}`
+                  )
+                  .then(async (m) => {
+                    await waitMessage.delete();
+                    await message.delete().catch(() => {
+                      message
+                        .reply(
+                          "Error: Can't delete the message due to **Missing Permissions**."
+                        )
+                        .then(async (m) => {
+                          setTimeout(async () => {
+                            await m.delete();
+                          }, 3000);
+                        });
+                    });
+                    await setTimeout(async () => {
+                      await m.delete();
+                    }, 5000);
+                  });
+              });
+          }
+          break;
+        case "fakeyou":
+          {
+            const fakeyouWaitMessage = await message.channel.send(
+              "Please wait until the voice gets generated. It may take some time. [API: Fakeyou]"
+            );
+            await message.channel.sendTyping();
+            let voice = "TM:7wbtjphx8h8v";
+            const cVoice = client.customlang.get(message.guild.id);
+            if (cVoice) voice = cVoice.sound;
+            const ttsURL = await client.fy.makeTTS(voice, `,${text}.`);
+            url = ttsURL.audioURL();
+            await client.player.play(userVC, url, {
+              nodeOptions: {
+                leaveOnEnd: false,
+              },
+            });
+            await message.channel
+              .send(
+                `(**\`Fakeyou API\`**) [${message.author.username} said]: ${text}`
+              )
+              .then(async (m) => {
+                await fakeyouWaitMessage.delete();
+                await setTimeout(async () => {
+                  await m.delete();
+                }, 5000);
+              });
+          }
+          break;
+        default: {
+          await client.player.play(userVC, url, {
+            nodeOptions: {
+              leaveOnEnd: false,
+            },
+          });
+          await message.channel
+            .send(`[${message.author.username} said]: ${text}`)
+            .then(async (m) => {
+              await message.delete().catch(() => {
+                message
+                  .reply(
+                    "Error: Can't delete the message due to **Missing Permissions**."
+                  )
+                  .then(async (m) => {
+                    setTimeout(async () => {
+                      await m.delete();
+                    }, 3000);
+                  });
+              });
+              setTimeout(async () => {
+                await m.delete();
+              }, 5000);
+            });
+        }
+      }
+    }
     const logData = client.ttslogs.get(message.guild.id);
     if (logData) {
       const logChannel = message.guild.channels.cache.get(logData.channel);
       const logEmbed = new EmbedBuilder()
         .setAuthor({
-          name: message.author.tag + " used Panel",
+          name: message.author.username + " used Panel",
           iconURL: message.author.displayAvatarURL(),
         })
         .setDescription("```\n" + text + "\n```")

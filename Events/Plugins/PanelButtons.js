@@ -9,7 +9,9 @@ module.exports = {
   name: "interactionCreate",
   async execute(interaction, client) {
     if (
-      !["panel-change-language", "panel-config"].includes(interaction.customId)
+      !["panel-change-language", "panel-config", "panel-change-voice"].includes(
+        interaction.customId
+      )
     )
       return;
     if (!interaction.member.permissions.has("Administrator"))
@@ -261,7 +263,7 @@ module.exports = {
         components: [menu1, menu2, menu3],
         ephemeral: true,
       });
-    } else {
+    } else if (interaction.customId === "panel-config") {
       const ConfigEmbed = new EmbedBuilder()
         .setColor(client.color)
         .setTitle("Panel Configuration")
@@ -288,6 +290,70 @@ module.exports = {
         components: [ConfigButtons],
         ephemeral: true,
       });
+    } else {
+      const panelAPI = client.panelapi
+        .prepare("SELECT * FROM panelapi WHERE guild = ?")
+        .get(interaction.guild.id);
+      if (!panelAPI) {
+        return interaction.reply({
+          content:
+            "You can't change the voice because your current selected API is: `Google TTs API`.",
+          ephemeral: true,
+        });
+      } else {
+        switch (panelAPI.api) {
+          case "google":
+            {
+              return interaction.reply({
+                content:
+                  "You can't change the voice because your current selected API is: `Google TTs API`.",
+                ephemeral: true,
+              });
+            }
+            break;
+          case "unreal":
+            {
+              const maleVoiceButton = new ActionRowBuilder().addComponents(
+                new StringSelectMenuBuilder()
+                  .setCustomId("panel-event-unreal")
+                  .setPlaceholder("Set a Male voice")
+                  .setMaxValues(1)
+                  .setMinValues(1)
+                  .setOptions([
+                    {
+                      label: "Male 1",
+                      value: "male-0",
+                    },
+                    {
+                      label: "Male 2",
+                      value: "male-1",
+                    },
+                    {
+                      label: "Male 3",
+                      value: "male-2",
+                    },
+                    {
+                      label: "Male 4",
+                      value: "male-3",
+                    },
+                  ])
+              );
+              await interaction.reply({
+                content: "Setup a custom Male Voice using the button below:",
+                components: [maleVoiceButton],
+                ephemeral: true,
+              });
+            }
+            break;
+          case "fakeyou": {
+            return interaction.reply({
+              content:
+                "To set the custom voice for Fakeyou API, you need to use `.setvoice`",
+              ephemeral: true,
+            });
+          }
+        }
+      }
     }
   },
 };

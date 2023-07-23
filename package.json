@@ -17,7 +17,7 @@
     "#endpoints/*": "./Endpoints/*"
   },
   "scripts": {
-    "dev": "eslint --fix . && node shard.js"
+    "start": "eslint --fix . && node shard.js"
   },
   "keywords": [],
   "author": "ArijitTheDev",

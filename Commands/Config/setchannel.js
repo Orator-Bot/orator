@@ -8,9 +8,10 @@ const {
 const { stripIndent } = require("common-tags");
 
 module.exports = {
-  name: "setchannel",
+  name: "setfixedchannel",
   description: "Set the voice channel where only the bot can operate.",
   permissions: "Administrator",
+  aliases: ["setchannel"],
   category: "config",
   async execute(message, args, client) {
     let currentChannel = "None";
