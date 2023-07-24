@@ -115,13 +115,6 @@ async function loadDatabase(client) {
     "INSERT OR REPLACE INTO jointocreate(guild, channel) VALUES(?,?)"
   );
 
-  // Soundboard
-  const soundboardStateDB = new client.database("./Database/sbstates.db");
-  soundboardStateDB
-    .prepare("CREATE TABLE IF NOT EXISTS sbstates(guild TEXT PRIMARY KEY)")
-    .run();
-  client.sbstate = soundboardStateDB;
-
   // Blacklist Word
   const blacklistwordDB = new client.database("./Database/blacklistword.db");
   blacklistwordDB
