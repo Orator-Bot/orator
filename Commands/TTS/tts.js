@@ -98,16 +98,8 @@ module.exports = {
         },
       });
 
-      const getPrm = new ButtonBuilder()
-        .setLabel("Upgrade to Premium Now")
-        .setURL("https://discord.gg/93dCvuY4RS")
-        .setStyle(ButtonStyle.Link);
-
-      const buttons = new ActionRowBuilder().addComponents(getPrm);
-
       await message.channel.send({
-        content: `[${langCode}] 🎙️ ${message.author.tag} said: **${text}**\n> :tada: **Sale is live!! We are giving 20% discount on lifetime and 10% discount on yearly plans**`,
-        components: [buttons],
+        content: `[${langCode}] 🎙️ ${message.author.tag} said: **${text}**`,
       });
       const logsChannel = client.ttslogs.get(message.guild.id);
       if (logsChannel) {
