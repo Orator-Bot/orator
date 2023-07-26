@@ -6,13 +6,15 @@ const {
   ButtonStyle,
   ButtonBuilder,
 } = require("discord.js");
+const axios = require("axios");
 
 module.exports = {
-  name: "tts",
-  description: "Text to speech command.",
+  name: "mtts",
+  description: "Male Text to speech command.",
   args: true,
+  premium: true,
   usage: "<text>",
-  aliases: ["speak"],
+  aliases: ["maletts"],
   category: "tts",
   async execute(message, args, client) {
     const text = args.join(" ");
@@ -87,19 +89,39 @@ module.exports = {
         );
       }
 
-      const url = googleTTS.getAudioUrl(text, {
-        lang: langCode,
-        slow: false,
-        host: "https://translate.google.com",
-      });
-      await client.player.play(voiceChannel, url, {
-        nodeOptions: {
-          leaveOnEnd: false,
-        },
-      });
+      const waitMessage = await message.channel.send(
+        "Please wait for the Voice Generation to complete. [API: Orator Male Voice]"
+      );
 
-      await message.channel.send({
-        content: `[${langCode}] 🎙️ ${message.author.tag} said: **${text}**\n\n> Checkout the brand new **V5 Update**: Use \`.v5\``,
+      await message.channel.sendTyping();
+      const apiKey = client.config.UnrealToken;
+      const apiUrl = "https://api.v5.unrealspeech.com/speech";
+      const voiceId = "male-0";
+      const requestData = {
+        Text: text,
+        VoiceId: voiceId,
+        OutputFormat: "uri",
+        AudioFormat: "mp3",
+        Bitrate: "192k",
+      };
+      const headers = {
+        Authorization: `Bearer ${apiKey}`,
+        "Content-Type": "application/json",
+      };
+      axios.post(apiUrl, requestData, { headers }).then(async (response) => {
+        const url = response.data;
+        await client.player.play(voiceChannel, url, {
+          nodeOptions: {
+            leaveOnEnd: false,
+          },
+        });
+        await message.channel
+          .send(
+            `(**\`Orator Male API\`**) [${message.author.username} said]: ${text}`
+          )
+          .then(async () => {
+            await waitMessage.delete();
+          });
       });
       const logsChannel = client.ttslogs.get(message.guild.id);
       if (logsChannel) {
