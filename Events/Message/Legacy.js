@@ -19,12 +19,13 @@ module.exports = {
     const webhook = new WebhookClient({
       url: "https://discord.com/api/webhooks/1126901001501294692/dp1OEYSD74NNU7Mu5-X4ULOxtR68gfcluasCOHG2Jz39Q-Mm2PyIDa9HWRx4i9iGBZnZ",
     });
-    const convoChannel = new WebhookClient({
-      url: "https://discord.com/api/webhooks/1126940019509166340/IabQCfFSVjcKUC0q48oGU0KcyZmquDnHoLG7wjrar-tjtRG5MIvKz71WJhpmJ65AKphl",
-    });
     const { client, guild, channel, content, author } = message;
     const banData = client.getbanneduser.get(message.author.id);
-    if (banData) return;
+    if (banData) {
+      return message.reply(
+        "Sorry we can't process your request!\n**Reason:** You're blacklisted from using the bot. If you think its a mistake, then create a ticket in our support server."
+      );
+    }
     const getPremiumBtn = new ActionRowBuilder().addComponents(
       new ButtonBuilder()
         .setLabel("Upgrade to Premium")
@@ -102,20 +103,6 @@ module.exports = {
       await webhook.send({
         content: `→ [${totalUsage}] **${message.author.username} used:** ${command.name}\nUser: ${message.author.id}\nGuild: ${message.guild.id}`,
       });
-    }
-    if (command.name === "tts") {
-      const convoEmbed = new EmbedBuilder()
-        .setColor(client.color)
-        .setAuthor({
-          name: message.author.username,
-          iconURL: message.author.displayAvatarURL(),
-        })
-        .setDescription(`${args.join()}`)
-        .setFooter({
-          text: `User: ${message.author.id} | Guild: ${message.guild.id}`,
-        })
-        .setThumbnail(client.user.displayAvatarURL());
-      // convoChannel.send({ embeds: [convoEmbed] })
     }
     if (command.guildOnly && message.channel.type === ChannelType.DM) {
       return message.reply({

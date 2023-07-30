@@ -18,7 +18,7 @@ module.exports = {
     4. A voice role feature which assigns a role to a user when he/she joins the voice channel. You can set one using \`setvoicerole\`. Also the role will be removed when he/she leaves the channel. You can use \`resetvoicerole\` to reset the voice role.
     5. A new TTS command: Male TTS (\`.mtts\` or \`.maletts\`) which uses Orator's Male TTS.
     6. A new configuration  command named \`.mttsvoice\` to change the voice of the Male TTS.
-    7. Due to some requests, we have added </tts:0> slashcommand and a </ping:0> command just for fun :)
+    7. We have also added some slashcommands for better usage experience.
     
     __**What are removed in this update?**__
     1. We removed the **Soundboard** system completely because Discord added their own Soundboard system. (If you want it back, you can request for it).
