@@ -48,7 +48,6 @@ module.exports = {
       <:iconDown:1029750030875234395> Admin
       <:iconDown:1029750030875234395> Config
       <:iconDown:1029750030875234395> Text to Speech
-      <:iconDown:1029750030875234395> Join to Create
       
       ⚠️ **If you want to claim free premium for testing, join our support server and claim 6hrs free premium**
       
@@ -105,16 +104,10 @@ module.exports = {
             description: "Check the Text to Speech commands.",
             value: "tts",
             emoji: "🎙️",
-          },
-          {
-            label: "Join to Create",
-            description: "Check join to create vc commands.",
-            value: "jointocreate",
-            emoji: "🔊",
           }
         )
         .setMinValues(1)
-        .setMaxValues(5);
+        .setMaxValues(4);
 
       row.setComponents(rowMenu);
       linkRow.setComponents(voteButton, supportButton, premiumButton);

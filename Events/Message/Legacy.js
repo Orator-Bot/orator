@@ -20,12 +20,7 @@ module.exports = {
       url: "https://discord.com/api/webhooks/1126901001501294692/dp1OEYSD74NNU7Mu5-X4ULOxtR68gfcluasCOHG2Jz39Q-Mm2PyIDa9HWRx4i9iGBZnZ",
     });
     const { client, guild, channel, content, author } = message;
-    const banData = client.getbanneduser.get(message.author.id);
-    if (banData) {
-      return message.reply(
-        "Sorry we can't process your request!\n**Reason:** You're blacklisted from using the bot. If you think its a mistake, then create a ticket in our support server."
-      );
-    }
+
     const getPremiumBtn = new ActionRowBuilder().addComponents(
       new ButtonBuilder()
         .setLabel("Upgrade to Premium")
@@ -84,6 +79,12 @@ module.exports = {
         "warn"
       );
     if (command) {
+      const banData = client.getbanneduser.get(message.author.id);
+      if (banData) {
+        return message.reply(
+          "Sorry we can't process your request!\n**Reason:** You're blacklisted from using the bot. If you think its a mistake, then create a ticket in our support server."
+        );
+      }
       const incrementCommandCount = (cmdName) => {
         client.statsdb
           .prepare(
