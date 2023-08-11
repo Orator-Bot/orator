@@ -10,7 +10,7 @@ module.exports = {
   async execute(message, args, client) {
     let guildID = args[0];
     if (guildID.toLowerCase() === "this") guildID = message.guild.id;
-    const endpointURL = `http://oratornodes.xyz:4000/dbdelete?serverId=${guildID}`;
+    const endpointURL = `http://46.4.31.110:4008/dbdelete?serverId=${guildID}`;
     const headers = {
       user: "arijit",
       password: "itsmemario",

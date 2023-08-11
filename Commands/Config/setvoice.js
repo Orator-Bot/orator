@@ -8,7 +8,6 @@ module.exports = {
   category: "config",
   premium: true,
   aliases: ["customvoice", "cv", "sv", "setcustomvoice"],
-  permission: "Administrator",
   async execute(message, args, client) {
     const voice = data.find((v) => v.value === args[0].toLowerCase());
     if (!voice) {
@@ -16,13 +15,13 @@ module.exports = {
         "You have entered an invalid voice. Use `.voices` to check the available voices."
       );
     } else {
-      client.setcustomlang.run(message.guild.id, voice.id);
+      client.setcustomlang.run(message.guild.id, message.author.id, voice.id);
       message.channel.send({
         embeds: [
           new EmbedBuilder()
             .setColor(client.color)
             .setDescription(
-              `<:Tick:1035765324693385226> Successfully set **${voice.name}** as the default voice!`
+              `<:Tick:1035765324693385226> Successfully set **${voice.name}** as the default voice for ${message.author.username}!`
             ),
         ],
       });

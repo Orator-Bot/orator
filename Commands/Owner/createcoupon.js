@@ -13,7 +13,7 @@ module.exports = {
   category: "dev",
   async execute(message, args, client) {
     const discount = parseInt(args[0]);
-    const endpointURL = `http://oratornodes.xyz:4000/api/coupon/create?discount=${discount}`;
+    const endpointURL = `http://46.4.31.110:4008/api/coupon/create?discount=${discount}`;
 
     const headers = {
       user: "arijit",

@@ -57,7 +57,7 @@ module.exports = {
             .addFields(
               {
                 name: "Expires In:",
-                value: ms(data.expires - Date.now(), { long: true }),
+                value: `${ms(data.expires - Date.now(), { long: true })}`,
               },
               {
                 name: "Boosted By:",

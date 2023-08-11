@@ -30,7 +30,7 @@ module.exports = {
       return message.reply("Please specify a valid time.");
     }
 
-    const endpointURL = `http://oratornodes.xyz:4000/dbcreate?serverId=${guildId}&time=${ms(
+    const endpointURL = `http://46.4.31.110:4008/dbcreate?serverId=${guildId}&time=${ms(
       time
     )}`;
 
