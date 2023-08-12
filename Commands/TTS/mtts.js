@@ -16,6 +16,7 @@ module.exports = {
   usage: "<text>",
   aliases: ["maletts"],
   category: "tts",
+  voteOnly: true,
   async execute(message, args, client) {
     const text = args.join(" ");
     let langCode = "en";

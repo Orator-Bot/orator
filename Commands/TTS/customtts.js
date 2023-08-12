@@ -14,6 +14,7 @@ module.exports = {
   premium: true,
   aliases: ["ctts"],
   category: "tts",
+  voteOnly: true,
   async execute(message, args, client) {
     const text = args.join(" ");
     if (text.length <= 5)

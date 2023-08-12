@@ -8,6 +8,7 @@ module.exports = {
   usage: "<text>",
   aliases: ["mp3"],
   category: "tts",
+  voteOnly: true,
   async execute(message, args, client) {
     const text = args.join(" ");
     if (text.length > 200) {

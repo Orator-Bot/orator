@@ -10,6 +10,7 @@ module.exports = {
   usage: "<language> <text>",
   aliases: ["tl"],
   category: "tts",
+  voteOnly: true,
   async execute(message, args, client) {
     const language = args[0];
     const text = args.slice(1).join(" ");
