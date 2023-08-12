@@ -14,7 +14,7 @@ const manager = new ClusterManager(`${__dirname}/index.js`, {
   mode: "process",
   token: config.TOKEN,
 });
-const poster = AutoPoster(config.TOPGGTOKEN, manager);
+// const poster = AutoPoster(config.TOPGGTOKEN, manager);
 manager.on("clusterCreate", (cluster) => {
   // Banner
   console.log(colors.brightMagenta("---------------------"));
@@ -26,6 +26,6 @@ manager.on("clusterCreate", (cluster) => {
 });
 manager.spawn({ timeout: -1 });
 
-poster.on("posted", (stats) => {
-  logger(`├─ Posted stats to Top.gg | ${stats.serverCount} servers`, "success");
-});
+// poster.on("posted", (stats) => {
+//   logger(`├─ Posted stats to Top.gg | ${stats.serverCount} servers`, "success");
+// });
