@@ -14,7 +14,7 @@ const manager = new ClusterManager(`${__dirname}/index.js`, {
   mode: "process",
   token: config.TOKEN,
 });
-
+const poster = AutoPoster(config.TOPGGTOKEN, manager);
 manager.on("clusterCreate", (cluster) => {
   // Banner
   console.log(colors.brightMagenta("---------------------"));
@@ -24,7 +24,6 @@ manager.on("clusterCreate", (cluster) => {
     ${colors.cyan(`Launched Cluster: ${cluster.id}`)}`
   );
 });
-const poster = AutoPoster(config.TOPGGTOKEN, manager);
 manager.spawn({ timeout: -1 });
 
 poster.on("posted", (stats) => {
