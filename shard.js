@@ -24,7 +24,7 @@ manager.on("clusterCreate", (cluster) => {
     ${colors.cyan(`Launched Cluster: ${cluster.id}`)}`
   );
 });
-const poster = AutoPoster(client.config.TOPGGTOKEN, manager);
+const poster = AutoPoster(config.TOPGGTOKEN, manager);
 manager.spawn({ timeout: -1 });
 
 poster.on("posted", (stats) => {
