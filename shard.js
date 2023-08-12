@@ -5,6 +5,7 @@ const { logger } = require("#functions/Logger.js");
 const figlet = require("figlet");
 const gradient = require("gradient-string");
 const colors = require("colors");
+const { AutoPoster } = require("topgg-autoposter");
 require("./server.js");
 
 const manager = new ClusterManager(`${__dirname}/index.js`, {
@@ -23,4 +24,9 @@ manager.on("clusterCreate", (cluster) => {
     ${colors.cyan(`Launched Cluster: ${cluster.id}`)}`
   );
 });
+const poster = AutoPoster(client.config.TOPGGTOKEN, manager);
 manager.spawn({ timeout: -1 });
+
+poster.on("posted", (stats) => {
+  logger(`├─ Posted stats to Top.gg | ${stats.serverCount} servers`, "success");
+});
