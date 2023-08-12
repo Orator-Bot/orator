@@ -49,6 +49,7 @@
     "pagination.djs": "latest",
     "pro.db": "latest",
     "sourcebin_js": "latest",
+    "topgg-autoposter": "^2.0.1",
     "translate-google": "latest",
     "voucher-code-generator": "latest",
     "ytdl-core": "latest"
