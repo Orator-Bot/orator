@@ -23,6 +23,11 @@ module.exports = {
     exec("npm run pull", (error, stdout, stderr) => {
       if (error) return message.reply(`${error.message}`);
 
+      client.logger(
+        "Successfully pulled from Github using command.",
+        "success"
+      );
+
       message.channel.send(
         "Pulled. Please wait for 5 seconds more before reloading."
       );
