@@ -17,6 +17,7 @@ module.exports = {
   async execute(message, args, client) {
     const user = message.mentions.members.first()?.id || args[0];
     let guildId = args[1];
+    if (guildId === "this") guildId = message.guild.id;
     if (!guildId) return message.reply("Please enter a guild Id.");
     if (guildId.toLowerCase() === "this") guildId = message.guild.id;
     const time = args[2];
@@ -48,13 +49,25 @@ module.exports = {
     const webhook = new WebhookClient({
       url: "https://discord.com/api/webhooks/1138905059292356719/X7TnXZY4129yNo9NCfRhxzlV6NY7eF8Kp8NjmgZVE2Te3gAF3zUvMLpVISgF8T4W3t3s",
     });
-    await webhook.send(
-      `${
-        message.author.username
-      } has gifted a premium to **${user} - ${await client.users
-        .fetch(user)
-        .then(async (usr) => await usr.username)}**`
-    );
+
+    await webhook.send({
+      embeds: [
+        new EmbedBuilder()
+          .setColor(client.color)
+          .setDescription(
+            `${
+              message.author.username
+            } has gifted a premium to **${user} - ${await client.users
+              .fetch(user)
+              .then(
+                async (usr) => await usr.username
+              )}**, Guild: ${await client.guilds
+              .fetch(guildId)
+              .then(async (g) => await g.name)} (${guildId}) for ${time}`
+          ),
+      ],
+    });
+
     try {
       await client.users
         .send(user, {
