@@ -17,7 +17,8 @@
     "#endpoints/*": "./Endpoints/*"
   },
   "scripts": {
-    "dev": "git pull && node shard.js"
+    "dev": "git pull && node shard.js",
+    "pull": "git pull"
   },
   "keywords": [],
   "author": "ArijitTheDev",
