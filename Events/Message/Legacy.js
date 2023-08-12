@@ -7,6 +7,7 @@ const {
   ButtonBuilder,
   WebhookClient,
 } = require("discord.js");
+const topgg = require("@top-gg/sdk");
 const { stripIndent } = require("common-tags");
 const ms = require("ms");
 const colors = require("colors");
@@ -146,6 +147,20 @@ module.exports = {
           ],
           components: [getPremiumBtn],
         });
+      }
+    }
+    if (command.voteOnly) {
+      const preData = client.premiumdb
+        .prepare("SELECT * FROM subscriptions WHERE guild_id = ?")
+        .get(message.guild.id);
+      if (!preData) {
+        const api = new topgg.Api(client.config.TOPGGTOKEN);
+        const hasVoted = api.hasVoted(message.author.id);
+        if (hasVoted !== true) {
+          return message.reply(
+            "This command requires you to vote the bot before using it. Please use *`ovote`* to vote now."
+          );
+        }
       }
     }
     if (command.cooldown) {
