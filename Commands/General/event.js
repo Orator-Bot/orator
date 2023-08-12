@@ -1,4 +1,4 @@
-const { Message, Client } = require("discord.js");
+const { Message, Client, EmbedBuilder } = require("discord.js");
 
 module.exports = {
   name: "event",
@@ -19,8 +19,12 @@ module.exports = {
    * @param {Client} client
    */
   async execute(message, args, client) {
+    const embed = new EmbedBuilder()
+      .setDescription("Comming Soon...")
+      .setColor(client.color);
+
     message.channel.send({
-      content: "Coming Soon...",
+      embeds: [embed],
     });
   },
 };
