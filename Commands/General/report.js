@@ -84,14 +84,13 @@ module.exports = {
     collector.on("collect", async (interaction) => {
       await interaction.deferUpdate();
       if (interaction.customId === "confirm-submit") {
-        await interaction.react("✅");
         await interaction.update({
           content: `Report ID: **${reportID[0].toLowerCase()}**`,
           embeds: [
             new EmbedBuilder()
               .setColor(client.color)
               .setDescription(
-                "Your report was submitted successfully. Please wait untill the devs respond to your report.\nMake sure not to spam reports or submit any report for fun, it may lead to get yourself banned from using the bot."
+                "✅ Your report was submitted successfully. Please wait untill the devs respond to your report.\nMake sure not to spam reports or submit any report for fun, it may lead to get yourself banned from using the bot."
               ),
           ],
           components: [],

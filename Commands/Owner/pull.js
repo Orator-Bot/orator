@@ -29,7 +29,7 @@ module.exports = {
       );
 
       message.channel.send(
-        "Pulled. Please wait for 5 seconds more before reloading."
+        `Pulled Successfully.\nOutput:\n\`\`\`${stdout}\`\`\``
       );
     });
   },
