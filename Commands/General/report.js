@@ -27,6 +27,7 @@ module.exports = {
 
     const reportID = await code.generate({
       pattern: "report-####-####",
+      charset: "alphanumeric",
     });
 
     const embed = new EmbedBuilder()
@@ -42,7 +43,7 @@ module.exports = {
         value: `${message.guild.name} - ${message.guild.id}`,
       })
       .setFooter({
-        text: `Report ID: ${reportID[0]} | ${message.author.id}`,
+        text: `Report ID: ${reportID[0].toLowerCase()} | ${message.author.id}`,
       });
 
     webhook.send({
