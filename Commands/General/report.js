@@ -31,7 +31,7 @@ module.exports = {
     });
 
     const embed = new EmbedBuilder()
-      .setDescription(`**__Report:__** ${report}`)
+      .setDescription(`${report}`)
       .setAuthor({
         name: message.author.username + " submitted a new report",
         iconURL: message.author.displayAvatarURL(),
