@@ -45,8 +45,35 @@ module.exports = {
         text: `Report ID: ${reportID[0].toLowerCase()} | ${message.author.id}`,
       });
 
-    webhook.send({
+    await webhook.send({
       embeds: [embed],
     });
+    await message.author
+      .send({
+        content: `Report ID: **${reportID[0].toLowerCase()}**`,
+        embeds: [
+          new EmbedBuilder()
+            .setColor(client.color)
+            .setDescription(
+              "Your report was submitted successfully. Please wait untill the devs respond to your report.\nMake sure not to spam reports or submit any report for fun, it may lead to get yourself banned from using the bot."
+            ),
+        ],
+      })
+      .then(async () => {
+        await message.react("✅");
+      })
+      .catch(async () => {
+        await message.react("✅");
+        await message.reply({
+          content: `Your DM is closed | Report ID: **${reportID[0].toLowerCase()}**`,
+          embeds: [
+            new EmbedBuilder()
+              .setColor(client.color)
+              .setDescription(
+                "Your report was submitted successfully. Please wait untill the devs respond to your report.\nMake sure not to spam reports or submit any report for fun, it may lead to get yourself banned from using the bot."
+              ),
+          ],
+        });
+      });
   },
 };
