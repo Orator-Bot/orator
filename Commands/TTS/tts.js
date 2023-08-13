@@ -95,7 +95,8 @@ module.exports = {
         },
       });
 
-      const adText = Math.floor(Math.random(adsArray) * adsArray.length);
+      const adIndex = Math.floor(Math.random(adsArray) * adsArray.length);
+      const adText = adsArray[adIndex];
 
       await message.channel.send({
         content: `[${langCode}] 🎙️ ${message.author.tag} said: **${text}**\n\n> ${adText}`,
