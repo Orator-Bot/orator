@@ -99,8 +99,11 @@ module.exports = {
         },
       });
 
+      const adText =
+        "You can now report any errors directly, using *`.report`*";
+
       await message.channel.send({
-        content: `[${langCode}] 🎙️ ${message.author.tag} said: **${text}**\n\n> Checkout the brand new **V5 Update**: Use \`.v5\``,
+        content: `[${langCode}] 🎙️ ${message.author.tag} said: **${text}**\n\n> ${adText}`,
       });
       const logsChannel = client.ttslogs.get(message.guild.id);
       if (logsChannel) {
