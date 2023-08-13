@@ -72,7 +72,7 @@ module.exports = {
     const sentMsg = await message.channel.send({
       content:
         "Confirm submitting the report? Make sure not to abuse the system, else you may get banned from using the bot.",
-      components,
+      components: [components],
     });
 
     const collector = await sentMsg.createMessageComponentCollector({
