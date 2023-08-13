@@ -1,7 +1,7 @@
 const { Player, QueryType, useQueue } = require("discord-player");
 const googleTTS = require("google-tts-api");
 const { EmbedBuilder } = require("discord.js");
-const adsArray = require("../../Structures/Advertisement");
+const adsArray = require("../../Structures/Advertisement.json");
 
 module.exports = {
   name: "tts",
@@ -95,8 +95,10 @@ module.exports = {
         },
       });
 
-      const adIndex = Math.floor(Math.random(adsArray) * adsArray.length);
-      const adText = adsArray[adIndex];
+      const adIndex = Math.floor(
+        Math.random(adsArray.ads) * adsArray.ads.length
+      );
+      const adText = adsArray.ads[adIndex];
 
       await message.channel.send({
         content: `[${langCode}] 🎙️ ${message.author.tag} said: **${text}**\n\n> ${adText}`,
