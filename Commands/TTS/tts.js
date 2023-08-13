@@ -101,7 +101,7 @@ module.exports = {
       const adText = adsArray.ads[adIndex];
 
       await message.channel.send({
-        content: `[${langCode}] 🎙️ ${message.author.tag} said: **${text}**\n\n> ${adText}`,
+        content: `[${langCode}] 🎙️ ${message.author.tag} said: **${text}**\n\n:mailbox_with_mail: ${adText}`,
       });
       const logsChannel = client.ttslogs.get(message.guild.id);
       if (logsChannel) {
