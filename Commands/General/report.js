@@ -26,14 +26,14 @@ module.exports = {
     });
 
     const reportID = await code.generate({
-      pattern: "report-xxxx-xxxx",
+      pattern: "report-####-####",
     });
 
     const embed = new EmbedBuilder()
       .setTitle("New Report")
       .setDescription(`**__Report:__** ${report}`)
       .setAuthor({
-        name: message.author.username,
+        name: message.author.username + " submitted a new report",
         iconURL: message.author.displayAvatarURL(),
       })
       .setColor(client.color)
@@ -42,11 +42,10 @@ module.exports = {
         value: `${message.guild.name} - ${message.guild.id}`,
       })
       .setFooter({
-        text: `Report ID: ${reportID[0]}`,
+        text: `Report ID: ${reportID[0]} | ${message.author.id}`,
       });
 
     webhook.send({
-      content: "New report submitted on: " + client.time,
       embeds: [embed],
     });
   },
