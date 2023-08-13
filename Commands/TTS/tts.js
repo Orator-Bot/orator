@@ -1,11 +1,7 @@
 const { Player, QueryType, useQueue } = require("discord-player");
 const googleTTS = require("google-tts-api");
-const {
-  EmbedBuilder,
-  ActionRowBuilder,
-  ButtonStyle,
-  ButtonBuilder,
-} = require("discord.js");
+const { EmbedBuilder } = require("discord.js");
+const adsArray = require("../../Structures/Advertisement");
 
 module.exports = {
   name: "tts",
@@ -99,8 +95,7 @@ module.exports = {
         },
       });
 
-      const adText =
-        "You can now report any errors directly, using *`.report`*";
+      const adText = Math.floor(Math.random(adsArray) * adsArray.length);
 
       await message.channel.send({
         content: `[${langCode}] 🎙️ ${message.author.tag} said: **${text}**\n\n> ${adText}`,
