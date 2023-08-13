@@ -1,4 +1,13 @@
-const { Message, Client, WebhookClient, EmbedBuilder } = require("discord.js");
+const {
+  Message,
+  Client,
+  WebhookClient,
+  EmbedBuilder,
+  ButtonBuilder,
+  ButtonStyle,
+  ActionRowBuilder,
+  ComponentType,
+} = require("discord.js");
 const code = require("voucher-code-generator");
 
 module.exports = {
@@ -30,6 +39,21 @@ module.exports = {
       charset: "alphanumeric",
     });
 
+    const confirmButton = new ButtonBuilder()
+      .setLabel("Submit Report")
+      .setStyle(ButtonStyle.Success)
+      .setCustomId("confirm-submit");
+
+    const cancelButton = new ButtonBuilder()
+      .setCustomId("cancel-submit")
+      .setStyle(ButtonStyle.Danger)
+      .setLabel("Cancel");
+
+    const components = new ActionRowBuilder().addComponents(
+      confirmButton,
+      cancelButton
+    );
+
     const embed = new EmbedBuilder()
       .setDescription(`${report}`)
       .setAuthor({
@@ -45,27 +69,24 @@ module.exports = {
         text: `Report ID: ${reportID[0].toLowerCase()} | ${message.author.id}`,
       });
 
-    await webhook.send({
-      embeds: [embed],
+    const sentMsg = await message.channel.send({
+      content:
+        "Confirm submitting the report? Make sure not to abuse the system, else you may get banned from using the bot.",
+      components,
     });
-    await message.author
-      .send({
-        content: `Report ID: **${reportID[0].toLowerCase()}**`,
-        embeds: [
-          new EmbedBuilder()
-            .setColor(client.color)
-            .setDescription(
-              "Your report was submitted successfully. Please wait untill the devs respond to your report.\nMake sure not to spam reports or submit any report for fun, it may lead to get yourself banned from using the bot."
-            ),
-        ],
-      })
-      .then(async () => {
-        await message.react("✅");
-      })
-      .catch(async () => {
-        await message.react("✅");
-        await message.reply({
-          content: `Your DM is closed | Report ID: **${reportID[0].toLowerCase()}**`,
+
+    const collector = await sentMsg.createMessageComponentCollector({
+      componentType: ComponentType.Button,
+      time: 10000,
+      filter: (i) => i.user.id === message.author.id,
+    });
+
+    collector.on("collect", async (interaction) => {
+      await interaction.deferUpdate();
+      if (interaction.customId === "confirm-submit") {
+        await interaction.react("✅");
+        await interaction.update({
+          content: `Report ID: **${reportID[0].toLowerCase()}**`,
           embeds: [
             new EmbedBuilder()
               .setColor(client.color)
@@ -73,7 +94,30 @@ module.exports = {
                 "Your report was submitted successfully. Please wait untill the devs respond to your report.\nMake sure not to spam reports or submit any report for fun, it may lead to get yourself banned from using the bot."
               ),
           ],
+          components: [],
         });
-      });
+        await webhook.send({
+          embeds: [embed],
+        });
+        await interaction.user
+          .send({
+            content: `Report ID: **${reportID[0].toLowerCase()}**`,
+            embeds: [
+              new EmbedBuilder()
+                .setColor(client.color)
+                .setDescription(
+                  "Your report was submitted successfully. Please wait untill the devs respond to your report.\nMake sure not to spam reports or submit any report for fun, it may lead to get yourself banned from using the bot."
+                ),
+            ],
+            components: [],
+          })
+          .catch(() => null);
+      } else if (interaction.customId === "cancel-submit") {
+        await interaction.update({
+          content: "Cancelled submit.",
+          components: [],
+        });
+      } else return;
+    });
   },
 };
