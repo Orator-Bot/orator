@@ -104,7 +104,7 @@ module.exports = {
               new EmbedBuilder()
                 .setColor(client.color)
                 .setDescription(
-                  "Your report was submitted successfully. Please wait untill the devs respond to your report.\nMake sure not to spam reports or submit any report for fun, it may lead to get yourself banned from using the bot."
+                  "Your report was submitted successfully. Please wait untill the devs respond to your report."
                 ),
             ],
             components: [],
