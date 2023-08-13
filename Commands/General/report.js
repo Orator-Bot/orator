@@ -82,7 +82,6 @@ module.exports = {
     });
 
     collector.on("collect", async (interaction) => {
-      await interaction.deferUpdate();
       if (interaction.customId === "confirm-submit") {
         await interaction.update({
           content: `Report ID: **${reportID[0].toLowerCase()}**`,
