@@ -31,7 +31,6 @@ module.exports = {
     });
 
     const embed = new EmbedBuilder()
-      .setTitle("New Report")
       .setDescription(`**__Report:__** ${report}`)
       .setAuthor({
         name: message.author.username + " submitted a new report",
