@@ -160,7 +160,7 @@ module.exports = {
         const hasVoted = api.hasVoted(message.author.id);
         if (hasVoted !== true) {
           return message.reply(
-            "This command requires you to vote the bot before using it. Please use *`.vote`* to vote now."
+            `This command requires you to vote the bot before using it. Please use *\`${prefix}vote\`* to vote now.`
           );
         }
       }
