@@ -5,7 +5,6 @@ const {
   ButtonStyle,
   ComponentType,
 } = require("discord.js");
-const { Player, QueryType } = require("discord-player");
 
 module.exports = {
   name: "customtts",
@@ -14,7 +13,6 @@ module.exports = {
   premium: true,
   aliases: ["ctts"],
   category: "tts",
-  voteOnly: true,
   async execute(message, args, client) {
     const text = args.join(" ");
     if (text.length <= 5)
@@ -91,7 +89,7 @@ module.exports = {
       .setDescription(
         `📃 Text: \`${text}\`\n\n🔊 Voice: ${voiceData.title}\n\n🔹Click on Play after joining vc to play the audio.\n🔹Or click on the button below to get the Audio File.`
       )
-      .setColor("Blue")
+      .setColor(client.color)
       .setFooter({
         text: `Requested by ${message.author.tag}`,
         iconURL: message.author.displayAvatarURL(),
@@ -176,7 +174,7 @@ module.exports = {
         });
         const logsChannel = client.ttslogs.get(interaction.guild.id);
         if (logsChannel) {
-          const sendchannel = await interaction.guild.channels.cache
+          await interaction.guild.channels.cache
             .get(logsChannel.channel)
             .send({
               embeds: [
@@ -187,14 +185,14 @@ module.exports = {
                     iconURL: interaction.user.displayAvatarURL(),
                   })
                   .setDescription(`\`\`\`${text}\`\`\``)
-                  .setColor("Blue")
+                  .setColor(client.color)
                   .setTimestamp()
                   .setFooter({
                     text: `Used in #${interaction.channel.name}`,
                   }),
               ],
             })
-            .catch((err) => {});
+            .catch(() => {});
         }
       } catch (error) {
         return interaction.channel.send({
