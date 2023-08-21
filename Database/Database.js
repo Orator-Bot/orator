@@ -78,16 +78,17 @@ async function loadDatabase(client) {
   const customVoice = new client.database("./Database/customLang.db");
   customVoice
     .prepare(
-      "CREATE TABLE IF NOT EXISTS customLang(guild TEXT, user TEXT, sound TEXT)"
+      "CREATE TABLE IF NOT EXISTS customLang(guild TEXT, sound TEXT)"
     )
     .run();
   client.customlang = customVoice.prepare(
-    "SELECT * FROM customLang WHERE guild = ? AND user = ?"
+    "SELECT * FROM customLang WHERE guild = ?"
   );
   client.setcustomlang = customVoice.prepare(
-    "INSERT OR REPLACE INTO customLang(guild, user, sound) VALUES(?, ?, ?)"
+    "INSERT OR REPLACE INTO customLang(guild, sound) VALUES(?, ?, ?)"
   );
-
+  client.customVoiceDB = customVoice;
+  
   // Logs DB
   const logsdb = new client.database("./Database/logs.db");
   logsdb

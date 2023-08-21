@@ -15,13 +15,13 @@ module.exports = {
         "You have entered an invalid voice. Use `.voices` to check the available voices."
       );
     } else {
-      client.setcustomlang.run(message.guild.id, message.author.id, voice.id);
+      client.setcustomlang.run(message.guild.id, voice.id);
       message.channel.send({
         embeds: [
           new EmbedBuilder()
             .setColor(client.color)
             .setDescription(
-              `<:Tick:1035765324693385226> Successfully set **${voice.name}** as the default voice for ${message.author.username}!`
+              `<:Tick:1035765324693385226> Successfully set **${voice.name}** for the guild.`
             ),
         ],
       });

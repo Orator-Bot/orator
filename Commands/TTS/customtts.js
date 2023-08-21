@@ -78,7 +78,8 @@ module.exports = {
     });
     message.channel.sendTyping();
     let voice = "TM:7wbtjphx8h8v";
-    const cVoice = client.customlang.get(message.guild.id);
+    const cVoice = client.customVoiceDB.prepare("SELECT * FROM customLang WHERE guild = ?").get(message.guild.id);
+    // const cVoice = client.customlang.get(message.guild.id);
     if (cVoice) voice = cVoice.sound;
     const tts = await client.fy.makeTTS(voice, `,${text}.`);
     const ttsURL = tts.audioURL();
