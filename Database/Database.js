@@ -85,7 +85,7 @@ async function loadDatabase(client) {
     "SELECT * FROM customLang WHERE guild = ?"
   );
   client.setcustomlang = customVoice.prepare(
-    "INSERT OR REPLACE INTO customLang(guild, sound) VALUES(?, ?, ?)"
+    "INSERT OR REPLACE INTO customLang(guild, sound) VALUES(?, ?)"
   );
   client.customVoiceDB = customVoice;
   
