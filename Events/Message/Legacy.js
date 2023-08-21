@@ -151,6 +151,7 @@ module.exports = {
         });
       }
     }
+    /*
     if (command.voteOnly) {
       const preData = client.premiumdb
         .prepare("SELECT * FROM subscriptions WHERE guild_id = ?")
@@ -165,6 +166,7 @@ module.exports = {
         }
       }
     }
+    */
     if (command.cooldown) {
       const now = Date.now();
       const cooldownAmount = command.cooldown;
