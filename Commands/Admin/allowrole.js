@@ -11,7 +11,7 @@ module.exports = {
   ownerOnly: false,
   cooldown: 0,
   async execute(message, args, client) {
-    const method = args[0]
+    const method = args[0];
     const db = client.allowroledb;
     switch (method) {
       case "add":
