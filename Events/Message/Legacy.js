@@ -248,16 +248,25 @@ module.exports = {
               }
             }
           });
+      } else {
+        try {
+          command.execute(message, args, client);
+        } catch (error) {
+          client.logger(error, "warn");
+          message.reply({
+            content: "There was an error trying to execute that command!",
+          });
+        }
       }
-    }else{
+    } else {
       try {
-      command.execute(message, args, client);
-    } catch (error) {
-      client.logger(error, "warn");
-      message.reply({
-        content: "There was an error trying to execute that command!",
-      });
-    }
+        command.execute(message, args, client);
+      } catch (error) {
+        client.logger(error, "warn");
+        message.reply({
+          content: "There was an error trying to execute that command!",
+        });
+      }
     }
   },
 };
