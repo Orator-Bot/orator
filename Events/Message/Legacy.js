@@ -167,7 +167,7 @@ module.exports = {
           .then((json) => {
             const voteRes = JSON.parse(json).voted;
             if (voteRes === 0) {
-              return message.reply(
+              return message.channel.send(
                 "You haven't voted yet! Please use `" +
                   prefix +
                   "vote` to vote the bot."
