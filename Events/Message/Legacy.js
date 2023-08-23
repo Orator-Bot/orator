@@ -153,7 +153,7 @@ module.exports = {
     }
     if (command.voteOnly) {
       const premiumData = client.premiumdb
-        .prepare("SELECT * FROM subscriptions WHERE guild-id = ?")
+        .prepare("SELECT * FROM subscriptions WHERE guild_id = ?")
         .get(message.guild.id);
       if (!premiumData) {
         const url = `https://top.gg/api/bots/${client.user.id}/check?userId=${message.author.id}`;
