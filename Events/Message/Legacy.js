@@ -7,7 +7,7 @@ const {
   ButtonBuilder,
   WebhookClient,
 } = require("discord.js");
-const topgg = require("@top-gg/sdk");
+const fetch = require("node-fetch");
 const { stripIndent } = require("common-tags");
 const ms = require("ms");
 const colors = require("colors");
@@ -151,22 +151,28 @@ module.exports = {
         });
       }
     }
-    /*
     if (command.voteOnly) {
-      const preData = client.premiumdb
-        .prepare("SELECT * FROM subscriptions WHERE guild_id = ?")
+      const premiumData = client.premiumdb
+        .prepare("SELECT * FROM subscriptions WHERE guild-id = ?")
         .get(message.guild.id);
-      if (!preData) {
-        const api = new topgg.Api(client.config.TOPGGTOKEN);
-        const hasVoted = api.hasVoted(message.author.id);
-        if (hasVoted !== true) {
-          return message.reply(
-            `This command requires you to vote the bot before using it. Please use *\`${prefix}vote\`* to vote now.`
-          );
-        }
+      if (!premiumData) {
+        const url = `https://top.gg/api/bots/${client.user.id}/check?userId=${message.author.id}`;
+        fetch(url, {
+          method: "GET",
+          headers: {
+            Authorization: `${client.config.TOPGGTOKEN}`,
+          },
+        }).then((json) => {
+          const voteRes = JSON.parse(json).voted;
+          if (voteRes == 0)
+            return message.reply(
+              "You haven't voted yet! Please use `" +
+                prefix +
+                "vote` to vote the bot."
+            );
+        });
       }
     }
-    */
     if (command.cooldown) {
       const now = Date.now();
       const cooldownAmount = command.cooldown;
