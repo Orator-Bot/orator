@@ -162,15 +162,17 @@ module.exports = {
           headers: {
             Authorization: `${client.config.TOPGGTOKEN}`,
           },
-        }).then((json) => {
-          const voteRes = JSON.parse(json).voted;
-          if (voteRes == 0)
-            return message.reply(
-              "You haven't voted yet! Please use `" +
-                prefix +
-                "vote` to vote the bot."
-            );
-        });
+        })
+          .then((res) => res.text())
+          .then((json) => {
+            const voteRes = JSON.parse(json).voted;
+            if (voteRes === 0)
+              return message.reply(
+                "You haven't voted yet! Please use `" +
+                  prefix +
+                  "vote` to vote the bot."
+              );
+          });
       }
     }
     if (command.cooldown) {
