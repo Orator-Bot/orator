@@ -24,17 +24,17 @@ module.exports = {
 
     const getPremiumBtn = new ActionRowBuilder().addComponents(
       new ButtonBuilder()
-        .setLabel("Upgrade to Premium")
-        .setEmoji("<a:__:1063829203117686895>")
-        .setURL("https://discord.gg/TeS3haQ4tT")
-        .setStyle(ButtonStyle.Link)
+      .setLabel("Upgrade to Premium")
+      .setEmoji("<a:__:1063829203117686895>")
+      .setURL("https://discord.gg/TeS3haQ4tT")
+      .setStyle(ButtonStyle.Link)
     );
     if (message.content === `<@${message.client.user.id}>`) {
       if (client.config.owners.includes(message.author.id)) {
         if (client.prefix.get(message.guild.id)) {
           message.reply(
             "Yes papa" +
-              ` mera prefix hai ${client.prefix.get(message.guild.id).prefix}`
+            ` mera prefix hai ${client.prefix.get(message.guild.id).prefix}`
           );
         } else {
           message.reply("Yes papa" + " mera prefix hai `.`");
@@ -98,8 +98,8 @@ module.exports = {
       const getTotalCommandUsage = () => {
         return (
           client.statsdb
-            .prepare("SELECT SUM(usage) as total FROM statsdb")
-            .get().total || 0
+          .prepare("SELECT SUM(usage) as total FROM statsdb")
+          .get().total || 0
         );
       };
       incrementCommandCount(`${command.name}`);
@@ -143,38 +143,12 @@ module.exports = {
             new EmbedBuilder()
               .setTitle("You discovered a Premium Command")
               .setDescription(
-                `${command.name} is a Premium only command. ${message.guild.name} doesn't have any Premium Subscriptions, Click on the button below to get Premium.`
-              )
+              `${command.name} is a Premium only command. ${message.guild.name} doesn't have any Premium Subscriptions, Click on the button below to get Premium.`
+            )
               .setColor(client.color),
           ],
           components: [getPremiumBtn],
         });
-      }
-    }
-    if (command.voteOnly) {
-      const premiumData = client.premiumdb
-        .prepare("SELECT * FROM subscriptions WHERE guild_id = ?")
-        .get(message.guild.id);
-      if (!premiumData) {
-        const url = `https://top.gg/api/bots/${client.user.id}/check?userId=${message.author.id}`;
-        fetch(url, {
-          method: "GET",
-          headers: {
-            Authorization: `${client.config.TOPGGTOKEN}`,
-          },
-        })
-          .then((res) => res.text())
-          .then((json) => {
-            const voteRes = JSON.parse(json).voted;
-            if (voteRes === 0) {
-              message.channel.send(
-                "You haven't voted yet! Please use `" +
-                  prefix +
-                  "vote` to vote the bot."
-              );
-              return;
-            }
-          });
       }
     }
     if (command.cooldown) {
@@ -240,13 +214,50 @@ module.exports = {
       }
       return message.channel.send({ embeds: [ArgsEmbed] });
     }
-    try {
+
+    if (command.voteOnly) {
+      const premiumData = client.premiumdb
+        .prepare("SELECT * FROM subscriptions WHERE guild_id = ?")
+        .get(message.guild.id);
+      if (!premiumData) {
+        const url = `https://top.gg/api/bots/${client.user.id}/check?userId=${message.author.id}`;
+        fetch(url, {
+            method: "GET",
+            headers: {
+              Authorization: `${client.config.TOPGGTOKEN}`,
+            },
+          })
+          .then((res) => res.text())
+          .then((json) => {
+            const voteRes = JSON.parse(json).voted;
+            if (voteRes === 0) {
+              message.channel.send(
+                "You haven't voted yet! Please use `" +
+                prefix +
+                "vote` to vote the bot."
+              );
+              return;
+            } else {
+              try {
+                command.execute(message, args, client);
+              } catch (error) {
+                client.logger(error, "warn");
+                message.reply({
+                  content: "There was an error trying to execute that command!",
+                });
+              }
+            }
+          });
+      }
+    }else{
+      try {
       command.execute(message, args, client);
     } catch (error) {
       client.logger(error, "warn");
       message.reply({
         content: "There was an error trying to execute that command!",
       });
+    }
     }
   },
 };
