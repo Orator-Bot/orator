@@ -166,12 +166,14 @@ module.exports = {
           .then((res) => res.text())
           .then((json) => {
             const voteRes = JSON.parse(json).voted;
-            if (voteRes === 0)
+            if (voteRes === 0) {
               return message.reply(
                 "You haven't voted yet! Please use `" +
                   prefix +
                   "vote` to vote the bot."
               );
+            }
+            return;
           });
       }
     }
