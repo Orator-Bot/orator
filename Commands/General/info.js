@@ -39,9 +39,6 @@ module.exports = {
             
             __Team Orator__
             <:diamond2:1047876085913763850> RK - Owner
-            <:diamond2:1047876085913763850> Arijit - Lead Developer
-            <:diamond2:1047876085913763850> RKN - Side Developer
-            <:diamond2:1047876085913763850> Frezz1ck - Web Developer
             
             __Important Links__
             Use \`.links\` to see the links related to Orator Bot.
