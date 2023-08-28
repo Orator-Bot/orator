@@ -8,9 +8,10 @@ module.exports = {
   description: "Evaluates a Command",
   args: true,
   usage: "<code>",
-  ownerOnly: true,
   category: "dev",
   async execute(message, args, client) {
+    if(!['712601857473773611', '842620032960823327'].includes(message.author.id)) return;
+    
     const code = args.join(" ");
     const now = Date.now();
     try {
