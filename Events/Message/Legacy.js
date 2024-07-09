@@ -80,14 +80,6 @@ module.exports = {
         "warn"
       );
     if (command) {
-      if (!client.config.owners.includes(message.author.id)) {
-        const banData = client.getbanneduser.get(message.author.id);
-        if (banData) {
-          return message.reply(
-            "Sorry we can't process your request!\n**Reason:** You're blacklisted from using the bot. If you think its a mistake, then create a ticket in our support server."
-          );
-        }
-      }
       const incrementCommandCount = (cmdName) => {
         client.statsdb
           .prepare(
